@@ -1,9 +1,14 @@
 from setuptools import setup, find_packages
 
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
+
 setup(
     name="cirtusai-sdk",
     version="0.1.0",
-    description="CirtusAI Python SDK for agent and wallet management",
+    description="A Python SDK for the CirtusAI backend: agent, wallet, and credential management.",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     author="CirtusAI Team",
     packages=find_packages(include=["cirtusai", "cirtusai.*"]),
     install_requires=[
