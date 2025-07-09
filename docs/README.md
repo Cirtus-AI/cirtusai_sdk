@@ -172,27 +172,38 @@ agent = Agent(**client.agents.get_agent(id))
 
 ## Testing
 
-Development requirements are in `extras_require["dev"]`:
-- `pytest`
-- `pytest-asyncio`
-- `responses`
-- `respx`
+To set up a development environment and run tests:
 
-Run:
 ```bash
 pip install -e .[dev]
 pytest
 ```
 
+- The `-e .[dev]` flag installs the SDK in editable mode with all development dependencies (see `setup.py`).
+- Tests are located in the `tests/` directory and use `pytest`, `pytest-asyncio`, `responses`, and `respx`.
+
 ---
 
 ## Publishing to PyPI
 
-Automated via GitHub Actions on any new `vX.Y.Z` tag:
+This SDK is now maintained in its own repository: [https://github.com/cirtus-ai/cirtusai-sdk](https://github.com/cirtus-ai/cirtusai-sdk)
+
+Publishing is automated via GitHub Actions on any new `vX.Y.Z` tag:
 - Build step: `python -m build --sdist --wheel`
 - Publish: `pypa/gh-action-pypi-publish`
 
-Ensure you have a `PYPI_API_TOKEN` in GitHub Secrets.
+To publish a new version:
+
+1. Update the version in `setup.py`.
+2. Commit and push your changes.
+3. Tag the release:
+
+   ```bash
+   git tag vX.Y.Z
+   git push origin vX.Y.Z
+   ```
+
+4. Ensure you have a `PYPI_API_TOKEN` in GitHub Secrets (see the technical documentation for details).
 
 ---
 

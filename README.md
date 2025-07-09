@@ -1,69 +1,86 @@
-# CirtusAI SDK
+# CirtusAI Python SDK
 
-The **CirtusAI SDK** (Python) makes it trivial to integrate with the CirtusAI backend: create and manage agents, provision email and wallet assets, and issue/verify verifiable credentials.
+The CirtusAI Python SDK provides a simple, robust interface for developers to interact with the CirtusAI backend. It enables seamless agent management, wallet and asset provisioning, decentralized identity (DID) operations, and verifiable credential workflows—all through a modern, well-documented Python API and CLI.
+
+- **Sync and async support:** Use either synchronous or asynchronous clients.
+- **Comprehensive CLI:** Manage agents, wallets, and credentials from the command line.
+- **Pydantic models:** Typed request/response validation for reliability.
+- **Easy integration:** Designed for third-party developers to get started in minutes.
+- **Automated tests and CI:** Ensures reliability and compatibility with the CirtusAI backend.
+
+Whether you’re building identity-driven apps, automating agent provisioning, or issuing verifiable credentials, the CirtusAI SDK makes integration fast and developer-friendly.
+
+---
 
 ## Installation
 
 ```bash
 pip install cirtusai-sdk
-```
-
-Optional development extras (for running tests):
-
-```bash
+# or to install the dev extras:
 pip install cirtusai-sdk[dev]
 ```
+
+---
 
 ## Quickstart
 
 ```python
 from cirtusai import CirtusAIClient
 
-# Initialize client (set token via env or pass directly)
-client = CirtusAIClient(base_url="https://api.cirtus.ai", token="YOUR_ACCESS_TOKEN")
-
-# List your master agents
+client = CirtusAIClient(base_url="https://api.cirtus.ai", token="YOUR_JWT_TOKEN")
 agents = client.agents.list_agents()
-print(agents)
-
-# Create a child agent
 child = client.agents.create_child_agent(parent_id=agents[0]["id"], name="MyChild")
-print(child)
-
-# Provision an email asset
 email_asset = client.agents.provision_email(child["id"])
-print(email_asset)
-
-# Issue a verifiable credential
 vc = client.identity.issue_credential(
     subject_id=child["id"],
     types=["VerifiableCredential"],
     claim={"role": "member"}
 )
-print(vc)
-
-# Close client when done
 client.close()
 ```
 
-## Command-Line Interface
+---
 
-Once installed, you have the `cirtusai` command:
+## Features
 
-```bash
-# Set environment variables for convenience:
-export CIRTUSAI_TOKEN="..."
-export CIRTUSAI_AGENT_ID="child-id"
-
-# List agents
-cirtusai agents list
-
-# Provision an email asset
-cirtusai agents provision-email
-```
-
-Run `cirtusai --help` for the full list of commands.
+- Manage agents and child agents
+- Provision email and wallet assets
+- Issue and verify verifiable credentials
+- Full CLI for agent and asset management
+- Sync and async Python API
 
 ---
 
-For comprehensive technical details, see the [Technical Documentation](docs/TECHNICAL_DOCUMENTATION.md).
+## Command-Line Interface (CLI)
+
+After installation, use the `cirtusai` command:
+
+```bash
+export CIRTUSAI_TOKEN="..."
+cirtusai agents list
+cirtusai agents provision-email
+```
+
+Run `cirtusai --help` for all commands.
+
+---
+
+## Documentation
+
+- [Technical Documentation](docs/TECHNICAL_DOCUMENTATION.md): Advanced usage, API models, and error handling.
+
+---
+
+## Contributing
+
+Contributions are welcome! Please open issues or pull requests on [GitHub](https://github.com/cirtus-ai/cirtusai-sdk).
+
+---
+
+## License
+
+This project is licensed under the MIT License.
+
+---
+
+Happy coding with CirtusAI! 🎉
