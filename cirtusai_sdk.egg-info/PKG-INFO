@@ -1,0 +1,19 @@
+Metadata-Version: 2.4
+Name: cirtusai-sdk
+Version: 0.1.0
+Summary: CirtusAI Python SDK for agent and wallet management
+Author: CirtusAI Team
+Requires-Python: >=3.8
+Requires-Dist: requests>=2.0.0
+Requires-Dist: httpx>=0.24.0
+Requires-Dist: click>=8.0.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0.0; extra == "dev"
+Requires-Dist: pytest-asyncio>=0.20.0; extra == "dev"
+Requires-Dist: responses>=0.10.0; extra == "dev"
+Requires-Dist: respx>=0.20.0; extra == "dev"
+Dynamic: author
+Dynamic: provides-extra
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
