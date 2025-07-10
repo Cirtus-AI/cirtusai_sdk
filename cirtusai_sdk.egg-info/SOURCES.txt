@@ -17,6 +17,11 @@ cirtusai_sdk.egg-info/requires.txt
 cirtusai_sdk.egg-info/top_level.txt
 tests/test_agent.py
 tests/test_agents_client.py
+tests/test_async_auth_client.py
 tests/test_async_client.py
+tests/test_auth_client.py
 tests/test_cli_agents.py
+tests/test_cli_auth.py
 tests/test_client.py
+tests/test_integration.py
+tests/test_schemas.py

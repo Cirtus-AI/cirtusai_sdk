@@ -40,27 +40,36 @@ This will install:
 
 ## Quickstart
 
+The recommended way to authenticate is using the two-step 2FA login flow.
+
 ```python
 from cirtusai import CirtusAIClient
+from cirtusai.auth import TwoFactorAuthenticationError
 
-# Initialize client (set API_TOKEN env or pass explicitly)
-client = CirtusAIClient(base_url="https://api.cirtus.ai", token="YOUR_JWT_TOKEN")
+# Initialize client
+client = CirtusAIClient(base_url="http://localhost:8000")
 
-# Create a child agent under your master agent
-child = client.agents.create_child_agent(parent_id="master-did", name="MyChild")
-print("New child agent:", child)
+# Step 1: Log in with username and password
+login_result = client.auth.login("myuser", "SecurePass123!")
 
-# Provision an email asset for that child
-email_asset = client.agents.provision_email(child["id"])
-print("Email asset:", email_asset)
+# Step 2: If 2FA is required, verify with a TOTP code
+if hasattr(login_result, 'requires_2fa') and login_result.requires_2fa:
+    totp_code = input("Enter your 6-digit code: ")
+    try:
+        token = client.auth.verify_2fa(login_result.temporary_token, totp_code)
+        client.set_token(token.access_token)
+    except TwoFactorAuthenticationError as e:
+        print(f"2FA verification failed: {e}")
+else:
+    # For accounts without 2FA enabled
+    client.set_token(login_result.access_token)
 
-# Issue a verifiable credential
-vc = client.identity.issue_credential(
-    subject_id=child["id"],
-    types=["VerifiableCredential"],
-    claim={"role": "member"}
-)
-print("Issued VC:", vc)
+# You can now use the authenticated client
+if client.token:
+    agents = client.agents.list_agents()
+    print("Successfully fetched agents:", agents)
+
+client.close()
 ```
 
 ---
@@ -82,12 +91,22 @@ client = CirtusAIClient(base_url: str, token: Optional[str] = None)
 ```
 
 ### AuthClient
-- `login(email, password)` → `{ access_token, refresh_token, expires_in, ... }`
-- `refresh(refresh_token)` → `{ access_token, ... }`
+
+- `register(username, email, password, preferred_2fa_method?)` -> `TwoFactorSetupResponse`
+- `login(username, password)` → `Token` or `TwoFactorRequiredResponse`. `username` can be the username or email.
+- `login_with_2fa(username, password, totp_code)` -> `Token`. `username` can be the username or email.
+- `verify_2fa(temporary_token, totp_code)` -> `Token`
+- `refresh(refresh_token)` → `Token`
+- `get_2fa_status()` -> `TwoFactorStatusResponse`
+- `setup_2fa()` -> `TwoFactorSetupResponse`
+- `confirm_2fa(totp_code)` -> `{ message }`
+- `disable_2fa(totp_code, password)` -> `{ message }`
+- `debug_2fa()` -> `{ ...debug info... }`
 
 ### AgentsClient
+
 - `list_agents()` → `[ { id, name?, did?, state? }, ... ]`
-- `get_agent(agent_id)` → `{ id, name, did, state }
+- `get_agent(agent_id)` → `{ id, name, did, state }`
 - `create_child_agent(parent_id, name)` → `{ id, parent_id, name, state }`
 - `delete_agent(agent_id)`
 - `get_children()` → `[ ChildAgent, ... ]`
@@ -97,6 +116,7 @@ client = CirtusAIClient(base_url: str, token: Optional[str] = None)
 - `provision_wallet(child_id, chain)` → `{ ...wallet asset... }`
 
 ### WalletsClient
+
 - `list_assets()` → `{ assets: [...] }`
 - `list_email_accounts()` → `[ EmailAccount, ... ]`
 - `create_email_account(provider, email_address, config)` → `EmailAccount`
@@ -105,8 +125,9 @@ client = CirtusAIClient(base_url: str, token: Optional[str] = None)
 - `refresh_email_token(account_id)` → `{ access_token, ... }`
 
 ### IdentityClient
+
 - `get_did(agent_id)` → `DID` record
-- `issue_credential(subject_id, types, claim)` → `{ credential }
+- `issue_credential(subject_id, types, claim)` → `{ credential }`
 - `verify_credential(jwt_token)` → `{ verified: bool, payload: ... }`
 
 ---
@@ -158,15 +179,32 @@ cirtusai identity issue-credential <subject_id> '{"foo":"bar"}'
 
 ## Pydantic Schemas
 
-Under `cirtusai.schemas`:
-- `Agent`, `ChildAgent`, `Asset`, `EmailAccount`, `Permissions`, `DID`, `CredentialResponse`
+The SDK uses Pydantic for all request and response data validation. Key schemas are available under `cirtusai.schemas`:
+
+- **Authentication & 2FA:**
+  - `Token`: Contains `access_token`, `refresh_token`, and `token_type`.
+  - `UserRegister`: The model for creating a new user.
+  - `TwoFactorSetupResponse`: Contains the secret, QR code, and backup codes for 2FA setup.
+  - `TwoFactorRequiredResponse`: Indicates that a TOTP code is needed to complete login.
+  - `TwoFactorVerifyRequest`: The request to verify a TOTP code.
+  - `TwoFactorStatusResponse`: The current 2FA status of an account.
+  - `TwoFactorDisableRequest`: The request to disable 2FA.
+- **Core Models:**
+  - `Agent`, `ChildAgent`, `Asset`, `EmailAccount`, `Permissions`, `DID`, `CredentialResponse`
 
 Use them to validate and serialize data in your own code:
 
 ```python
-from cirtusai.schemas import Agent
-agent = Agent(**client.agents.get_agent(id))
-``` 
+from cirtusai.schemas import Agent, Token
+
+# Example of how you might use the schemas in your application
+# agent_data = client.agents.get_agent(id)
+# agent = Agent.model_validate(agent_data)
+#
+# login_data = client.auth.login("user", "pass")
+# if isinstance(login_data, dict):
+#   token = Token.model_validate(login_data)
+```
 
 ---
 
@@ -189,6 +227,7 @@ pytest
 This SDK is now maintained in its own repository: [https://github.com/cirtus-ai/cirtusai-sdk](https://github.com/cirtus-ai/cirtusai-sdk)
 
 Publishing is automated via GitHub Actions on any new `vX.Y.Z` tag:
+
 - Build step: `python -m build --sdist --wheel`
 - Publish: `pypa/gh-action-pypi-publish`
 

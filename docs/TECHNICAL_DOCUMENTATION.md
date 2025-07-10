@@ -1,6 +1,16 @@
-# Technical Documentation
+# Technical Documentation - 2FA ENFORCED
 
-This document provides in-depth examples, API models, and edge-case handling for the CirtusAI Python SDK.
+This document provides in-depth examples, API models, and edge-case handling for the CirtusAI Python SDK with **mandatory Two-Factor Authentication**.
+
+## 🔒 Important: 2FA is ENFORCED
+
+**All newly registered users MUST use 2FA.** The CirtusAI platform automatically sets up TOTP during registration and requires it for login. This SDK provides comprehensive support for:
+
+- **Automatic 2FA setup** during registration
+- **Two-step login flow** for production use
+- **Direct login methods** for testing
+- **TOTP management** and troubleshooting
+- **Error handling** for 2FA scenarios
 
 ## Architecture Overview
 
@@ -67,10 +77,21 @@ from cirtusai import CirtusAIClient
 client = CirtusAIClient(base_url, token="jwt-token")
 ```
 
-### AuthClient
+### AuthClient - 2FA ENFORCED
 
-- `login(email: str, password: str) -> dict`
-- `refresh(refresh_token: str) -> dict`
+**All authentication now requires 2FA for new users:**
+
+- `register(username, email, password, preferred_2fa_method="totp") -> TwoFactorSetupResponse`
+  - **Automatically sets up 2FA** - returns QR code and backup codes
+  - **No opt-out** - all new accounts require 2FA
+- `login(username: str, password: str) -> Union[Token, TwoFactorRequiredResponse]`
+  - **Legacy users**: May return Token directly
+  - **New users**: Always returns TwoFactorRequiredResponse. `username` can be the username or email.
+- `verify_2fa(temporary_token: str, totp_code: str) -> Token`
+  - **Required second step** for 2FA users
+- `refresh(refresh_token: str) -> Token`
+- `get_2fa_status() -> TwoFactorStatusResponse`
+- `debug_2fa() -> dict` - **Troubleshooting helper**
 
 ### AgentsClient
 
@@ -144,12 +165,85 @@ cirtusai agents list  # returns JSON array
 ## Testing
 
 Run all tests with:
+
 ```bash
 pytest
 ```
 
 Mocks are configured with:
+
 - `responses` for sync
 - `respx` for async
 
 Each test suite is located in `tests/` (e.g. `test_client.py`, `test_async_client.py`, `test_agents_client.py`, `test_cli_agents.py`).
+
+---
+
+## 2FA Usage Examples
+
+### Registration with Automatic 2FA Setup
+
+```python
+from cirtusai import CirtusAIClient
+
+client = CirtusAIClient(base_url="http://localhost:8000")
+
+# Register user - 2FA is automatically set up
+setup_info = client.auth.register(
+    username="newuser",
+    email="user@example.com", 
+    password="SecurePass123!",
+    preferred_2fa_method="totp"
+)
+
+print(f"Secret: {setup_info.secret}")
+print(f"QR Code URI: {setup_info.qr_code_uri}")
+print(f"Backup Codes: {setup_info.backup_codes}")
+
+# You can save the QR code image (base64 encoded) to a file
+import base64
+with open("qr_code.png", "wb") as f:
+    f.write(base64.b64decode(setup_info.qr_code_image))
+```
+
+### Two-Step Login Flow
+
+```python
+# Step 1: Initial login
+auth_response = client.auth.login("newuser", "SecurePass123!")
+
+if hasattr(auth_response, 'requires_2fa') and auth_response.requires_2fa:
+    # Step 2: Get TOTP code from user and verify
+    totp_code = input("Enter 6-digit code from authenticator app: ")
+    token_response = client.auth.verify_2fa(
+        temporary_token=auth_response.temporary_token,
+        totp_code=totp_code
+    )
+    client.set_token(token_response.access_token)
+else:
+    # Legacy user without 2FA
+    client.set_token(auth_response.access_token)
+```
+
+### Direct Login with 2FA (for tests or scripts)
+
+```python
+# For non-interactive use - combine username, password and TOTP code
+token_response = client.auth.login_with_2fa(
+    "newuser",
+    "SecurePass123!",
+    "123456"  # Current 6-digit code from authenticator app
+)
+client.set_token(token_response.access_token)
+```
+
+### Troubleshooting 2FA
+
+```python
+# Get debug information for TOTP sync issues
+debug_info = client.auth.debug_2fa()
+print(f"Current valid codes: {debug_info['valid_codes']}")
+print(f"Server time: {debug_info['current_server_time']}")
+```
+
+For complete examples, see `examples/2fa_examples.py` in the SDK repository.

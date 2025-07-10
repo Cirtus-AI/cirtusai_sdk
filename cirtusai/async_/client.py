@@ -9,16 +9,23 @@ class AsyncCirtusAIClient:
     """
     Asynchronous client for CirtusAI: wraps sub-clients for auth, agents, wallets, and identity.
     """
-    def __init__(self, base_url: str, token: Optional[str] = None):
+    def __init__(self, base_url: str, token: Optional[str] = None, **kwargs):
         self.base_url = base_url.rstrip("/")
-        self.client = httpx.AsyncClient(base_url=self.base_url, headers={
-            **({"Authorization": f"Bearer {token}"} if token else {}),
-            "Content-Type": "application/json"
-        })
+        headers = {}
+        if token:
+            headers["Authorization"] = f"Bearer {token}"
+        
+        self.client = httpx.AsyncClient(base_url=self.base_url, headers=headers, **kwargs)
         self.auth = AsyncAuthClient(self.client, self.base_url)
         self.agents = AsyncAgentsClient(self.client, self.base_url)
         self.wallets = AsyncWalletsClient(self.client, self.base_url)
         self.identity = AsyncIdentityClient(self.client, self.base_url)
+
+    async def __aenter__(self):
+        return self
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        await self.close()
 
     async def set_token(self, token: str):
         """Update Authorization header."""
