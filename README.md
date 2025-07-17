@@ -1,24 +1,24 @@
 # CirtusAI Python SDK - Complete Developer Guide (Updated July 2025)
 
-🚀 **The Most Comprehensive SDK for Autonomous AI Agent Management with Blockchain-Level Security**
+**The Most Comprehensive SDK for Autonomous AI Agent Management with Blockchain-Level Security**
 
 The CirtusAI Python SDK provides everything developers need to build powerful, secure, and compliant AI agent applications. From basic wallet management to advanced smart contract automation, from governance participation to real-world asset tokenization - this SDK unlocks the complete power of the CirtusAI platform.
 
-## 🎯 What Makes CirtusAI Unique
+## What Makes CirtusAI Unique
 
-- **🔐 Enterprise-Grade 2FA Security**: Mandatory TOTP authentication with time-sync tolerance
-- **🤖 Smart Contract Agent Wallets**: On-chain spending limits, whitelists, and automated rule enforcement  
-- **🌐 Multi-Chain Support**: Ethereum, Polygon, Arbitrum, and more
-- **📧 Email Integration**: IMAP/SMTP and OAuth for seamless communication
-- **🏛️ DAO Governance**: Participate in on-chain voting and proposal management
-- **💱 DeFi Integration**: Swaps, yield farming, cross-chain bridges, and gas abstraction
-- **🏠 Real-World Assets (RWA)**: Tokenize and manage physical assets on-chain
-- **📊 Compliance Built-In**: KYC/AML, audit trails, and regulatory reporting
-- **⚡ Production Ready**: Sync/async support, comprehensive error handling, and extensive testing
+- Enterprise-Grade 2FA Security: Mandatory TOTP authentication with time-sync tolerance
+- Smart Contract Agent Wallets: On-chain spending limits, whitelists, and automated rule enforcement  
+- Multi-Chain Support: Ethereum, Polygon, Arbitrum, and more
+- Email Integration: IMAP/SMTP and OAuth for seamless communication
+- DAO Governance: Participate in on-chain voting and proposal management
+- DeFi Integration: Swaps, yield farming, cross-chain bridges, and gas abstraction
+- Real-World Assets (RWA): Tokenize and manage physical assets on-chain
+- Compliance Built-In: KYC/AML, audit trails, and regulatory reporting
+- Production Ready: Sync/async support, comprehensive error handling, and extensive testing
 
 ---
 
-## 📦 Installation
+## Installation
 
 ```bash
 # Install the latest stable SDK
@@ -30,7 +30,41 @@ pip install --pre cirtusai-sdk
 
 ---
 
-## 🚀 Quick Start Guide
+## Command Line Interface
+
+The SDK includes a powerful CLI for common tasks. After installing:
+
+```bash
+pip install cirtusai-sdk
+```
+
+Use the `cirtusai` command:
+
+```bash
+cirtusai --help
+```
+
+Available commands:
+
+```bash
+ cirtusai auth           Authentication (login, register, refresh, verify-2fa)
+cirtusai agents         Agent management (list, get, create-child, delete, children, provision-email, provision-wallet, update-permissions, unlink)
+cirtusai wallets        Wallet & email account management (list-assets, list-email, create-email, get-email, update-email, delete-email, refresh-email-token, add-crypto)
+cirtusai identity       DID & credential management (get-did, issue-credential, verify-credential)
+cirtusai governance     Governance (create-proposal, cast-vote, get-proposal-state)
+cirtusai reputation     Soulbound token commands (issue-sbt, get-sbt-owner)
+cirtusai bridge         Cross-chain bridge (get-quote, transfer)
+cirtusai assets         Asset view (view, refresh)
+cirtusai marketplace    Marketplace (create-listing, list-listings, get-listing, update-listing, cancel-listing, place-bid, list-bids, accept-bid)
+cirtusai swap           Token swap (get-quote, execute, cancel)
+cirtusai nfts           NFT management (list, get-metadata, mint, batch-transfer, burn)
+cirtusai child-assets   Child asset management (list, get, create, update, delete)
+cirtusai child-services Child service management (list)
+```bash
+
+---
+
+## Quick Start Guide
 
 ### 1. Authentication with 2FA (Required)
 
@@ -52,9 +86,9 @@ setup_info = client.auth.register(
 )
 
 # Save the QR code for your authenticator app
-print(f"📱 Scan QR: data:image/png;base64,{setup_info.qr_code_image}")
-print(f"🔑 Secret: {setup_info.secret}")
-print(f"🔐 Backup codes: {setup_info.backup_codes}")
+print(f"Scan QR: data:image/png;base64,{setup_info.qr_code_image}")
+print(f"Secret: {setup_info.secret}")
+print(f"Backup codes: {setup_info.backup_codes}")
 
 # Login with 2FA (one-step method)
 try:
@@ -64,9 +98,9 @@ try:
         "123456"  # Current TOTP code from authenticator
     )
     client.set_token(token.access_token)
-    print("✅ Authenticated successfully!")
+    print("Authenticated successfully!")
 except TwoFactorAuthenticationError as e:
-    print(f"❌ 2FA failed: {e}")
+    print(f"2FA failed: {e}")
 ```
 
 ### 2. Create Your First Wallet
@@ -74,14 +108,14 @@ except TwoFactorAuthenticationError as e:
 ```python
 # Create a new HD wallet
 wallet = client.wallets.create_wallet(chain="ethereum")
-print(f"💰 New wallet: {wallet['wallet_address']}")
+print(f"New wallet: {wallet['wallet_address']}")
 
 # Import an existing wallet
 imported = client.wallets.import_wallet(
     chain="ethereum",
     private_key="0x1234567890abcdef..."  # Your private key
 )
-print(f"📥 Imported wallet: {imported['wallet_address']}")
+print(f"Imported wallet: {imported['wallet_address']}")
 
 # List all your wallets
 wallets = client.wallets.list_wallets()
@@ -96,7 +130,7 @@ Agent wallets are smart contracts with programmable rules:
 ```python
 # Deploy a smart contract agent wallet
 agent_wallet = client.wallets.deploy_agent_wallet()
-print(f"🤖 Agent wallet deployed: {agent_wallet['wallet_address']}")
+print(f"Agent wallet deployed: {agent_wallet['wallet_address']}")
 
 # Set spending limits (daily ETH limit)
 tx_hash = client.wallets.set_spending_limit(
@@ -105,7 +139,7 @@ tx_hash = client.wallets.set_spending_limit(
     amount=1000000000000000000,  # 1 ETH in wei
     period=86400  # 24 hours
 )
-print(f"⚡ Spending limit set: {tx_hash}")
+print(f"Spending limit set: {tx_hash}")
 
 # Add trusted addresses to whitelist
 whitelist_tx = client.wallets.update_whitelist(
@@ -113,7 +147,7 @@ whitelist_tx = client.wallets.update_whitelist(
     target="0x742d35Cc6634C0532925a3b8D0715a99C7DCF",
     allowed=True
 )
-print(f"✅ Address whitelisted: {whitelist_tx}")
+print(f"Address whitelisted: {whitelist_tx}")
 ```
 
 ### 4. Manage Child Agents
@@ -134,7 +168,7 @@ print(f"Child agents: {children}")
 
 ---
 
-## 🏗️ Complete Feature Guide
+## Complete Feature Guide
 
 ## 1. 🔐 Advanced Authentication & Security
 
@@ -304,7 +338,7 @@ threshold_tx = client.wallets.set_threshold(
     address=agent_addr,
     new_threshold=500  # Require approval for transactions > $500
 )
-print(f"🔒 Threshold set: {threshold_tx}")
+print(f"Threshold set: {threshold_tx}")
 ```
 
 ### 3.3 Audit Trail & Event Monitoring
@@ -315,7 +349,7 @@ transactions = client.wallets.list_wallet_transactions(
     address=agent_addr
 )
 
-print(f"📊 Found {len(transactions)} events:")
+print(f"Found {len(transactions)} events:")
 for tx in transactions:
     print(f"  {tx['timestamp']}: {tx['event_name']}")
     print(f"    TX: {tx['tx_hash']}")
@@ -327,8 +361,8 @@ for tx in transactions:
 spending_events = [tx for tx in transactions if tx['event_name'] == 'SpendingLimitSet']
 whitelist_events = [tx for tx in transactions if tx['event_name'] == 'WhitelistUpdated']
 
-print(f"🔍 Spending limit changes: {len(spending_events)}")
-print(f"🔍 Whitelist updates: {len(whitelist_events)}")
+print(f"Spending limit changes: {len(spending_events)}")
+print(f"Whitelist updates: {len(whitelist_events)}")
 ```
 
 ---
@@ -345,7 +379,7 @@ master_agent = client.agents.create_agent(
     agent_type="master",
     capabilities=["content_creation", "social_media", "email_marketing"]
 )
-print(f"👑 Master agent created: {master_agent['id']}")
+print(f"Master agent created: {master_agent['id']}")
 
 # Create specialized child agents
 social_media_agent = client.agents.create_agent(
@@ -364,7 +398,7 @@ email_agent = client.agents.create_agent(
     capabilities=["email_marketing", "newsletter_automation"]
 )
 
-print(f"👶 Child agents created:")
+print(f"Child agents created:")
 print(f"  Social Media: {social_media_agent['id']}")
 print(f"  Email: {email_agent['id']}")
 ```
@@ -377,7 +411,7 @@ inherited_rules = client.agents.get_inherited_rules(
     child_id=social_media_agent['id']
 )
 
-print(f"📋 Inherited rules from master:")
+print(f"Inherited rules from master:")
 print(f"  Spending limits: {inherited_rules['spending_limits']}")
 print(f"  Whitelists: {inherited_rules['whitelists']}")
 print(f"  Policies: {inherited_rules['policies']}")
@@ -402,7 +436,7 @@ social_campaign = client.agents.delegate_task(
         "post_frequency": "3_per_day"
     }
 )
-print(f"📋 Task delegated: {social_campaign['id']}")
+print(f"Task delegated: {social_campaign['id']}")
 
 # Monitor delegation status
 delegations = client.agents.list_delegations(master_agent['id'])
@@ -431,16 +465,16 @@ email_account = client.wallets.create_email_account(
         "smtp_port": 587
     }
 )
-print(f"📧 Email account linked: {email_account['id']}")
+print(f"Email account linked: {email_account['id']}")
 
 # OAuth integration for Google/Outlook (redirect-based)
 google_oauth_url = client.wallets.get_google_oauth_url()
-print(f"🔗 Google OAuth: {google_oauth_url}")
+print(f"Google OAuth: {google_oauth_url}")
 
 # List all linked email accounts
 email_accounts = client.wallets.list_email_accounts()
 for account in email_accounts:
-    print(f"  📬 {account['email_address']} ({account['provider']})")
+    print(f"  {account['email_address']} ({account['provider']})")
 ```
 
 ### 5.2 Email Management & Access
@@ -448,7 +482,7 @@ for account in email_accounts:
 ```python
 # Test email connection
 test_result = client.wallets.test_email_connection(email_account['id'])
-print(f"✅ Connection test: {test_result['status']}")
+print(f"Connection test: {test_result['status']}")
 
 # Access inbox (with proper permissions)
 inbox = client.wallets.get_inbox(
@@ -456,7 +490,7 @@ inbox = client.wallets.get_inbox(
     limit=10,
     unread_only=True
 )
-print(f"📨 Unread emails: {inbox['unread_count']}")
+print(f"Unread emails: {inbox['unread_count']}")
 for msg in inbox['messages']:
     print(f"  From: {msg['from']}")
     print(f"  Subject: {msg['subject']}")
@@ -478,7 +512,7 @@ quote = client.bridge.get_quote(
     to_token="0x2791bca1f2de4661ed88a30c99a7a9449aa84174",   # USDC on Polygon
     amount=1000000000  # $1000 USDC
 )
-print(f"💱 Bridge quote:")
+print(f"Bridge quote:")
 print(f"  Fee: ${quote['fee_usd']}")
 print(f"  Time: {quote['estimated_time']}")
 print(f"  You'll receive: {quote['to_amount']} USDC on Polygon")
@@ -494,7 +528,7 @@ if quote['fee_usd'] < 10:  # Acceptable fee
         amount=1000000000,
         recipient_address=poly_wallet['wallet_address']
     )
-    print(f"🌉 Bridge transfer initiated: {bridge_tx['tx_hash']}")
+    print(f"Bridge transfer initiated: {bridge_tx['tx_hash']}")
 ```
 
 ### 6.2 DeFi Integration
@@ -508,7 +542,7 @@ swap_tx = client.wallets.swap_tokens(
     amount=1.0,  # 1 ETH
     slippage_tolerance=0.5  # 0.5%
 )
-print(f"🔄 Swap completed: {swap_tx['tx_hash']}")
+print(f"Swap completed: {swap_tx['tx_hash']}")
 
 # Deposit into yield farming vault
 yield_deposit = client.wallets.deposit_yield_vault(
@@ -517,7 +551,7 @@ yield_deposit = client.wallets.deposit_yield_vault(
     token_address="0xA0b86a33E6D1cc22c435370bA9e4240EE8D5fE5",
     amount=500.0
 )
-print(f"🌾 Yield farming deposit: {yield_deposit['tx_hash']}")
+print(f"Yield farming deposit: {yield_deposit['tx_hash']}")
 
 # Check yield farming positions
 positions = client.wallets.get_yield_positions(eth_wallet['id'])
@@ -537,7 +571,7 @@ swap_quote = client.swap.get_quote(
     to_token="0xA0b86a33E6D1cc22c435370bA9e4240EE8D5fE5",  # USDC
     amount=1.0
 )
-print(f"🔍 Swap quote: {swap_quote}")
+print(f"Swap quote: {swap_quote}")
 
 # Execute the swap
 swap_tx = client.swap.execute_swap(
@@ -546,11 +580,11 @@ swap_tx = client.swap.execute_swap(
     amount=1.0,
     slippage_tolerance=0.5
 )
-print(f"🔄 Swap executed: {swap_tx['tx_hash']}")
+print(f"Swap executed: {swap_tx['tx_hash']}")
 
 # Cancel a pending swap quote
 cancel = client.swap.cancel_swap(quote_id=swap_quote['quote_id'])
-print(f"❌ Swap quote cancelled: {cancel['status']}")
+print(f"Swap quote cancelled: {cancel['status']}")
 ```
 
 ### 6.4 Marketplace Operations
@@ -567,18 +601,18 @@ new_listing = client.marketplace.create_listing(
     price="0.5 ETH",
     quantity=1
 )
-print(f"✅ Created listing: {new_listing['id']}")
+print(f"Created listing: {new_listing['id']}")
 
 # Place a bid on a listing
 bid = client.marketplace.place_bid(
     listing_id=new_listing['id'],
     bid_amount="0.45 ETH"
 )
-print(f"🎯 Bid placed: {bid['bid_id']}")
+print(f"Bid placed: {bid['bid_id']}")
 
 # Cancel a listing
 client.marketplace.cancel_listing(listing_id=new_listing['id'])
-print("❌ Listing cancelled")
+print("Listing cancelled")
 ```
 
 ---
@@ -595,7 +629,7 @@ proposal = client.governance.create_proposal(
     calldatas=["0xabcdef..."],  # Encoded function call
     description="Increase agent spending limits to $2000/day"
 )
-print(f"📜 Proposal created: {proposal['proposal_id']}")
+print(f"Proposal created: {proposal['proposal_id']}")
 
 # Get proposal details
 proposal_info = client.governance.get_proposal_state(proposal['proposal_id'])
@@ -613,7 +647,7 @@ vote = client.governance.cast_vote(
     proposal_id=proposal['proposal_id'],
     support=1  # Vote in favor
 )
-print(f"🗳️ Vote cast: {vote['tx_hash']}")
+print(f"Vote cast: {vote['tx_hash']}")
 
 # Check your voting history
 voting_history = client.governance.get_user_votes()
@@ -634,7 +668,7 @@ rwa_asset = client.wallets.register_rwa_asset(
     token_id="1",  # Specific asset ID
     metadata_uri="https://metadata.example.com/asset/1"
 )
-print(f"🏠 RWA asset registered: {rwa_asset['id']}")
+print(f"RWA asset registered: {rwa_asset['id']}")
 
 # List your RWA holdings
 rwa_holdings = client.wallets.list_rwa_assets()
@@ -656,7 +690,7 @@ rwa_transfer = client.wallets.transfer_rwa(
     to_address="0x742d35Cc6634C0532925a3b8D0715a99C7DCF",
     amount=1
 )
-print(f"🔄 RWA transfer: {rwa_transfer['tx_hash']}")
+print(f"RWA transfer: {rwa_transfer['tx_hash']}")
 ```
 
 ---
@@ -676,7 +710,7 @@ email_provision = client.agents.provision_email_asset(
         "monthly_emails": 2000
     }
 )
-print(f"📧 Email access provisioned: {email_provision['email_address']}")
+print(f"Email access provisioned: {email_provision['email_address']}")
 
 # Check email quota usage
 email_usage = client.agents.get_email_usage(email_agent['id'])
@@ -691,13 +725,13 @@ child_eth_wallet = client.agents.provision_wallet_asset(
     child_id=social_media_agent['id'],
     chain="ethereum"
 )
-print(f"💰 Child wallet created: {child_eth_wallet['wallet_address']}")
+print(f"Child wallet created: {child_eth_wallet['wallet_address']}")
 
 child_poly_wallet = client.agents.provision_wallet_asset(
     child_id=social_media_agent['id'],
     chain="polygon"
 )
-print(f"💰 Child Polygon wallet: {child_poly_wallet['wallet_address']}")
+print(f"Child Polygon wallet: {child_poly_wallet['wallet_address']}")
 
 # Transfer budget to child wallets
 budget_transfer = client.agents.transfer_assets_to_child(
@@ -708,7 +742,7 @@ budget_transfer = client.agents.transfer_assets_to_child(
     amount="100000000000000000",  # 0.1 ETH
     note="Monthly social media budget"
 )
-print(f"💸 Budget transferred: {budget_transfer['transfer_id']}")
+print(f"Budget transferred: {budget_transfer['transfer_id']}")
 ```
 
 ---
@@ -723,8 +757,8 @@ onramp_session = client.wallets.create_onramp_session(
     currency="USD",
     amount=1000.0  # $1000
 )
-print(f"💳 On-ramp session: {onramp_session['session_id']}")
-print(f"🔗 Widget URL: {onramp_session['widget_url']}")
+print(f"On-ramp session: {onramp_session['session_id']}")
+print(f"Widget URL: {onramp_session['widget_url']}")
 
 # Check on-ramp status
 onramp_status = client.wallets.get_onramp_status(
@@ -732,7 +766,7 @@ onramp_status = client.wallets.get_onramp_status(
 )
 print(f"Status: {onramp_status['status']}")
 if onramp_status['status'] == 'completed':
-    print(f"✅ Received: {onramp_status['crypto_amount']} {onramp_status['crypto_currency']}")
+    print(f"Received: {onramp_status['crypto_amount']} {onramp_status['crypto_currency']}")
 ```
 
 ---
@@ -747,11 +781,11 @@ gas_deposit = client.wallets.sponsor_gas(
     token_address="0xA0b86a33E6D1cc22c435370bA9e4240EE8D5fE5",  # USDC
     amount=100.0  # $100 worth of gas
 )
-print(f"⛽ Gas sponsorship: {gas_deposit}")
+print(f"Gas sponsorship: {gas_deposit}")
 
 # Check gas balance
 gas_balance = client.wallets.get_gas_sponsorship_balance()
-print(f"⛽ Gas balance: {gas_balance} USDC")
+print(f"Gas balance: {gas_balance} USDC")
 
 # Send gasless transaction using ERC-4337
 user_op = client.wallets.send_user_operation(
@@ -770,7 +804,7 @@ user_op = client.wallets.send_user_operation(
     },
     entry_point_address="0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789"
 )
-print(f"🚀 Gasless transaction: {user_op['user_op_hash']}")
+print(f"Gasless transaction: {user_op['user_op_hash']}")
 ```
 
 ---
@@ -785,7 +819,7 @@ monitoring = client.monitoring.watch_address(
     address="0x742d35Cc6634C0532925a3b8D0715a99C7DCF",
     alert_conditions=["large_transaction", "new_contract_interaction"]
 )
-print(f"👁️ Monitoring started: {monitoring['watch_id']}")
+print(f"Monitoring started: {monitoring['watch_id']}")
 
 # Get transaction status
 tx_status = client.monitoring.get_transaction_status(
@@ -797,12 +831,12 @@ print(f"Confirmations: {tx_status['confirmations']}")
 # List all active watches
 watches = client.monitoring.list_watches()
 for w in watches:
-    print(f"👁️ Watch: {w['watch_id']} - {w['address']}")
+    print(f"Watch: {w['watch_id']} - {w['address']}")
 
 # Retrieve recent alerts
 alerts = client.monitoring.get_alerts()
 for alert in alerts:
-    print(f"⚠️ Alert: {alert['alert_id']} - {alert['type']} at {alert['timestamp']}")
+    print(f"Alert: {alert['alert_id']} - {alert['type']} at {alert['timestamp']}")
 ```
 
 ### 12.2 Compliance & Reporting
@@ -815,7 +849,7 @@ print(f"KYC Status: {kyc_status['status']}")
 # Initiate KYC if needed
 if kyc_status['status'] == 'not_verified':
     kyc_session = client.compliance.initiate_kyc()
-    print(f"🆔 KYC session: {kyc_session['verification_url']}")
+    print(f"KYC session: {kyc_session['verification_url']}")
 
 # Generate compliance report
 compliance_report = client.compliance.generate_report(
@@ -823,7 +857,7 @@ compliance_report = client.compliance.generate_report(
     end_date="2025-07-17",
     report_type="full_audit"
 )
-print(f"📋 Compliance report:")
+print(f"Compliance report:")
 print(f"  Total transactions: {compliance_report['total_transactions']}")
 print(f"  Total value: ${compliance_report['total_value_usd']}")
 print(f"  Flagged activities: {compliance_report['flagged_count']}")
@@ -834,7 +868,7 @@ audit_trail = client.compliance.get_audit_trail(
     entity_id="entity123",
     entity_type="transaction"
 )
-print("📝 Audit trail entries:")
+print("Audit trail entries:")
 for entry in audit_trail:
     print(f"  {entry['timestamp']}: {entry['action']} by {entry['performed_by']}")
 ```
@@ -849,7 +883,7 @@ for entry in audit_trail:
 # List NFTs in wallet
 nfts = client.wallets.list_nfts(wallet_id=eth_wallet['id'])
 for nft in nfts:
-    print(f"🖼️ {nft['name']} #{nft['token_id']}")
+    print(f"{nft['name']} #{nft['token_id']}")
     print(f"  Collection: {nft['collection_name']}")
     print(f"  Value: ${nft['estimated_value']}")
 
@@ -860,7 +894,7 @@ nft_transfer = client.wallets.transfer_nft(
     token_id="123", 
     to_address="0x742d35Cc6634C0532925a3b8D0715a99C7DCF"
 )
-print(f"🖼️ NFT transferred: {nft_transfer['tx_hash']}")
+print(f"NFT transferred: {nft_transfer['tx_hash']}")
 
 # Get metadata for a specific NFT
 metadata = client.nfts.get_nft_metadata(
@@ -875,7 +909,7 @@ minted = client.nfts.mint_nft(
     to_address="0x742d35Cc6634C0532925a3b8D0715a99C7DCF",
     metadata_uri="https://metadata.example.com/nft/1"
 )
-print(f"🎨 NFT minted: {minted['token_id']}")
+print(f"NFT minted: {minted['token_id']}")
 
 # Batch transfer multiple NFTs
 batch = client.nfts.batch_transfer(
@@ -885,14 +919,14 @@ batch = client.nfts.batch_transfer(
         {"token_id": "124", "to_address": "0xdef..."}
     ]
 )
-print("🔀 Batch transfer complete")
+print("Batch transfer complete")
 
 # Burn an NFT
 burn = client.nfts.burn_nft(
     contract_address="0x1234567890abcdef...",
     token_id="123"
 )
-print(f"🔥 NFT burned: {burn['status']}")
+print(f"NFT burned: {burn['status']}")
 ```
 
 ### 13.2 Event Subscriptions
@@ -903,7 +937,7 @@ subscription = client.wallets.subscribe_to_events(
     wallet_address=eth_wallet['wallet_address'],
     event_types=["transfer", "approval", "swap"]
 )
-print(f"📡 Event subscription: {subscription['subscription_id']}")
+print(f"Event subscription: {subscription['subscription_id']}")
 
 # Get recent events
 events = client.wallets.get_wallet_events(
@@ -911,7 +945,7 @@ events = client.wallets.get_wallet_events(
     limit=50
 )
 for event in events:
-    print(f"⚡ {event['event_type']}: {event['details']}")
+    print(f"{event['event_type']}: {event['details']}")
 ```
 
 ## 📚 Complete API Reference
@@ -1107,10 +1141,10 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 
 ---
 
-**🎉 Ready to build the future of autonomous AI agents? Install the CirtusAI SDK today and unlock the complete power of programmable, compliant, and secure AI automation!**
+**Ready to build the future of autonomous AI agents? Install the CirtusAI SDK today and unlock the complete power of programmable, compliant, and secure AI automation!**
 
 ```bash
 pip install cirtusai-sdk
 ```
 
-*Built with ❤️ by the CirtusAI team - Empowering the Autonomous*
+### Built with ❤️ by the CirtusAI team - Empowering the Autonomous
