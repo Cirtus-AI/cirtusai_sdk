@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="cirtusai-sdk",
-    version="0.2.0b1",
+    version="0.2.0b2",
     description="A Python SDK for the CirtusAI backend: agent, wallet, and credential management.",
     long_description=long_description,
     long_description_content_type="text/markdown",
