@@ -1,3 +1,6 @@
+# agents.py
+# Provides AgentsClient: full-featured client for master/child agent lifecycle and provisioning, used in SDK context.
+
 import requests
 from typing import Optional, Dict, Any, List
 
@@ -17,13 +20,13 @@ class AgentsClient:
         return resp.json()
 
     def get_agent(self, agent_id: str) -> Dict[str, Any]:
-        """Retrieve a specific agent by DID or ID."""
+        """Retrieve a specific agent (master or child) by ID."""
         url = f"{self.base_url}/agents/{agent_id}"
         resp = self.session.get(url)
         resp.raise_for_status()
         return resp.json()
 
-    def create_child_agent(self, parent_id: str, name: str) -> Dict[str, Any]:
+    def create_child_agent(self, parent_id: str, name: str, permissions_granted: List[str] = ["email:read"]) -> Dict[str, Any]:
         """Create a new child agent under a master agent."""
         url = f"{self.base_url}/agents/children"
         payload = {"parent_id": parent_id, "name": name}

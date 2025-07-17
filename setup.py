@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="cirtusai-sdk",
-    version="0.1.1",
+    version="0.2.0b1",
     description="A Python SDK for the CirtusAI backend: agent, wallet, and credential management.",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -14,7 +14,10 @@ setup(
     install_requires=[
         "requests>=2.0.0",
         "httpx>=0.24.0",
-        "click>=8.0.0"
+        "click>=8.0.0",
+        "langchain>=0.1.0",
+        "langchain-deepseek>=0.0.1",
+        "python-dotenv>=0.21.0"
     ],
     python_requires=">=3.8",
     entry_points={

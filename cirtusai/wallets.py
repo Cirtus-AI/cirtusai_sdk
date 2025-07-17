@@ -19,7 +19,7 @@ class WalletsClient:
 
     def list_email_accounts(self) -> List[Dict[str, Any]]:
         """List all linked email accounts."""
-        url = f"{self.base_url}/wallets/email_accounts"
+        url = f"{self.base_url}/wallets/email_accounts/"
         resp = self.session.get(url)
         resp.raise_for_status()
         return resp.json()
@@ -194,6 +194,59 @@ class WalletsClient:
         url = f"{self.base_url}/wallets/events/{subscription_id}"
         resp = self.session.delete(url)
         resp.raise_for_status()
+
+    # Agent smart contract wallet management (Phase 1)
+    def deploy_agent_wallet(self) -> Dict[str, Any]:
+        """Deploy a new CirtusWallet contract for the authenticated user."""
+        url = f"{self.base_url}/agents/wallets/"
+        resp = self.session.post(url)
+        resp.raise_for_status()
+        return resp.json()
+
+    def list_agent_wallets(self) -> List[Dict[str, Any]]:
+        """Retrieve all deployed CirtusWallet contracts for the user."""
+        url = f"{self.base_url}/agents/wallets/"
+        resp = self.session.get(url)
+        resp.raise_for_status()
+        return resp.json()
+
+    def get_agent_wallet(self, address: str) -> Dict[str, Any]:
+        """Get details of a specific CirtusWallet by address."""
+        url = f"{self.base_url}/agents/wallets/{address}"
+        resp = self.session.get(url)
+        resp.raise_for_status()
+        return resp.json()
+
+    def set_spending_limit(self, address: str, token: str, amount: int, period: int) -> str:
+        """Set the on-chain spending limit for a token."""
+        url = f"{self.base_url}/agents/wallets/{address}/spending_limit"
+        payload = {"token": token, "amount": amount, "period": period}
+        resp = self.session.post(url, json=payload)
+        resp.raise_for_status()
+        return resp.json()
+
+    def update_whitelist(self, address: str, target: str, allowed: bool) -> str:
+        """Add or remove a whitelisted address on-chain."""
+        url = f"{self.base_url}/agents/wallets/{address}/whitelist"
+        payload = {"target": target, "allowed": allowed}
+        resp = self.session.post(url, json=payload)
+        resp.raise_for_status()
+        return resp.json()
+
+    def set_threshold(self, address: str, new_threshold: int) -> str:
+        """Adjust the transaction threshold on-chain."""
+        url = f"{self.base_url}/agents/wallets/{address}/threshold"
+        payload = {"new_threshold": new_threshold}
+        resp = self.session.post(url, json=payload)
+        resp.raise_for_status()
+        return resp.json()
+
+    def list_wallet_transactions(self, address: str) -> List[Dict[str, Any]]:
+        """Fetch the history of on-chain events for a specific wallet."""
+        url = f"{self.base_url}/agents/wallets/{address}/transactions"
+        resp = self.session.get(url)
+        resp.raise_for_status()
+        return resp.json()
 
     def create_wallet(self, chain: str) -> Dict[str, Any]:
         response = self.session.post("/wallets/", json={"chain": chain})
