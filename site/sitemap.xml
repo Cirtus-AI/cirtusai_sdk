@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://github.com/Cirtus-AI/cirtusai_sdk/</loc>
+         <lastmod>2025-07-21</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Cirtus-AI/cirtusai_sdk/agents/</loc>
+         <lastmod>2025-07-21</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Cirtus-AI/cirtusai_sdk/authentication/</loc>
+         <lastmod>2025-07-21</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Cirtus-AI/cirtusai_sdk/blockchain/</loc>
+         <lastmod>2025-07-21</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Cirtus-AI/cirtusai_sdk/email/</loc>
+         <lastmod>2025-07-21</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Cirtus-AI/cirtusai_sdk/quickstart/</loc>
+         <lastmod>2025-07-21</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Cirtus-AI/cirtusai_sdk/security/</loc>
+         <lastmod>2025-07-21</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Cirtus-AI/cirtusai_sdk/wallets/</loc>
+         <lastmod>2025-07-21</lastmod>
+    </url>
+</urlset>

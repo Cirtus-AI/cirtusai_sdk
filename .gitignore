@@ -1,4 +1,22 @@
-# Byte-compiled / optimized / DLL files
+ # Byte-compiled / cache files
+ __pycache__/
+ *.py[cod]
+
+ # Environment files
+ .env
+
+ # Distribution / packaging
+ build/
+ dist/
+ *.egg
+ cirtusai_sdk.egg-info/
+
+ # Logs
+ *.log
+
+ # Editor directories and files
+ .vscode/
+ .idea/# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
