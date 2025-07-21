@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="https://github.com/Cirtus-AI/cirtusai_sdk/security/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Security & Compliance - CirtusAI SDK Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">CirtusAI SDK Documentation</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../quickstart/" class="nav-link">Quick Start</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../authentication/" class="nav-link">Authentication</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../agents/" class="nav-link">Agent Management</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../wallets/" class="nav-link">Wallet Operations</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../email/" class="nav-link">Email Services</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="./" class="nav-link active" aria-current="page">Security & Compliance</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../blockchain/" class="nav-link">Blockchain Infrastructure</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../email/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../blockchain/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/Cirtus-AI/cirtusai_sdk/edit/master/docs/security.md" class="nav-link"><i class="fa-brands fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#cirtusai-sdk-security-compliance-guide" class="nav-link">CirtusAI SDK Security &amp; Compliance Guide</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#overview" class="nav-link">Overview</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#features" class="nav-link">Features</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#transaction-monitoring" class="nav-link">Transaction Monitoring</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#kycaml-compliance" class="nav-link">KYC/AML Compliance</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#audit-trail-management" class="nav-link">Audit Trail Management</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#compliance-reporting" class="nav-link">Compliance Reporting</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#webhook-management" class="nav-link">Webhook Management</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#task-management" class="nav-link">Task Management</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#advanced-security-workflows" class="nav-link">Advanced Security Workflows</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#error-handling-and-best-practices" class="nav-link">Error Handling and Best Practices</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#api-reference" class="nav-link">API Reference</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="cirtusai-sdk-security-compliance-guide">CirtusAI SDK Security &amp; Compliance Guide</h1>
+<h2 id="overview">Overview</h2>
+<p>The CirtusAI SDK provides comprehensive security and compliance features including transaction monitoring, KYC verification, audit trails, compliance reporting, and regulatory adherence tools. The security system integrates with multiple providers and offers enterprise-grade compliance management.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li><strong>Transaction Monitoring</strong>: Real-time blockchain transaction surveillance</li>
+<li><strong>KYC/AML Compliance</strong>: Identity verification and anti-money laundering checks</li>
+<li><strong>Audit Trails</strong>: Comprehensive activity logging and integrity verification</li>
+<li><strong>Compliance Reporting</strong>: Automated regulatory report generation</li>
+<li><strong>Document Processing</strong>: AI-powered compliance document analysis</li>
+<li><strong>Webhook Management</strong>: Real-time compliance event notifications</li>
+<li><strong>Risk Assessment</strong>: Automated risk scoring and alerts</li>
+</ul>
+<h2 id="transaction-monitoring">Transaction Monitoring</h2>
+<h3 id="address-monitoring">Address Monitoring</h3>
+<pre><code class="language-python">from cirtusai import CirtusAIClient
+
+client = CirtusAIClient(&quot;https://api.cirtusai.com&quot;)
+client.set_token(&quot;your_access_token&quot;)
+
+# Watch specific address for suspicious activity
+watch_result = client.security.watch_address(
+    address=&quot;0x742d35Cc6635C0532925a3b8D&quot;,
+    chain=&quot;ethereum&quot;,
+    provider=&quot;blocknative&quot;
+)
+
+print(f&quot;Watch ID: {watch_result['watch_id']}&quot;)
+print(f&quot;Status: {watch_result['status']}&quot;)
+print(f&quot;Alert threshold: {watch_result['alert_threshold']}&quot;)
+
+# List all active watches
+watches = client.security.list_watches()
+for watch in watches:
+    print(f&quot;Watch ID: {watch['watch_id']}&quot;)
+    print(f&quot;Address: {watch['address']}&quot;)
+    print(f&quot;Chain: {watch['chain']}&quot;)
+    print(f&quot;Status: {watch['status']}&quot;)
+</code></pre>
+<h3 id="transaction-status-monitoring">Transaction Status Monitoring</h3>
+<pre><code class="language-python"># Get transaction status and risk assessment
+tx_status = client.security.get_tx_status(
+    tx_hash=&quot;0x1234567890abcdef&quot;,
+    provider=&quot;blocknative&quot;
+)
+
+print(f&quot;Transaction status: {tx_status['status']}&quot;)
+print(f&quot;Risk score: {tx_status['risk_score']}&quot;)
+print(f&quot;AML alerts: {tx_status['aml_alerts']}&quot;)
+
+# Alternative method
+status = client.security.get_transaction_status(&quot;0x1234567890abcdef&quot;)
+print(f&quot;Confirmation status: {status}&quot;)
+</code></pre>
+<h3 id="security-alerts">Security Alerts</h3>
+<pre><code class="language-python"># Get security alerts for monitored addresses
+alerts = client.security.get_alerts()
+for alert in alerts:
+    print(f&quot;Alert ID: {alert['alert_id']}&quot;)
+    print(f&quot;Type: {alert['alert_type']}&quot;)
+    print(f&quot;Severity: {alert['severity']}&quot;)
+    print(f&quot;Address: {alert['address']}&quot;)
+    print(f&quot;Description: {alert['description']}&quot;)
+    print(f&quot;Timestamp: {alert['timestamp']}&quot;)
+</code></pre>
+<h2 id="kycaml-compliance">KYC/AML Compliance</h2>
+<h3 id="kyc-status-management">KYC Status Management</h3>
+<pre><code class="language-python"># Check current KYC status
+kyc_status = client.security.get_kyc_status()
+print(f&quot;KYC Status: {kyc_status['status']}&quot;)
+print(f&quot;Verification level: {kyc_status['verification_level']}&quot;)
+print(f&quot;Required documents: {kyc_status['required_documents']}&quot;)
+
+# Initiate KYC process
+kyc_init = client.security.initiate_kyc()
+print(f&quot;KYC session ID: {kyc_init['session_id']}&quot;)
+print(f&quot;Upload URL: {kyc_init['upload_url']}&quot;)
+print(f&quot;Instructions: {kyc_init['instructions']}&quot;)
+</code></pre>
+<h3 id="automated-kyc-processing">Automated KYC Processing</h3>
+<pre><code class="language-python"># Auto-submit KYC for single user
+auto_kyc = client.security.auto_submit_kyc()
+print(f&quot;Submission status: {auto_kyc['status']}&quot;)
+print(f&quot;Processing time: {auto_kyc['estimated_processing_time']}&quot;)
+
+# Bulk auto-submit KYC for multiple users
+user_ids = [&quot;user_123&quot;, &quot;user_456&quot;, &quot;user_789&quot;]
+bulk_kyc = client.security.bulk_auto_submit_kyc(user_ids)
+print(f&quot;Batch ID: {bulk_kyc['batch_id']}&quot;)
+print(f&quot;Submitted: {bulk_kyc['submitted_count']}&quot;)
+print(f&quot;Failed: {bulk_kyc['failed_count']}&quot;)
+</code></pre>
+<h3 id="document-processing">Document Processing</h3>
+<pre><code class="language-python"># Process compliance document
+with open(&quot;passport.pdf&quot;, &quot;rb&quot;) as doc_file:
+    document_result = client.security.process_document(
+        document_file=doc_file,
+        document_type=&quot;passport&quot;
+    )
+
+print(f&quot;Document ID: {document_result['document_id']}&quot;)
+print(f&quot;Verification status: {document_result['verification_status']}&quot;)
+print(f&quot;Extracted data: {document_result['extracted_data']}&quot;)
+print(f&quot;Confidence score: {document_result['confidence_score']}&quot;)
+
+# Bulk document processing
+documents = [
+    {&quot;file&quot;: &quot;passport.pdf&quot;, &quot;type&quot;: &quot;passport&quot;},
+    {&quot;file&quot;: &quot;utility_bill.pdf&quot;, &quot;type&quot;: &quot;proof_of_address&quot;},
+    {&quot;file&quot;: &quot;bank_statement.pdf&quot;, &quot;type&quot;: &quot;proof_of_income&quot;}
+]
+
+bulk_results = client.security.bulk_document_processing(documents)
+for result in bulk_results:
+    print(f&quot;Document: {result['document_type']}&quot;)
+    print(f&quot;Status: {result['verification_status']}&quot;)
+    print(f&quot;Issues: {result.get('issues', 'None')}&quot;)
+</code></pre>
+<h2 id="audit-trail-management">Audit Trail Management</h2>
+<h3 id="comprehensive-audit-logging">Comprehensive Audit Logging</h3>
+<pre><code class="language-python"># Get detailed audit trail
+audit_trail = client.security.get_audit_trail(
+    start_date=&quot;2024-01-01&quot;,
+    end_date=&quot;2024-01-31&quot;,
+    entity_types=[&quot;user&quot;, &quot;transaction&quot;, &quot;document&quot;],
+    action_types=[&quot;create&quot;, &quot;update&quot;, &quot;delete&quot;, &quot;verify&quot;],
+    user_ids=[&quot;user_123&quot;],
+    limit=100
+)
+
+print(f&quot;Total entries: {len(audit_trail['entries'])}&quot;)
+for entry in audit_trail['entries']:
+    print(f&quot;Timestamp: {entry['timestamp']}&quot;)
+    print(f&quot;Action: {entry['action_type']}&quot;)
+    print(f&quot;Entity: {entry['entity_type']} - {entry['entity_id']}&quot;)
+    print(f&quot;User: {entry['user_id']}&quot;)
+    print(f&quot;Details: {entry['details']}&quot;)
+</code></pre>
+<h3 id="audit-integrity-verification">Audit Integrity Verification</h3>
+<pre><code class="language-python"># Verify audit trail integrity
+integrity_check = client.security.verify_audit_integrity()
+print(f&quot;Integrity status: {integrity_check['status']}&quot;)
+print(f&quot;Total entries checked: {integrity_check['entries_checked']}&quot;)
+print(f&quot;Hash verification: {integrity_check['hash_verification']}&quot;)
+print(f&quot;Timestamp verification: {integrity_check['timestamp_verification']}&quot;)
+
+if integrity_check['issues']:
+    print(&quot;Integrity issues found:&quot;)
+    for issue in integrity_check['issues']:
+        print(f&quot;  - {issue['type']}: {issue['description']}&quot;)
+</code></pre>
+<h3 id="legacy-audit-trail-access">Legacy Audit Trail Access</h3>
+<pre><code class="language-python"># Access legacy audit trail for specific entity
+legacy_audit = client.security.get_audit_trail_legacy(
+    entity_id=&quot;transaction_123&quot;,
+    entity_type=&quot;transaction&quot;
+)
+
+print(f&quot;Entity: {legacy_audit['entity_id']}&quot;)
+print(f&quot;Audit entries: {len(legacy_audit['audit_entries'])}&quot;)
+for entry in legacy_audit['audit_entries']:
+    print(f&quot;  {entry['timestamp']}: {entry['action']} by {entry['user_id']}&quot;)
+</code></pre>
+<h2 id="compliance-reporting">Compliance Reporting</h2>
+<h3 id="automated-report-generation">Automated Report Generation</h3>
+<pre><code class="language-python"># Generate compliance report
+report = client.security.generate_report(
+    start_date=&quot;2024-01-01&quot;,
+    end_date=&quot;2024-01-31&quot;,
+    report_type=&quot;aml_summary&quot;
+)
+
+print(f&quot;Report ID: {report['report_id']}&quot;)
+print(f&quot;Status: {report['status']}&quot;)
+print(f&quot;Download URL: {report['download_url']}&quot;)
+print(f&quot;Expires: {report['expires_at']}&quot;)
+
+# Available report types: &quot;aml_summary&quot;, &quot;kyc_status&quot;, &quot;transaction_monitoring&quot;, &quot;risk_assessment&quot;
+</code></pre>
+<h3 id="compliance-dashboard">Compliance Dashboard</h3>
+<pre><code class="language-python"># Get compliance dashboard data
+dashboard = client.security.compliance_dashboard_data()
+
+print(f&quot;KYC Statistics:&quot;)
+print(f&quot;  - Verified users: {dashboard['kyc_stats']['verified_users']}&quot;)
+print(f&quot;  - Pending verification: {dashboard['kyc_stats']['pending_verification']}&quot;)
+print(f&quot;  - Rejected applications: {dashboard['kyc_stats']['rejected']}&quot;)
+
+print(f&quot;Transaction Monitoring:&quot;)
+print(f&quot;  - Transactions monitored: {dashboard['monitoring_stats']['transactions_monitored']}&quot;)
+print(f&quot;  - Alerts generated: {dashboard['monitoring_stats']['alerts_generated']}&quot;)
+print(f&quot;  - High-risk transactions: {dashboard['monitoring_stats']['high_risk_transactions']}&quot;)
+
+print(f&quot;Compliance Score: {dashboard['compliance_score']}/100&quot;)
+</code></pre>
+<h3 id="data-export">Data Export</h3>
+<pre><code class="language-python"># Export compliance data
+export_result = client.security.export_compliance_data(
+    format=&quot;json&quot;,  # or &quot;csv&quot;, &quot;xml&quot;
+    date_range={&quot;start&quot;: &quot;2024-01-01&quot;, &quot;end&quot;: &quot;2024-01-31&quot;},
+    data_types=[&quot;kyc&quot;, &quot;transactions&quot;, &quot;audit_logs&quot;],
+    include_pii=False  # Exclude personally identifiable information
+)
+
+print(f&quot;Export ID: {export_result['export_id']}&quot;)
+print(f&quot;Download URL: {export_result['download_url']}&quot;)
+print(f&quot;File size: {export_result['file_size_mb']} MB&quot;)
+</code></pre>
+<h2 id="webhook-management">Webhook Management</h2>
+<h3 id="webhook-configuration">Webhook Configuration</h3>
+<pre><code class="language-python"># Submit webhook for compliance events
+webhook_payload = {
+    &quot;event_type&quot;: &quot;kyc_status_change&quot;,
+    &quot;user_id&quot;: &quot;user_123&quot;,
+    &quot;old_status&quot;: &quot;pending&quot;,
+    &quot;new_status&quot;: &quot;verified&quot;,
+    &quot;timestamp&quot;: &quot;2024-01-15T10:30:00Z&quot;,
+    &quot;verification_details&quot;: {
+        &quot;documents_verified&quot;: [&quot;passport&quot;, &quot;proof_of_address&quot;],
+        &quot;risk_score&quot;: 15
+    }
+}
+
+webhook_result = client.security.submit_webhook(webhook_payload)
+print(f&quot;Webhook submitted: {webhook_result['webhook_id']}&quot;)
+print(f&quot;Status: {webhook_result['status']}&quot;)
+</code></pre>
+<h3 id="webhook-analytics">Webhook Analytics</h3>
+<pre><code class="language-python"># Get webhook statistics
+webhook_stats = client.security.get_webhook_statistics()
+print(f&quot;Total webhooks: {webhook_stats['total_webhooks']}&quot;)
+print(f&quot;Successful deliveries: {webhook_stats['successful_deliveries']}&quot;)
+print(f&quot;Failed deliveries: {webhook_stats['failed_deliveries']}&quot;)
+print(f&quot;Average response time: {webhook_stats['avg_response_time_ms']}ms&quot;)
+
+# Retry failed webhooks
+retry_result = client.security.retry_failed_webhooks(max_retries=3)
+print(f&quot;Retried webhooks: {retry_result['retried_count']}&quot;)
+print(f&quot;Successful retries: {retry_result['successful_retries']}&quot;)
+</code></pre>
+<h2 id="task-management">Task Management</h2>
+<h3 id="asynchronous-task-monitoring">Asynchronous Task Monitoring</h3>
+<pre><code class="language-python"># Get status of long-running compliance tasks
+task_status = client.security.get_task_status(&quot;task_123&quot;)
+print(f&quot;Task ID: {task_status['task_id']}&quot;)
+print(f&quot;Status: {task_status['status']}&quot;)
+print(f&quot;Progress: {task_status['progress']}%&quot;)
+print(f&quot;Started: {task_status['started_at']}&quot;)
+if task_status['status'] == 'completed':
+    print(f&quot;Result: {task_status['result']}&quot;)
+</code></pre>
+<h3 id="rate-limiting">Rate Limiting</h3>
+<pre><code class="language-python"># Check API rate limit status
+rate_limit = client.security.get_rate_limit_status()
+print(f&quot;Remaining requests: {rate_limit['remaining_requests']}&quot;)
+print(f&quot;Reset time: {rate_limit['reset_time']}&quot;)
+print(f&quot;Rate limit window: {rate_limit['window_seconds']} seconds&quot;)
+
+if rate_limit['remaining_requests'] &lt; 10:
+    print(&quot;Warning: Approaching rate limit&quot;)
+</code></pre>
+<h2 id="advanced-security-workflows">Advanced Security Workflows</h2>
+<h3 id="comprehensive-risk-assessment">Comprehensive Risk Assessment</h3>
+<pre><code class="language-python">def perform_risk_assessment(client, address, transaction_history_days=30):
+    &quot;&quot;&quot;Perform comprehensive risk assessment for an address&quot;&quot;&quot;
+
+    # Start monitoring the address
+    watch_result = client.security.watch_address(
+        address=address,
+        chain=&quot;ethereum&quot;
+    )
+
+    # Get recent alerts
+    alerts = client.security.get_alerts()
+    address_alerts = [alert for alert in alerts if alert.get('address') == address]
+
+    # Calculate risk score
+    risk_factors = {
+        &quot;alert_count&quot;: len(address_alerts),
+        &quot;high_severity_alerts&quot;: len([a for a in address_alerts if a.get('severity') == 'high']),
+        &quot;monitoring_duration&quot;: transaction_history_days
+    }
+
+    # Generate risk assessment report
+    risk_score = min(100, (risk_factors[&quot;alert_count&quot;] * 10) + (risk_factors[&quot;high_severity_alerts&quot;] * 25))
+
+    assessment = {
+        &quot;address&quot;: address,
+        &quot;risk_score&quot;: risk_score,
+        &quot;risk_level&quot;: &quot;high&quot; if risk_score &gt; 70 else &quot;medium&quot; if risk_score &gt; 30 else &quot;low&quot;,
+        &quot;factors&quot;: risk_factors,
+        &quot;alerts&quot;: address_alerts,
+        &quot;watch_id&quot;: watch_result.get('watch_id')
+    }
+
+    return assessment
+
+# Usage
+risk_assessment = perform_risk_assessment(
+    client, 
+    &quot;0x742d35Cc6635C0532925a3b8D&quot;,
+    transaction_history_days=60
+)
+
+print(f&quot;Risk Assessment for {risk_assessment['address']}:&quot;)
+print(f&quot;Risk Score: {risk_assessment['risk_score']}/100&quot;)
+print(f&quot;Risk Level: {risk_assessment['risk_level'].upper()}&quot;)
+</code></pre>
+<h3 id="automated-compliance-workflow">Automated Compliance Workflow</h3>
+<pre><code class="language-python">def automated_compliance_check(client, user_id):
+    &quot;&quot;&quot;Automated compliance verification workflow&quot;&quot;&quot;
+
+    workflow_results = {
+        &quot;user_id&quot;: user_id,
+        &quot;kyc_status&quot;: None,
+        &quot;document_verification&quot;: None,
+        &quot;risk_assessment&quot;: None,
+        &quot;compliance_score&quot;: 0
+    }
+
+    try:
+        # Step 1: Check KYC status
+        kyc_status = client.security.get_kyc_status()
+        workflow_results[&quot;kyc_status&quot;] = kyc_status
+
+        if kyc_status['status'] == 'not_started':
+            # Initiate KYC if not started
+            kyc_init = client.security.initiate_kyc()
+            workflow_results[&quot;kyc_initiated&quot;] = kyc_init
+
+        # Step 2: Auto-submit KYC if applicable
+        if kyc_status['status'] in ['pending', 'documents_required']:
+            auto_kyc = client.security.auto_submit_kyc()
+            workflow_results[&quot;auto_kyc&quot;] = auto_kyc
+
+        # Step 3: Get audit trail for user
+        audit_trail = client.security.get_audit_trail(
+            user_ids=[user_id],
+            limit=50
+        )
+        workflow_results[&quot;audit_entries&quot;] = len(audit_trail.get('entries', []))
+
+        # Step 4: Calculate compliance score
+        score = 0
+        if kyc_status['status'] == 'verified':
+            score += 50
+        if workflow_results[&quot;audit_entries&quot;] &gt; 0:
+            score += 20
+        if kyc_status.get('verification_level') == 'enhanced':
+            score += 30
+
+        workflow_results[&quot;compliance_score&quot;] = score
+
+    except Exception as e:
+        workflow_results[&quot;error&quot;] = str(e)
+
+    return workflow_results
+
+# Usage
+compliance_check = automated_compliance_check(client, &quot;user_123&quot;)
+print(f&quot;Compliance Score: {compliance_check['compliance_score']}/100&quot;)
+</code></pre>
+<h3 id="regulatory-reporting-pipeline">Regulatory Reporting Pipeline</h3>
+<pre><code class="language-python">def generate_regulatory_reports(client, reporting_period):
+    &quot;&quot;&quot;Generate all required regulatory reports for a period&quot;&quot;&quot;
+
+    report_types = [
+        &quot;aml_summary&quot;,
+        &quot;kyc_status&quot;, 
+        &quot;transaction_monitoring&quot;,
+        &quot;risk_assessment&quot;
+    ]
+
+    generated_reports = []
+
+    for report_type in report_types:
+        try:
+            report = client.security.generate_report(
+                start_date=reporting_period[&quot;start&quot;],
+                end_date=reporting_period[&quot;end&quot;],
+                report_type=report_type
+            )
+
+            generated_reports.append({
+                &quot;type&quot;: report_type,
+                &quot;report_id&quot;: report[&quot;report_id&quot;],
+                &quot;status&quot;: report[&quot;status&quot;],
+                &quot;download_url&quot;: report.get(&quot;download_url&quot;)
+            })
+
+            print(f&quot;Generated {report_type} report: {report['report_id']}&quot;)
+
+        except Exception as e:
+            print(f&quot;Failed to generate {report_type} report: {e}&quot;)
+
+    # Export compliance data
+    try:
+        export = client.security.export_compliance_data(
+            format=&quot;json&quot;,
+            date_range=reporting_period,
+            data_types=[&quot;kyc&quot;, &quot;transactions&quot;, &quot;audit_logs&quot;]
+        )
+
+        generated_reports.append({
+            &quot;type&quot;: &quot;data_export&quot;,
+            &quot;export_id&quot;: export[&quot;export_id&quot;],
+            &quot;download_url&quot;: export[&quot;download_url&quot;],
+            &quot;file_size_mb&quot;: export[&quot;file_size_mb&quot;]
+        })
+
+    except Exception as e:
+        print(f&quot;Failed to export compliance data: {e}&quot;)
+
+    return generated_reports
+
+# Usage
+reporting_period = {
+    &quot;start&quot;: &quot;2024-01-01&quot;,
+    &quot;end&quot;: &quot;2024-01-31&quot;
+}
+
+reports = generate_regulatory_reports(client, reporting_period)
+print(f&quot;Generated {len(reports)} reports and exports&quot;)
+</code></pre>
+<h2 id="error-handling-and-best-practices">Error Handling and Best Practices</h2>
+<h3 id="robust-error-handling">Robust Error Handling</h3>
+<pre><code class="language-python">def safe_compliance_operation(client, operation, *args, **kwargs):
+    &quot;&quot;&quot;Safely execute compliance operations with proper error handling&quot;&quot;&quot;
+
+    try:
+        result = getattr(client.security, operation)(*args, **kwargs)
+        return {&quot;success&quot;: True, &quot;result&quot;: result}
+
+    except requests.exceptions.HTTPError as e:
+        error_code = e.response.status_code
+        error_detail = e.response.json().get(&quot;detail&quot;, str(e))
+
+        if error_code == 403:
+            return {&quot;success&quot;: False, &quot;error&quot;: &quot;Insufficient permissions for compliance operation&quot;}
+        elif error_code == 429:
+            return {&quot;success&quot;: False, &quot;error&quot;: &quot;Rate limit exceeded&quot;, &quot;retry_after&quot;: e.response.headers.get(&quot;Retry-After&quot;)}
+        else:
+            return {&quot;success&quot;: False, &quot;error&quot;: f&quot;HTTP {error_code}: {error_detail}&quot;}
+
+    except Exception as e:
+        return {&quot;success&quot;: False, &quot;error&quot;: f&quot;Unexpected error: {str(e)}&quot;}
+
+# Usage
+result = safe_compliance_operation(client, &quot;get_kyc_status&quot;)
+if result[&quot;success&quot;]:
+    print(f&quot;KYC Status: {result['result']['status']}&quot;)
+else:
+    print(f&quot;Operation failed: {result['error']}&quot;)
+</code></pre>
+<h3 id="compliance-monitoring-best-practices">Compliance Monitoring Best Practices</h3>
+<pre><code class="language-python">class ComplianceMonitor:
+    &quot;&quot;&quot;Best practices for compliance monitoring&quot;&quot;&quot;
+
+    def __init__(self, client):
+        self.client = client
+
+    def setup_monitoring(self, addresses):
+        &quot;&quot;&quot;Setup comprehensive monitoring for multiple addresses&quot;&quot;&quot;
+        watch_ids = []
+
+        for address in addresses:
+            try:
+                watch = self.client.security.watch_address(
+                    address=address,
+                    chain=&quot;ethereum&quot;
+                )
+                watch_ids.append(watch['watch_id'])
+                print(f&quot;Monitoring setup for {address}: {watch['watch_id']}&quot;)
+            except Exception as e:
+                print(f&quot;Failed to setup monitoring for {address}: {e}&quot;)
+
+        return watch_ids
+
+    def daily_compliance_check(self):
+        &quot;&quot;&quot;Daily compliance status check&quot;&quot;&quot;
+        alerts = self.client.security.get_alerts()
+        high_priority = [a for a in alerts if a.get('severity') == 'high']
+
+        if high_priority:
+            print(f&quot;⚠️  {len(high_priority)} high-priority alerts found!&quot;)
+            for alert in high_priority:
+                print(f&quot;   - {alert['alert_type']}: {alert['description']}&quot;)
+
+        # Check webhook delivery status
+        webhook_stats = self.client.security.get_webhook_statistics()
+        failure_rate = (webhook_stats['failed_deliveries'] / webhook_stats['total_webhooks']) * 100
+
+        if failure_rate &gt; 5:  # 5% failure threshold
+            print(f&quot;⚠️  High webhook failure rate: {failure_rate:.1f}%&quot;)
+            # Retry failed webhooks
+            self.client.security.retry_failed_webhooks()
+
+    def monthly_audit(self):
+        &quot;&quot;&quot;Monthly compliance audit&quot;&quot;&quot;
+        end_date = datetime.now().strftime(&quot;%Y-%m-%d&quot;)
+        start_date = (datetime.now() - timedelta(days=30)).strftime(&quot;%Y-%m-%d&quot;)
+
+        # Generate comprehensive audit trail
+        audit = self.client.security.get_audit_trail(
+            start_date=start_date,
+            end_date=end_date,
+            limit=1000
+        )
+
+        # Verify audit integrity
+        integrity = self.client.security.verify_audit_integrity()
+
+        # Generate compliance reports
+        reports = generate_regulatory_reports(self.client, {
+            &quot;start&quot;: start_date,
+            &quot;end&quot;: end_date
+        })
+
+        return {
+            &quot;audit_entries&quot;: len(audit.get('entries', [])),
+            &quot;integrity_status&quot;: integrity['status'],
+            &quot;reports_generated&quot;: len(reports)
+        }
+
+# Usage
+monitor = ComplianceMonitor(client)
+monitor.daily_compliance_check()
+</code></pre>
+<h2 id="api-reference">API Reference</h2>
+<h3 id="securityclient-methods">SecurityClient Methods</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+<th>Parameters</th>
+<th>Returns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>watch_address()</code></td>
+<td>Monitor address for suspicious activity</td>
+<td>address, chain, provider</td>
+<td>Dict</td>
+</tr>
+<tr>
+<td><code>get_tx_status()</code></td>
+<td>Get transaction status and risk assessment</td>
+<td>tx_hash, provider</td>
+<td>Dict</td>
+</tr>
+<tr>
+<td><code>get_transaction_status()</code></td>
+<td>Get transaction confirmation status</td>
+<td>tx_hash, provider</td>
+<td>Dict</td>
+</tr>
+<tr>
+<td><code>list_watches()</code></td>
+<td>List all active address watches</td>
+<td>-</td>
+<td>List[Dict]</td>
+</tr>
+<tr>
+<td><code>get_alerts()</code></td>
+<td>Get security alerts</td>
+<td>-</td>
+<td>List[Dict]</td>
+</tr>
+<tr>
+<td><code>get_kyc_status()</code></td>
+<td>Get KYC verification status</td>
+<td>-</td>
+<td>Dict</td>
+</tr>
+<tr>
+<td><code>initiate_kyc()</code></td>
+<td>Start KYC verification process</td>
+<td>-</td>
+<td>Dict</td>
+</tr>
+<tr>
+<td><code>auto_submit_kyc()</code></td>
+<td>Auto-submit KYC for current user</td>
+<td>-</td>
+<td>Dict</td>
+</tr>
+<tr>
+<td><code>bulk_auto_submit_kyc()</code></td>
+<td>Bulk auto-submit KYC</td>
+<td>user_ids</td>
+<td>Dict</td>
+</tr>
+<tr>
+<td><code>process_document()</code></td>
+<td>Process compliance document</td>
+<td>document_file, document_type</td>
+<td>Dict</td>
+</tr>
+<tr>
+<td><code>submit_webhook()</code></td>
+<td>Submit compliance webhook</td>
+<td>payload</td>
+<td>Dict</td>
+</tr>
+<tr>
+<td><code>get_webhook_statistics()</code></td>
+<td>Get webhook delivery stats</td>
+<td>-</td>
+<td>Dict</td>
+</tr>
+<tr>
+<td><code>retry_failed_webhooks()</code></td>
+<td>Retry failed webhook deliveries</td>
+<td>max_retries</td>
+<td>Dict</td>
+</tr>
+<tr>
+<td><code>get_audit_trail()</code></td>
+<td>Get comprehensive audit trail</td>
+<td>start_date, end_date, filters</td>
+<td>Dict</td>
+</tr>
+<tr>
+<td><code>verify_audit_integrity()</code></td>
+<td>Verify audit trail integrity</td>
+<td>-</td>
+<td>Dict</td>
+</tr>
+<tr>
+<td><code>generate_report()</code></td>
+<td>Generate compliance report</td>
+<td>start_date, end_date, report_type</td>
+<td>Dict</td>
+</tr>
+<tr>
+<td><code>get_audit_trail_legacy()</code></td>
+<td>Get legacy audit trail</td>
+<td>entity_id, entity_type</td>
+<td>Dict</td>
+</tr>
+<tr>
+<td><code>get_task_status()</code></td>
+<td>Get async task status</td>
+<td>task_id</td>
+<td>Dict</td>
+</tr>
+<tr>
+<td><code>get_rate_limit_status()</code></td>
+<td>Get API rate limit status</td>
+<td>-</td>
+<td>Dict</td>
+</tr>
+<tr>
+<td><code>bulk_document_processing()</code></td>
+<td>Process multiple documents</td>
+<td>documents</td>
+<td>List[Dict]</td>
+</tr>
+<tr>
+<td><code>compliance_dashboard_data()</code></td>
+<td>Get compliance dashboard data</td>
+<td>-</td>
+<td>Dict</td>
+</tr>
+<tr>
+<td><code>export_compliance_data()</code></td>
+<td>Export compliance data</td>
+<td>format, filters</td>
+<td>Dict</td>
+</tr>
+</tbody>
+</table>
+<h3 id="compliance-data-models">Compliance Data Models</h3>
+<h4 id="kyc-status-response">KYC Status Response</h4>
+<pre><code class="language-json">{
+    &quot;status&quot;: &quot;verified&quot; | &quot;pending&quot; | &quot;not_started&quot; | &quot;rejected&quot;,
+    &quot;verification_level&quot;: &quot;basic&quot; | &quot;enhanced&quot;,
+    &quot;required_documents&quot;: [&quot;passport&quot;, &quot;proof_of_address&quot;],
+    &quot;submission_date&quot;: &quot;2024-01-15T10:30:00Z&quot;,
+    &quot;verification_date&quot;: &quot;2024-01-16T14:20:00Z&quot;
+}
+</code></pre>
+<h4 id="security-alert">Security Alert</h4>
+<pre><code class="language-json">{
+    &quot;alert_id&quot;: &quot;alert_123&quot;,
+    &quot;alert_type&quot;: &quot;suspicious_transaction&quot; | &quot;high_value_transfer&quot; | &quot;blacklist_match&quot;,
+    &quot;severity&quot;: &quot;low&quot; | &quot;medium&quot; | &quot;high&quot; | &quot;critical&quot;,
+    &quot;address&quot;: &quot;0x742d35Cc6635C0532925a3b8D&quot;,
+    &quot;description&quot;: &quot;Large transaction to high-risk address&quot;,
+    &quot;timestamp&quot;: &quot;2024-01-15T10:30:00Z&quot;,
+    &quot;risk_score&quot;: 85
+}
+</code></pre></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="https://github.com/Cirtus-AI/cirtusai_sdk/email/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Email Services - CirtusAI SDK Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">CirtusAI SDK Documentation</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../quickstart/" class="nav-link">Quick Start</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../authentication/" class="nav-link">Authentication</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../agents/" class="nav-link">Agent Management</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../wallets/" class="nav-link">Wallet Operations</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="./" class="nav-link active" aria-current="page">Email Services</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../security/" class="nav-link">Security & Compliance</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../blockchain/" class="nav-link">Blockchain Infrastructure</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../wallets/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../security/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/Cirtus-AI/cirtusai_sdk/edit/master/docs/email.md" class="nav-link"><i class="fa-brands fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#cirtusai-sdk-email-services-guide" class="nav-link">CirtusAI SDK Email Services Guide</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#overview" class="nav-link">Overview</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#features" class="nav-link">Features</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#basic-email-operations" class="nav-link">Basic Email Operations</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ai-powered-email-processing" class="nav-link">AI-Powered Email Processing</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#advanced-email-workflows" class="nav-link">Advanced Email Workflows</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#integration-with-other-sdk-components" class="nav-link">Integration with Other SDK Components</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#error-handling-and-best-practices" class="nav-link">Error Handling and Best Practices</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#api-reference" class="nav-link">API Reference</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="cirtusai-sdk-email-services-guide">CirtusAI SDK Email Services Guide</h1>
+<h2 id="overview">Overview</h2>
+<p>The CirtusAI SDK provides comprehensive email services with AI-powered features including inbox management, email sending, automated summarization, and integration with agent-based workflows. The email system supports multiple providers and includes advanced LangChain integration for intelligent email processing.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li><strong>Multi-Provider Support</strong>: Gmail, Outlook, and other email providers</li>
+<li><strong>Agent-Based Access</strong>: Permission-controlled email access for child agents</li>
+<li><strong>AI-Powered Summarization</strong>: Automated email content analysis and summarization</li>
+<li><strong>LangChain Integration</strong>: Advanced email processing tools</li>
+<li><strong>Real-Time Processing</strong>: Live email monitoring and processing</li>
+<li><strong>Secure Authentication</strong>: OAuth2 and secure token management</li>
+</ul>
+<h2 id="basic-email-operations">Basic Email Operations</h2>
+<h3 id="reading-emails">Reading Emails</h3>
+<pre><code class="language-python">from cirtusai import CirtusAIClient
+
+client = CirtusAIClient(&quot;https://api.cirtusai.com&quot;)
+client.set_token(&quot;your_access_token&quot;)
+
+# Read inbox for a specific agent
+agent_id = &quot;child_agent_123&quot;
+messages = client.email.read_inbox(agent_id)
+
+for message in messages:
+    print(f&quot;From: {message.get('from', 'Unknown')}&quot;)
+    print(f&quot;Subject: {message.get('subject', 'No Subject')}&quot;)
+    print(f&quot;Date: {message.get('date')}&quot;)
+    print(f&quot;Body: {message.get('text_body', '')[:200]}...&quot;)
+    print(&quot;-&quot; * 50)
+</code></pre>
+<h3 id="sending-emails">Sending Emails</h3>
+<pre><code class="language-python"># Send email from agent
+email_result = client.email.send_email(
+    agent_id=&quot;child_agent_123&quot;,
+    recipient=&quot;recipient@example.com&quot;,
+    subject=&quot;Automated Email from CirtusAI Agent&quot;,
+    body=&quot;This is an automated email sent using the CirtusAI SDK.&quot;
+)
+
+print(f&quot;Email sent: {email_result['success']}&quot;)
+print(f&quot;Message ID: {email_result.get('message_id')}&quot;)
+</code></pre>
+<h2 id="ai-powered-email-processing">AI-Powered Email Processing</h2>
+<h3 id="email-summarization-tool">Email Summarization Tool</h3>
+<p>The SDK includes a powerful LangChain-based email summarization tool:</p>
+<pre><code class="language-python">from cirtusai.email import EmailSummarizerTool
+from langchain_deepseek import ChatDeepSeek
+
+# Setup the email summarizer
+llm = ChatDeepSeek(
+    api_key=&quot;your_deepseek_api_key&quot;,
+    model=&quot;deepseek-chat&quot;
+)
+
+email_tool = EmailSummarizerTool(
+    llm=llm,
+    client=client,
+    agent_id=&quot;child_agent_123&quot;,
+    username=&quot;your_username&quot;,
+    password=&quot;your_password&quot;
+)
+
+# Execute email summarization
+summary_result = email_tool._run()
+print(summary_result)
+</code></pre>
+<h3 id="custom-email-processing">Custom Email Processing</h3>
+<pre><code class="language-python">def process_emails_with_ai(client, agent_id, llm):
+    &quot;&quot;&quot;Custom email processing with AI analysis&quot;&quot;&quot;
+
+    # Read recent emails
+    messages = client.email.read_inbox(agent_id)
+
+    if not messages:
+        return &quot;No new emails to process&quot;
+
+    processed_emails = []
+
+    for message in messages:
+        email_content = message.get('text_body', '')
+        sender = message.get('from', 'Unknown')
+        subject = message.get('subject', 'No Subject')
+
+        # AI-powered analysis
+        analysis_prompt = f&quot;&quot;&quot;
+        Analyze the following email and provide:
+        1. Sentiment (positive/negative/neutral)
+        2. Priority level (high/medium/low)
+        3. Action required (yes/no)
+        4. Category (business/personal/marketing/support)
+
+        Email:
+        From: {sender}
+        Subject: {subject}
+        Content: {email_content}
+        &quot;&quot;&quot;
+
+        analysis = llm.invoke(analysis_prompt).content
+
+        # Generate summary
+        summary_prompt = f&quot;Summarize this email in one sentence: {email_content}&quot;
+        summary = llm.invoke(summary_prompt).content
+
+        processed_emails.append({
+            &quot;from&quot;: sender,
+            &quot;subject&quot;: subject,
+            &quot;summary&quot;: summary,
+            &quot;analysis&quot;: analysis,
+            &quot;original_content&quot;: email_content[:500]  # First 500 chars
+        })
+
+    return processed_emails
+
+# Usage
+from langchain_deepseek import ChatDeepSeek
+
+llm = ChatDeepSeek(api_key=&quot;your_deepseek_api_key&quot;)
+processed = process_emails_with_ai(client, &quot;child_agent_123&quot;, llm)
+
+for email in processed:
+    print(f&quot;From: {email['from']}&quot;)
+    print(f&quot;Subject: {email['subject']}&quot;)
+    print(f&quot;Summary: {email['summary']}&quot;)
+    print(f&quot;Analysis: {email['analysis']}&quot;)
+    print(&quot;-&quot; * 50)
+</code></pre>
+<h2 id="advanced-email-workflows">Advanced Email Workflows</h2>
+<h3 id="automated-email-response-system">Automated Email Response System</h3>
+<pre><code class="language-python">def setup_auto_responder(client, agent_id, llm, response_templates):
+    &quot;&quot;&quot;Setup automated email response system&quot;&quot;&quot;
+
+    def classify_email(content, subject):
+        &quot;&quot;&quot;Classify email to determine response template&quot;&quot;&quot;
+        classification_prompt = f&quot;&quot;&quot;
+        Classify this email into one of these categories:
+        - support_request
+        - business_inquiry  
+        - appointment_request
+        - general_question
+        - spam
+
+        Email Subject: {subject}
+        Content: {content}
+
+        Return only the category name.
+        &quot;&quot;&quot;
+
+        category = llm.invoke(classification_prompt).content.strip().lower()
+        return category
+
+    def generate_response(category, original_content, sender):
+        &quot;&quot;&quot;Generate personalized response based on category&quot;&quot;&quot;
+
+        if category not in response_templates:
+            category = &quot;general_question&quot;
+
+        template = response_templates[category]
+
+        personalization_prompt = f&quot;&quot;&quot;
+        Personalize this email template based on the original email:
+
+        Template: {template}
+        Original Email: {original_content}
+        Sender: {sender}
+
+        Make it sound natural and address specific points from the original email.
+        &quot;&quot;&quot;
+
+        personalized_response = llm.invoke(personalization_prompt).content
+        return personalized_response
+
+    # Main processing loop
+    messages = client.email.read_inbox(agent_id)
+
+    for message in messages:
+        content = message.get('text_body', '')
+        subject = message.get('subject', '')
+        sender = message.get('from', '')
+
+        # Skip if already processed (you'd implement this logic)
+        if message.get('processed'):
+            continue
+
+        # Classify and generate response
+        category = classify_email(content, subject)
+
+        if category != 'spam':
+            response = generate_response(category, content, sender)
+
+            # Send automated response
+            client.email.send_email(
+                agent_id=agent_id,
+                recipient=sender,
+                subject=f&quot;Re: {subject}&quot;,
+                body=response
+            )
+
+            print(f&quot;Auto-responded to {sender} - Category: {category}&quot;)
+
+# Response templates
+templates = {
+    &quot;support_request&quot;: &quot;Thank you for reaching out. We've received your support request and will respond within 24 hours.&quot;,
+    &quot;business_inquiry&quot;: &quot;Thank you for your business inquiry. We'll review your request and get back to you shortly.&quot;,
+    &quot;appointment_request&quot;: &quot;We've received your appointment request. Please check your calendar for available slots.&quot;,
+    &quot;general_question&quot;: &quot;Thank you for your email. We'll review your question and provide a response soon.&quot;
+}
+
+# Setup auto-responder
+setup_auto_responder(client, &quot;child_agent_123&quot;, llm, templates)
+</code></pre>
+<h3 id="email-analytics-and-reporting">Email Analytics and Reporting</h3>
+<pre><code class="language-python">def analyze_email_patterns(client, agent_id, llm, days=30):
+    &quot;&quot;&quot;Analyze email patterns and generate insights&quot;&quot;&quot;
+
+    # Get emails (in a real implementation, you'd filter by date)
+    messages = client.email.read_inbox(agent_id)
+
+    if not messages:
+        return {&quot;error&quot;: &quot;No emails found for analysis&quot;}
+
+    # Collect email data
+    email_data = []
+    for message in messages:
+        email_data.append({
+            &quot;sender&quot;: message.get('from', ''),
+            &quot;subject&quot;: message.get('subject', ''),
+            &quot;content&quot;: message.get('text_body', ''),
+            &quot;date&quot;: message.get('date', ''),
+            &quot;length&quot;: len(message.get('text_body', ''))
+        })
+
+    # Generate analytics
+    analysis_prompt = f&quot;&quot;&quot;
+    Analyze these {len(email_data)} emails and provide insights:
+
+    1. Most common email types/categories
+    2. Busiest senders
+    3. Average email length
+    4. Common themes or topics
+    5. Response time requirements
+
+    Email subjects: {[email['subject'] for email in email_data[:10]]}
+
+    Provide a structured analysis report.
+    &quot;&quot;&quot;
+
+    insights = llm.invoke(analysis_prompt).content
+
+    # Basic statistics
+    total_emails = len(email_data)
+    avg_length = sum(email['length'] for email in email_data) / total_emails
+    unique_senders = len(set(email['sender'] for email in email_data))
+
+    return {
+        &quot;total_emails&quot;: total_emails,
+        &quot;unique_senders&quot;: unique_senders,
+        &quot;average_length&quot;: avg_length,
+        &quot;ai_insights&quot;: insights,
+        &quot;period_days&quot;: days
+    }
+
+# Usage
+analytics = analyze_email_patterns(client, &quot;child_agent_123&quot;, llm)
+print(f&quot;Email Analytics Report:&quot;)
+print(f&quot;Total Emails: {analytics['total_emails']}&quot;)
+print(f&quot;Unique Senders: {analytics['unique_senders']}&quot;)
+print(f&quot;Average Length: {analytics['average_length']:.0f} characters&quot;)
+print(f&quot;\nAI Insights:\n{analytics['ai_insights']}&quot;)
+</code></pre>
+<h3 id="email-driven-task-automation">Email-Driven Task Automation</h3>
+<pre><code class="language-python">def setup_email_task_automation(client, agent_id, llm):
+    &quot;&quot;&quot;Setup email-driven task automation&quot;&quot;&quot;
+
+    def extract_tasks_from_email(content, subject, sender):
+        &quot;&quot;&quot;Extract actionable tasks from email content&quot;&quot;&quot;
+
+        task_extraction_prompt = f&quot;&quot;&quot;
+        Extract actionable tasks from this email. Return as a JSON list of tasks.
+        Each task should have: description, priority (high/medium/low), deadline (if mentioned).
+
+        From: {sender}
+        Subject: {subject}
+        Content: {content}
+
+        Example format:
+        [
+            {
+                &quot;description&quot;: &quot;Schedule meeting with client&quot;,
+                &quot;priority&quot;: &quot;high&quot;,
+                &quot;deadline&quot;: &quot;this week&quot;
+            }
+        ]
+        &quot;&quot;&quot;
+
+        tasks_json = llm.invoke(task_extraction_prompt).content
+
+        try:
+            # Parse JSON (you'd want better error handling)
+            import json
+            tasks = json.loads(tasks_json)
+            return tasks
+        except:
+            return []
+
+    def create_calendar_event(task):
+        &quot;&quot;&quot;Create calendar event for task (mock implementation)&quot;&quot;&quot;
+        print(f&quot;📅 Created calendar event: {task['description']}&quot;)
+        return {&quot;event_id&quot;: f&quot;event_{hash(task['description'])}&quot;, &quot;status&quot;: &quot;created&quot;}
+
+    def send_task_confirmation(sender, tasks):
+        &quot;&quot;&quot;Send confirmation email with extracted tasks&quot;&quot;&quot;
+
+        task_list = &quot;\n&quot;.join([f&quot;- {task['description']} (Priority: {task['priority']})&quot; for task in tasks])
+
+        confirmation_body = f&quot;&quot;&quot;
+        Thank you for your email. I've extracted the following tasks:
+
+        {task_list}
+
+        I'll work on these and update you on progress.
+
+        Best regards,
+        CirtusAI Assistant
+        &quot;&quot;&quot;
+
+        client.email.send_email(
+            agent_id=agent_id,
+            recipient=sender,
+            subject=&quot;Task Confirmation - Action Items Extracted&quot;,
+            body=confirmation_body
+        )
+
+    # Process emails for task extraction
+    messages = client.email.read_inbox(agent_id)
+
+    for message in messages:
+        content = message.get('text_body', '')
+        subject = message.get('subject', '')
+        sender = message.get('from', '')
+
+        # Extract tasks
+        tasks = extract_tasks_from_email(content, subject, sender)
+
+        if tasks:
+            print(f&quot;Extracted {len(tasks)} tasks from email from {sender}&quot;)
+
+            # Create calendar events
+            for task in tasks:
+                create_calendar_event(task)
+
+            # Send confirmation
+            send_task_confirmation(sender, tasks)
+
+# Setup task automation
+setup_email_task_automation(client, &quot;child_agent_123&quot;, llm)
+</code></pre>
+<h2 id="integration-with-other-sdk-components">Integration with Other SDK Components</h2>
+<h3 id="email-wallet-integration">Email + Wallet Integration</h3>
+<pre><code class="language-python">def setup_financial_email_monitoring(client, agent_id, llm):
+    &quot;&quot;&quot;Monitor emails for financial information and trigger wallet actions&quot;&quot;&quot;
+
+    messages = client.email.read_inbox(agent_id)
+
+    for message in messages:
+        content = message.get('text_body', '')
+        subject = message.get('subject', '')
+
+        # Check for financial keywords
+        financial_keywords = ['payment', 'invoice', 'transfer', 'crypto', 'wallet', 'transaction']
+
+        if any(keyword in content.lower() or keyword in subject.lower() for keyword in financial_keywords):
+
+            # Extract financial information using AI
+            financial_prompt = f&quot;&quot;&quot;
+            Extract financial information from this email:
+            - Amount (if mentioned)
+            - Currency/Token
+            - Transaction type (payment/receipt/request)
+            - Wallet address (if any)
+
+            Email: {content}
+
+            Return as structured data.
+            &quot;&quot;&quot;
+
+            financial_info = llm.invoke(financial_prompt).content
+            print(f&quot;Financial email detected from {message.get('from')}:&quot;)
+            print(f&quot;Analysis: {financial_info}&quot;)
+
+            # You could trigger wallet operations here
+            # For example, check balances, prepare transactions, etc.
+            try:
+                wallets = client.wallets.list_wallets()
+                print(f&quot;Available wallets: {len(wallets)}&quot;)
+            except Exception as e:
+                print(f&quot;Could not access wallet info: {e}&quot;)
+
+# Setup financial monitoring
+setup_financial_email_monitoring(client, &quot;child_agent_123&quot;, llm)
+</code></pre>
+<h3 id="email-agent-management">Email + Agent Management</h3>
+<pre><code class="language-python">def email_driven_agent_creation(client, master_agent_id, llm):
+    &quot;&quot;&quot;Create child agents based on email requests&quot;&quot;&quot;
+
+    messages = client.email.read_inbox(master_agent_id)
+
+    for message in messages:
+        content = message.get('text_body', '')
+        subject = message.get('subject', '')
+        sender = message.get('from', '')
+
+        # Check if email is requesting agent creation
+        if 'create agent' in content.lower() or 'new agent' in content.lower():
+
+            # Extract agent requirements using AI
+            agent_prompt = f&quot;&quot;&quot;
+            Extract agent creation requirements from this email:
+            - Agent name/purpose
+            - Required permissions
+            - Needed assets (email/wallet)
+
+            Email content: {content}
+
+            Return as structured requirements.
+            &quot;&quot;&quot;
+
+            requirements = llm.invoke(agent_prompt).content
+            print(f&quot;Agent creation request from {sender}:&quot;)
+            print(f&quot;Requirements: {requirements}&quot;)
+
+            # Create child agent (simplified)
+            try:
+                child_agent = client.agents.create_child_agent(
+                    parent_id=master_agent_id,
+                    name=f&quot;Agent for {sender}&quot;,
+                    permissions_granted=[&quot;email:read&quot;, &quot;email:send&quot;]
+                )
+
+                # Send confirmation
+                client.email.send_email(
+                    agent_id=master_agent_id,
+                    recipient=sender,
+                    subject=&quot;Agent Created Successfully&quot;,
+                    body=f&quot;Your requested agent has been created with ID: {child_agent['id']}&quot;
+                )
+
+            except Exception as e:
+                print(f&quot;Failed to create agent: {e}&quot;)
+
+# Setup agent creation automation
+email_driven_agent_creation(client, &quot;master_agent_123&quot;, llm)
+</code></pre>
+<h2 id="error-handling-and-best-practices">Error Handling and Best Practices</h2>
+<h3 id="robust-email-processing">Robust Email Processing</h3>
+<pre><code class="language-python">def safe_email_operation(client, operation, *args, **kwargs):
+    &quot;&quot;&quot;Safely execute email operations with proper error handling&quot;&quot;&quot;
+
+    try:
+        result = getattr(client.email, operation)(*args, **kwargs)
+        return {&quot;success&quot;: True, &quot;result&quot;: result}
+
+    except requests.exceptions.HTTPError as e:
+        error_code = e.response.status_code
+
+        if error_code == 403:
+            return {&quot;success&quot;: False, &quot;error&quot;: &quot;Permission denied - check agent email permissions&quot;}
+        elif error_code == 404:
+            return {&quot;success&quot;: False, &quot;error&quot;: &quot;Agent not found or email not configured&quot;}
+        else:
+            return {&quot;success&quot;: False, &quot;error&quot;: f&quot;HTTP {error_code}: {e}&quot;}
+
+    except Exception as e:
+        return {&quot;success&quot;: False, &quot;error&quot;: f&quot;Unexpected error: {str(e)}&quot;}
+
+# Usage
+result = safe_email_operation(client, &quot;read_inbox&quot;, &quot;child_agent_123&quot;)
+if result[&quot;success&quot;]:
+    messages = result[&quot;result&quot;]
+    print(f&quot;Retrieved {len(messages)} messages&quot;)
+else:
+    print(f&quot;Email operation failed: {result['error']}&quot;)
+</code></pre>
+<h3 id="email-processing-best-practices">Email Processing Best Practices</h3>
+<pre><code class="language-python">class EmailManager:
+    &quot;&quot;&quot;Best practices for email management&quot;&quot;&quot;
+
+    def __init__(self, client, llm=None):
+        self.client = client
+        self.llm = llm
+        self.processed_emails = set()  # Track processed emails
+
+    def batch_process_emails(self, agent_id, batch_size=10):
+        &quot;&quot;&quot;Process emails in batches to avoid overload&quot;&quot;&quot;
+
+        messages = self.client.email.read_inbox(agent_id)
+
+        # Process in batches
+        for i in range(0, len(messages), batch_size):
+            batch = messages[i:i + batch_size]
+
+            for message in batch:
+                message_id = message.get('id', hash(message.get('subject', '')))
+
+                if message_id in self.processed_emails:
+                    continue
+
+                try:
+                    self.process_single_email(agent_id, message)
+                    self.processed_emails.add(message_id)
+                except Exception as e:
+                    print(f&quot;Failed to process email {message_id}: {e}&quot;)
+
+    def process_single_email(self, agent_id, message):
+        &quot;&quot;&quot;Process a single email with full error handling&quot;&quot;&quot;
+
+        sender = message.get('from', '')
+        subject = message.get('subject', '')
+        content = message.get('text_body', '')
+
+        print(f&quot;Processing email from {sender}: {subject}&quot;)
+
+        # Add your processing logic here
+        if self.llm:
+            summary = self.llm.invoke(f&quot;Summarize: {content}&quot;).content
+            print(f&quot;Summary: {summary}&quot;)
+
+    def cleanup_old_emails(self, days=30):
+        &quot;&quot;&quot;Clean up old processed email records&quot;&quot;&quot;
+        # In a real implementation, you'd clean up old entries
+        # based on timestamps
+        pass
+
+# Usage
+email_manager = EmailManager(client, llm)
+email_manager.batch_process_emails(&quot;child_agent_123&quot;)
+</code></pre>
+<h2 id="api-reference">API Reference</h2>
+<h3 id="emailclient-methods">EmailClient Methods</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+<th>Parameters</th>
+<th>Returns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>read_inbox()</code></td>
+<td>Read email inbox for agent</td>
+<td>agent_id</td>
+<td>List[Dict]</td>
+</tr>
+<tr>
+<td><code>send_email()</code></td>
+<td>Send email from agent</td>
+<td>agent_id, recipient, subject, body</td>
+<td>Dict</td>
+</tr>
+</tbody>
+</table>
+<h3 id="emailsummarizertool">EmailSummarizerTool</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>Tool identifier</td>
+<td>str</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>Tool description</td>
+<td>str</td>
+</tr>
+<tr>
+<td><code>llm</code></td>
+<td>LangChain LLM instance</td>
+<td>ChatDeepSeek</td>
+</tr>
+<tr>
+<td><code>client</code></td>
+<td>CirtusAI client instance</td>
+<td>CirtusAIClient</td>
+</tr>
+<tr>
+<td><code>agent_id</code></td>
+<td>Agent ID for email access</td>
+<td>str</td>
+</tr>
+<tr>
+<td><code>username</code></td>
+<td>Authentication username</td>
+<td>str</td>
+</tr>
+<tr>
+<td><code>password</code></td>
+<td>Authentication password</td>
+<td>str</td>
+</tr>
+</tbody>
+</table>
+<h3 id="email-message-structure">Email Message Structure</h3>
+<pre><code class="language-python">{
+    &quot;id&quot;: &quot;message_123&quot;,
+    &quot;from&quot;: &quot;sender@example.com&quot;,
+    &quot;to&quot;: &quot;recipient@example.com&quot;,
+    &quot;subject&quot;: &quot;Email Subject&quot;,
+    &quot;text_body&quot;: &quot;Email content...&quot;,
+    &quot;html_body&quot;: &quot;&lt;html&gt;Email content...&lt;/html&gt;&quot;,
+    &quot;date&quot;: &quot;2024-01-15T10:30:00Z&quot;,
+    &quot;attachments&quot;: [],
+    &quot;processed&quot;: false
+}
+</code></pre>
+<h3 id="required-permissions">Required Permissions</h3>
+<ul>
+<li><code>email:read</code> - Required to read inbox</li>
+<li><code>email:send</code> - Required to send emails</li>
+</ul>
+<h3 id="langchain-integration">LangChain Integration</h3>
+<p>The email system integrates seamlessly with LangChain for advanced AI processing:</p>
+<pre><code class="language-python">from langchain_core.tools import BaseTool
+from langchain_deepseek import ChatDeepSeek
+
+# The EmailSummarizerTool extends BaseTool
+# and can be used in LangChain agent workflows
+</code></pre></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

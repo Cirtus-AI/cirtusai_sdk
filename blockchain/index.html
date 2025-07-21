@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="https://github.com/Cirtus-AI/cirtusai_sdk/blockchain/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Blockchain Infrastructure - CirtusAI SDK Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">CirtusAI SDK Documentation</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../quickstart/" class="nav-link">Quick Start</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../authentication/" class="nav-link">Authentication</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../agents/" class="nav-link">Agent Management</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../wallets/" class="nav-link">Wallet Operations</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../email/" class="nav-link">Email Services</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../security/" class="nav-link">Security & Compliance</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="./" class="nav-link active" aria-current="page">Blockchain Infrastructure</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../security/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" class="nav-link disabled">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/Cirtus-AI/cirtusai_sdk/edit/master/docs/blockchain.md" class="nav-link"><i class="fa-brands fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#cirtusai-sdk-blockchain-infrastructure-guide" class="nav-link">CirtusAI SDK Blockchain Infrastructure Guide</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#overview" class="nav-link">Overview</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#cross-chain-bridge" class="nav-link">Cross-Chain Bridge</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#defi-swap-operations" class="nav-link">DeFi Swap Operations</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#nft-management" class="nav-link">NFT Management</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#governance" class="nav-link">Governance</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#identity-reputation" class="nav-link">Identity &amp; Reputation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#marketplace" class="nav-link">Marketplace</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#child-assets-management" class="nav-link">Child Assets Management</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#advanced-blockchain-workflows" class="nav-link">Advanced Blockchain Workflows</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#error-handling" class="nav-link">Error Handling</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#api-reference-summary" class="nav-link">API Reference Summary</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="cirtusai-sdk-blockchain-infrastructure-guide">CirtusAI SDK Blockchain Infrastructure Guide</h1>
+<h2 id="overview">Overview</h2>
+<p>The CirtusAI SDK provides comprehensive blockchain infrastructure components including cross-chain bridging, DeFi swaps, NFT management, governance operations, identity management, and marketplace functionality. These modules enable seamless interaction with multiple blockchain networks.</p>
+<h2 id="cross-chain-bridge">Cross-Chain Bridge</h2>
+<h3 id="bridge-operations">Bridge Operations</h3>
+<pre><code class="language-python">from cirtusai import CirtusAIClient
+
+client = CirtusAIClient(&quot;https://api.cirtusai.com&quot;)
+client.set_token(&quot;your_access_token&quot;)
+
+# Get bridge quote for cross-chain transfer
+quote = client.bridge.get_quote(
+    from_chain=&quot;ethereum&quot;,
+    to_chain=&quot;polygon&quot;,
+    from_token=&quot;ETH&quot;,
+    to_token=&quot;MATIC&quot;,
+    amount=1000000000000000000  # 1 ETH in wei
+)
+
+print(f&quot;Estimated output: {quote['estimated_output']}&quot;)
+print(f&quot;Fee: {quote['fee']}&quot;)
+print(f&quot;Estimated time: {quote['estimated_time']}&quot;)
+
+# Execute bridge transfer
+bridge_result = client.bridge.bridge_transfer(
+    provider=&quot;multichain&quot;,
+    from_chain=&quot;ethereum&quot;,
+    to_chain=&quot;polygon&quot;, 
+    from_token=&quot;ETH&quot;,
+    to_token=&quot;MATIC&quot;,
+    amount=1000000000000000000,
+    recipient_address=&quot;0x742d35Cc6635C0532925a3b8D&quot;
+)
+
+print(f&quot;Bridge transaction: {bridge_result['transaction_hash']}&quot;)
+print(f&quot;Bridge ID: {bridge_result['bridge_id']}&quot;)
+</code></pre>
+<h3 id="multi-chain-asset-view">Multi-Chain Asset View</h3>
+<pre><code class="language-python"># Get consolidated view of assets across chains
+asset_view = client.bridge.get_multi_chain_asset_view()
+
+print(&quot;Multi-chain asset portfolio:&quot;)
+for chain, assets in asset_view.items():
+    print(f&quot;\n{chain.upper()}:&quot;)
+    for asset in assets:
+        print(f&quot;  {asset['symbol']}: {asset['balance']} ({asset['usd_value']} USD)&quot;)
+
+# Refresh the asset view
+refreshed_view = client.bridge.refresh_multi_chain_asset_view()
+print(f&quot;Asset view refreshed: {refreshed_view['updated_at']}&quot;)
+</code></pre>
+<h2 id="defi-swap-operations">DeFi Swap Operations</h2>
+<h3 id="token-swaps">Token Swaps</h3>
+<pre><code class="language-python"># Get swap quote
+swap_quote = client.swap.get_quote(
+    from_chain=&quot;ethereum&quot;,
+    to_chain=&quot;ethereum&quot;,
+    from_token=&quot;USDC&quot;,
+    to_token=&quot;ETH&quot;,
+    amount=1000.0  # 1000 USDC
+)
+
+print(f&quot;Estimated ETH output: {swap_quote['estimated_output']}&quot;)
+print(f&quot;Price impact: {swap_quote['price_impact']}%&quot;)
+print(f&quot;Slippage tolerance: {swap_quote['slippage_tolerance']}%&quot;)
+
+# Execute swap
+swap_data = {
+    &quot;from_token&quot;: &quot;USDC&quot;,
+    &quot;to_token&quot;: &quot;ETH&quot;,
+    &quot;amount&quot;: 1000.0,
+    &quot;slippage_tolerance&quot;: 0.5,
+    &quot;deadline&quot;: 1800  # 30 minutes
+}
+
+swap_result = client.swap.execute_swap(swap_data)
+print(f&quot;Swap transaction: {swap_result['transaction_hash']}&quot;)
+print(f&quot;Swap ID: {swap_result['swap_id']}&quot;)
+
+# Cancel pending swap if needed
+client.swap.cancel_swap(&quot;swap_123&quot;)
+</code></pre>
+<h2 id="nft-management">NFT Management</h2>
+<h3 id="nft-operations">NFT Operations</h3>
+<pre><code class="language-python"># List NFTs in wallet
+nfts = client.nfts.list_nfts(wallet_id=&quot;wallet_123&quot;)
+for nft in nfts:
+    print(f&quot;Contract: {nft['contract_address']}&quot;)
+    print(f&quot;Token ID: {nft['token_id']}&quot;)
+    print(f&quot;Name: {nft['name']}&quot;)
+    print(f&quot;Description: {nft['description']}&quot;)
+
+# Get specific NFT metadata
+metadata = client.nfts.get_nft_metadata(
+    contract_address=&quot;0x1234567890123456789012345678901234567890&quot;,
+    token_id=&quot;1&quot;
+)
+print(f&quot;NFT metadata: {metadata}&quot;)
+
+# Mint new NFT
+mint_result = client.nfts.mint_nft(
+    contract_address=&quot;0x1234567890123456789012345678901234567890&quot;,
+    to_address=&quot;0x742d35Cc6635C0532925a3b8D&quot;,
+    metadata_uri=&quot;https://metadata.example.com/nft/1&quot;
+)
+print(f&quot;Mint transaction: {mint_result['transaction_hash']}&quot;)
+
+# Batch transfer NFTs
+transfers = [
+    {
+        &quot;token_id&quot;: &quot;1&quot;,
+        &quot;to_address&quot;: &quot;0x742d35Cc6635C0532925a3b8D&quot;
+    },
+    {
+        &quot;token_id&quot;: &quot;2&quot;, 
+        &quot;to_address&quot;: &quot;0x1234567890123456789012345678901234567890&quot;
+    }
+]
+
+batch_result = client.nfts.batch_transfer(
+    contract_address=&quot;0x1234567890123456789012345678901234567890&quot;,
+    transfers=transfers
+)
+
+# Burn NFT
+client.nfts.burn_nft(
+    contract_address=&quot;0x1234567890123456789012345678901234567890&quot;,
+    token_id=&quot;3&quot;
+)
+</code></pre>
+<h2 id="governance">Governance</h2>
+<h3 id="dao-governance-operations">DAO Governance Operations</h3>
+<pre><code class="language-python"># Create governance proposal
+proposal = client.governance.create_proposal(
+    targets=[&quot;0x1234567890123456789012345678901234567890&quot;],
+    values=[0],
+    calldatas=[&quot;0xa9059cbb000000000000000000000000742d35cc6635c0532925a3b8d00000000000000000000000000000000000000000000000000000000000000064&quot;],
+    description=&quot;Transfer 100 tokens to community fund&quot;
+)
+
+print(f&quot;Proposal ID: {proposal['proposal_id']}&quot;)
+print(f&quot;Proposal state: {proposal['state']}&quot;)
+
+# Cast vote on proposal
+vote_result = client.governance.cast_vote(
+    proposal_id=1,
+    support=1  # 0=against, 1=for, 2=abstain
+)
+print(f&quot;Vote transaction: {vote_result['transaction_hash']}&quot;)
+
+# Get proposal state
+proposal_state = client.governance.get_proposal_state(proposal_id=1)
+print(f&quot;Current state: {proposal_state['state']}&quot;)
+print(f&quot;For votes: {proposal_state['for_votes']}&quot;)
+print(f&quot;Against votes: {proposal_state['against_votes']}&quot;)
+</code></pre>
+<h2 id="identity-reputation">Identity &amp; Reputation</h2>
+<h3 id="decentralized-identity-did">Decentralized Identity (DID)</h3>
+<pre><code class="language-python"># Get DID for agent
+did_info = client.identity.get_did(agent_id=&quot;agent_123&quot;)
+print(f&quot;DID: {did_info['did']}&quot;)
+print(f&quot;Public key: {did_info['public_key']}&quot;)
+
+# Issue verifiable credential
+credential = client.identity.issue_credential(
+    subject_id=&quot;user_123&quot;,
+    types=[&quot;VerifiableCredential&quot;, &quot;KYCCredential&quot;],
+    claim={
+        &quot;kyc_verified&quot;: True,
+        &quot;verification_level&quot;: &quot;enhanced&quot;,
+        &quot;verified_at&quot;: &quot;2024-01-15T10:30:00Z&quot;
+    }
+)
+print(f&quot;Credential issued: {credential['credential_id']}&quot;)
+
+# Verify credential
+verification = client.identity.verify_credential(
+    jwt_token=&quot;eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...&quot;
+)
+print(f&quot;Verification status: {verification['valid']}&quot;)
+print(f&quot;Claims: {verification['claims']}&quot;)
+</code></pre>
+<h3 id="soulbound-tokens-sbt">Soulbound Tokens (SBT)</h3>
+<pre><code class="language-python"># Issue soulbound token for reputation
+sbt_result = client.reputation.issue_sbt(
+    to_address=&quot;0x742d35Cc6635C0532925a3b8D&quot;,
+    token_uri=&quot;https://metadata.example.com/sbt/reputation/1&quot;
+)
+print(f&quot;SBT transaction: {sbt_result['transaction_hash']}&quot;)
+
+# Get SBT owner
+owner = client.reputation.get_sbt_owner(token_id=1)
+print(f&quot;SBT owner: {owner}&quot;)
+</code></pre>
+<h2 id="marketplace">Marketplace</h2>
+<h3 id="nft-marketplace-operations">NFT Marketplace Operations</h3>
+<pre><code class="language-python"># Create marketplace listing
+listing_data = {
+    &quot;nft_contract&quot;: &quot;0x1234567890123456789012345678901234567890&quot;,
+    &quot;token_id&quot;: &quot;1&quot;,
+    &quot;price&quot;: &quot;1.5&quot;,  # ETH
+    &quot;currency&quot;: &quot;ETH&quot;,
+    &quot;duration&quot;: 7  # days
+}
+
+listing = client.marketplace.create_listing(listing_data)
+print(f&quot;Listing ID: {listing['listing_id']}&quot;)
+print(f&quot;Status: {listing['status']}&quot;)
+
+# Get specific listing
+listing_info = client.marketplace.get_listing(&quot;listing_123&quot;)
+print(f&quot;Price: {listing_info['price']} {listing_info['currency']}&quot;)
+print(f&quot;Seller: {listing_info['seller']}&quot;)
+
+# List all available listings
+listings = client.marketplace.list_listings(
+    filters={
+        &quot;min_price&quot;: 0.1,
+        &quot;max_price&quot;: 10.0,
+        &quot;currency&quot;: &quot;ETH&quot;
+    }
+)
+
+for listing in listings:
+    print(f&quot;Listing {listing['listing_id']}: {listing['price']} {listing['currency']}&quot;)
+
+# Place bid on listing
+bid_data = {
+    &quot;price&quot;: &quot;1.2&quot;,
+    &quot;currency&quot;: &quot;ETH&quot;,
+    &quot;expires_at&quot;: &quot;2024-01-20T10:30:00Z&quot;
+}
+
+bid = client.marketplace.place_bid(
+    listing_id=&quot;listing_123&quot;,
+    bid_data=bid_data
+)
+print(f&quot;Bid placed: {bid['bid_id']}&quot;)
+
+# List bids for a listing
+bids = client.marketplace.list_bids(&quot;listing_123&quot;)
+for bid in bids:
+    print(f&quot;Bid {bid['bid_id']}: {bid['price']} {bid['currency']} by {bid['bidder']}&quot;)
+
+# Accept bid (as seller)
+accept_result = client.marketplace.accept_bid(
+    listing_id=&quot;listing_123&quot;,
+    bid_id=&quot;bid_456&quot;
+)
+print(f&quot;Bid accepted: {accept_result['transaction_hash']}&quot;)
+
+# Update listing
+updated_listing = client.marketplace.update_listing(
+    listing_id=&quot;listing_123&quot;,
+    listing_data={&quot;price&quot;: &quot;1.3&quot;}
+)
+
+# Cancel listing
+client.marketplace.cancel_listing(&quot;listing_123&quot;)
+</code></pre>
+<h2 id="child-assets-management">Child Assets Management</h2>
+<h3 id="child-agent-asset-operations">Child Agent Asset Operations</h3>
+<pre><code class="language-python"># List assets for child agent
+child_assets = client.child_assets.list_child_assets(child_id=&quot;child_123&quot;)
+for asset in child_assets:
+    print(f&quot;Asset ID: {asset['asset_id']}&quot;)
+    print(f&quot;Type: {asset['asset_type']}&quot;)
+    print(f&quot;Value: {asset['asset_value']}&quot;)
+
+# Get specific child asset
+asset = client.child_assets.get_child_asset(&quot;asset_123&quot;)
+print(f&quot;Asset details: {asset}&quot;)
+
+# Create new asset for child
+asset_data = {
+    &quot;asset_type&quot;: &quot;email_account&quot;,
+    &quot;asset_value&quot;: &quot;child_agent@example.com&quot;,
+    &quot;metadata&quot;: {
+        &quot;provider&quot;: &quot;gmail&quot;,
+        &quot;configured&quot;: True
+    }
+}
+
+new_asset = client.child_assets.create_child_asset(
+    child_id=&quot;child_123&quot;,
+    asset_data=asset_data
+)
+print(f&quot;Created asset: {new_asset['asset_id']}&quot;)
+
+# Update child asset
+updated_asset = client.child_assets.update_child_asset(
+    asset_id=&quot;asset_123&quot;,
+    asset_data={&quot;metadata&quot;: {&quot;status&quot;: &quot;active&quot;}}
+)
+
+# Delete child asset
+client.child_assets.delete_child_asset(&quot;asset_123&quot;)
+</code></pre>
+<h2 id="advanced-blockchain-workflows">Advanced Blockchain Workflows</h2>
+<h3 id="cross-chain-defi-strategy">Cross-Chain DeFi Strategy</h3>
+<pre><code class="language-python">def execute_cross_chain_strategy(client, strategy_config):
+    &quot;&quot;&quot;Execute complex cross-chain DeFi strategy&quot;&quot;&quot;
+
+    results = []
+
+    for step in strategy_config[&quot;steps&quot;]:
+        if step[&quot;type&quot;] == &quot;bridge&quot;:
+            # Bridge assets to target chain
+            quote = client.bridge.get_quote(
+                from_chain=step[&quot;from_chain&quot;],
+                to_chain=step[&quot;to_chain&quot;],
+                from_token=step[&quot;from_token&quot;],
+                to_token=step[&quot;to_token&quot;],
+                amount=step[&quot;amount&quot;]
+            )
+
+            if quote[&quot;estimated_output&quot;] &gt;= step[&quot;min_output&quot;]:
+                bridge_result = client.bridge.bridge_transfer(
+                    provider=step[&quot;provider&quot;],
+                    from_chain=step[&quot;from_chain&quot;],
+                    to_chain=step[&quot;to_chain&quot;],
+                    from_token=step[&quot;from_token&quot;],
+                    to_token=step[&quot;to_token&quot;],
+                    amount=step[&quot;amount&quot;],
+                    recipient_address=step[&quot;recipient&quot;]
+                )
+                results.append({&quot;step&quot;: &quot;bridge&quot;, &quot;result&quot;: bridge_result})
+
+        elif step[&quot;type&quot;] == &quot;swap&quot;:
+            # Execute DeFi swap
+            swap_result = client.swap.execute_swap(step[&quot;swap_data&quot;])
+            results.append({&quot;step&quot;: &quot;swap&quot;, &quot;result&quot;: swap_result})
+
+    return results
+
+# Strategy configuration
+strategy = {
+    &quot;steps&quot;: [
+        {
+            &quot;type&quot;: &quot;bridge&quot;,
+            &quot;from_chain&quot;: &quot;ethereum&quot;,
+            &quot;to_chain&quot;: &quot;polygon&quot;,
+            &quot;from_token&quot;: &quot;USDC&quot;,
+            &quot;to_token&quot;: &quot;USDC&quot;,
+            &quot;amount&quot;: 1000,
+            &quot;min_output&quot;: 995,
+            &quot;provider&quot;: &quot;multichain&quot;,
+            &quot;recipient&quot;: &quot;0x742d35Cc6635C0532925a3b8D&quot;
+        },
+        {
+            &quot;type&quot;: &quot;swap&quot;,
+            &quot;swap_data&quot;: {
+                &quot;from_token&quot;: &quot;USDC&quot;,
+                &quot;to_token&quot;: &quot;MATIC&quot;,
+                &quot;amount&quot;: 1000,
+                &quot;slippage_tolerance&quot;: 0.5
+            }
+        }
+    ]
+}
+
+results = execute_cross_chain_strategy(client, strategy)
+print(f&quot;Strategy executed with {len(results)} steps&quot;)
+</code></pre>
+<h3 id="nft-collection-management">NFT Collection Management</h3>
+<pre><code class="language-python">def manage_nft_collection(client, collection_config):
+    &quot;&quot;&quot;Comprehensive NFT collection management&quot;&quot;&quot;
+
+    collection_stats = {
+        &quot;total_nfts&quot;: 0,
+        &quot;minted&quot;: 0,
+        &quot;transferred&quot;: 0,
+        &quot;listed&quot;: 0
+    }
+
+    # Mint NFTs in batch
+    for i in range(collection_config[&quot;mint_count&quot;]):
+        try:
+            mint_result = client.nfts.mint_nft(
+                contract_address=collection_config[&quot;contract&quot;],
+                to_address=collection_config[&quot;owner&quot;],
+                metadata_uri=f&quot;{collection_config['base_uri']}/{i}&quot;
+            )
+            collection_stats[&quot;minted&quot;] += 1
+            print(f&quot;Minted NFT #{i}: {mint_result['transaction_hash']}&quot;)
+        except Exception as e:
+            print(f&quot;Failed to mint NFT #{i}: {e}&quot;)
+
+    # List NFTs on marketplace
+    nfts = client.nfts.list_nfts(collection_config[&quot;wallet_id&quot;])
+
+    for nft in nfts[:collection_config.get(&quot;list_count&quot;, 5)]:
+        try:
+            listing_data = {
+                &quot;nft_contract&quot;: nft[&quot;contract_address&quot;],
+                &quot;token_id&quot;: nft[&quot;token_id&quot;],
+                &quot;price&quot;: collection_config[&quot;list_price&quot;],
+                &quot;currency&quot;: &quot;ETH&quot;,
+                &quot;duration&quot;: 30
+            }
+
+            listing = client.marketplace.create_listing(listing_data)
+            collection_stats[&quot;listed&quot;] += 1
+            print(f&quot;Listed NFT {nft['token_id']}: {listing['listing_id']}&quot;)
+        except Exception as e:
+            print(f&quot;Failed to list NFT {nft['token_id']}: {e}&quot;)
+
+    return collection_stats
+
+# Collection configuration
+config = {
+    &quot;contract&quot;: &quot;0x1234567890123456789012345678901234567890&quot;,
+    &quot;owner&quot;: &quot;0x742d35Cc6635C0532925a3b8D&quot;,
+    &quot;wallet_id&quot;: &quot;wallet_123&quot;,
+    &quot;base_uri&quot;: &quot;https://metadata.example.com/collection&quot;,
+    &quot;mint_count&quot;: 10,
+    &quot;list_count&quot;: 5,
+    &quot;list_price&quot;: &quot;0.1&quot;
+}
+
+stats = manage_nft_collection(client, config)
+print(f&quot;Collection stats: {stats}&quot;)
+</code></pre>
+<h3 id="dao-governance-automation">DAO Governance Automation</h3>
+<pre><code class="language-python">def automated_governance_participation(client, governance_config):
+    &quot;&quot;&quot;Automate DAO governance participation&quot;&quot;&quot;
+
+    # Get current proposal state
+    proposal_id = governance_config[&quot;proposal_id&quot;]
+    proposal_state = client.governance.get_proposal_state(proposal_id)
+
+    print(f&quot;Proposal {proposal_id} state: {proposal_state['state']}&quot;)
+
+    # Voting logic based on configuration
+    if proposal_state[&quot;state&quot;] == &quot;Active&quot;:
+        voting_decision = governance_config.get(&quot;auto_vote&quot;)
+
+        if voting_decision is not None:
+            vote_result = client.governance.cast_vote(
+                proposal_id=proposal_id,
+                support=voting_decision
+            )
+            print(f&quot;Automatic vote cast: {vote_result['transaction_hash']}&quot;)
+        else:
+            print(&quot;Manual voting required - no auto-vote configured&quot;)
+
+    # Create new proposal if configured
+    if governance_config.get(&quot;create_proposal&quot;):
+        proposal_data = governance_config[&quot;proposal_data&quot;]
+        new_proposal = client.governance.create_proposal(
+            targets=proposal_data[&quot;targets&quot;],
+            values=proposal_data[&quot;values&quot;],
+            calldatas=proposal_data[&quot;calldatas&quot;],
+            description=proposal_data[&quot;description&quot;]
+        )
+        print(f&quot;New proposal created: {new_proposal['proposal_id']}&quot;)
+
+    return {
+        &quot;current_proposal_state&quot;: proposal_state,
+        &quot;actions_taken&quot;: [&quot;vote_cast&quot;] if voting_decision is not None else []
+    }
+
+# Governance configuration
+gov_config = {
+    &quot;proposal_id&quot;: 1,
+    &quot;auto_vote&quot;: 1,  # 1 = for, 0 = against, 2 = abstain
+    &quot;create_proposal&quot;: False,
+    &quot;proposal_data&quot;: {
+        &quot;targets&quot;: [&quot;0x1234567890123456789012345678901234567890&quot;],
+        &quot;values&quot;: [0],
+        &quot;calldatas&quot;: [&quot;0x&quot;],
+        &quot;description&quot;: &quot;Community treasury allocation&quot;
+    }
+}
+
+governance_result = automated_governance_participation(client, gov_config)
+</code></pre>
+<h2 id="error-handling">Error Handling</h2>
+<h3 id="blockchain-operation-safety">Blockchain Operation Safety</h3>
+<pre><code class="language-python">def safe_blockchain_operation(client, module, operation, *args, **kwargs):
+    &quot;&quot;&quot;Safely execute blockchain operations with proper error handling&quot;&quot;&quot;
+
+    try:
+        module_client = getattr(client, module)
+        result = getattr(module_client, operation)(*args, **kwargs)
+        return {&quot;success&quot;: True, &quot;result&quot;: result}
+
+    except requests.exceptions.HTTPError as e:
+        error_code = e.response.status_code
+
+        if error_code == 400:
+            return {&quot;success&quot;: False, &quot;error&quot;: &quot;Invalid parameters&quot;}
+        elif error_code == 403:
+            return {&quot;success&quot;: False, &quot;error&quot;: &quot;Insufficient permissions&quot;}
+        elif error_code == 429:
+            return {&quot;success&quot;: False, &quot;error&quot;: &quot;Rate limit exceeded&quot;}
+        else:
+            return {&quot;success&quot;: False, &quot;error&quot;: f&quot;HTTP {error_code}: {e}&quot;}
+
+    except Exception as e:
+        return {&quot;success&quot;: False, &quot;error&quot;: f&quot;Unexpected error: {str(e)}&quot;}
+
+# Usage examples
+bridge_result = safe_blockchain_operation(
+    client, &quot;bridge&quot;, &quot;get_quote&quot;,
+    &quot;ethereum&quot;, &quot;polygon&quot;, &quot;ETH&quot;, &quot;MATIC&quot;, 1000000000000000000
+)
+
+if bridge_result[&quot;success&quot;]:
+    print(f&quot;Bridge quote: {bridge_result['result']}&quot;)
+else:
+    print(f&quot;Bridge operation failed: {bridge_result['error']}&quot;)
+</code></pre>
+<h2 id="api-reference-summary">API Reference Summary</h2>
+<h3 id="available-modules">Available Modules</h3>
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th>Description</th>
+<th>Key Methods</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bridge</code></td>
+<td>Cross-chain bridging</td>
+<td><code>get_quote()</code>, <code>bridge_transfer()</code>, <code>get_multi_chain_asset_view()</code></td>
+</tr>
+<tr>
+<td><code>swap</code></td>
+<td>DeFi token swaps</td>
+<td><code>get_quote()</code>, <code>execute_swap()</code>, <code>cancel_swap()</code></td>
+</tr>
+<tr>
+<td><code>nfts</code></td>
+<td>NFT management</td>
+<td><code>list_nfts()</code>, <code>mint_nft()</code>, <code>batch_transfer()</code>, <code>burn_nft()</code></td>
+</tr>
+<tr>
+<td><code>governance</code></td>
+<td>DAO governance</td>
+<td><code>create_proposal()</code>, <code>cast_vote()</code>, <code>get_proposal_state()</code></td>
+</tr>
+<tr>
+<td><code>identity</code></td>
+<td>Decentralized identity</td>
+<td><code>get_did()</code>, <code>issue_credential()</code>, <code>verify_credential()</code></td>
+</tr>
+<tr>
+<td><code>reputation</code></td>
+<td>Soulbound tokens</td>
+<td><code>issue_sbt()</code>, <code>get_sbt_owner()</code></td>
+</tr>
+<tr>
+<td><code>marketplace</code></td>
+<td>NFT marketplace</td>
+<td><code>create_listing()</code>, <code>place_bid()</code>, <code>accept_bid()</code></td>
+</tr>
+<tr>
+<td><code>child_assets</code></td>
+<td>Child agent assets</td>
+<td><code>list_child_assets()</code>, <code>create_child_asset()</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="common-response-patterns">Common Response Patterns</h3>
+<p>All blockchain operations return transaction hashes and operation IDs for tracking:</p>
+<pre><code class="language-python">{
+    &quot;transaction_hash&quot;: &quot;0x1234567890abcdef...&quot;,
+    &quot;operation_id&quot;: &quot;op_123&quot;,
+    &quot;status&quot;: &quot;pending&quot; | &quot;confirmed&quot; | &quot;failed&quot;,
+    &quot;block_number&quot;: 12345678,
+    &quot;gas_used&quot;: 21000
+}
+</code></pre></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
