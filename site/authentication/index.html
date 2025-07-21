@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="https://github.com/Cirtus-AI/cirtusai_sdk/authentication/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Authentication - CirtusAI SDK Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">CirtusAI SDK Documentation</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../quickstart/" class="nav-link">Quick Start</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="./" class="nav-link active" aria-current="page">Authentication</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../agents/" class="nav-link">Agent Management</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../wallets/" class="nav-link">Wallet Operations</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../email/" class="nav-link">Email Services</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../security/" class="nav-link">Security & Compliance</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../blockchain/" class="nav-link">Blockchain Infrastructure</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../quickstart/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../agents/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/Cirtus-AI/cirtusai_sdk/edit/master/docs/authentication.md" class="nav-link"><i class="fa-brands fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#cirtusai-sdk-authentication-guide" class="nav-link">CirtusAI SDK Authentication Guide</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#overview" class="nav-link">Overview</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#features" class="nav-link">Features</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#basic-authentication" class="nav-link">Basic Authentication</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#two-factor-authentication" class="nav-link">Two-Factor Authentication</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#sms-2fa-framework-ready" class="nav-link">SMS 2FA (Framework Ready)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#debugging-and-troubleshooting" class="nav-link">Debugging and Troubleshooting</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#token-management" class="nav-link">Token Management</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#error-handling" class="nav-link">Error Handling</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#advanced-usage" class="nav-link">Advanced Usage</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#security-best-practices" class="nav-link">Security Best Practices</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#configuration" class="nav-link">Configuration</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#api-reference" class="nav-link">API Reference</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="cirtusai-sdk-authentication-guide">CirtusAI SDK Authentication Guide</h1>
+<h2 id="overview">Overview</h2>
+<p>The CirtusAI SDK provides comprehensive authentication capabilities with robust Two-Factor Authentication (2FA) support. The authentication system supports TOTP-based 2FA, SMS verification (framework ready), and complete user lifecycle management.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li><strong>User Registration</strong>: Automatic 2FA setup during registration</li>
+<li><strong>Two-Step Login Flow</strong>: Secure authentication for 2FA-enabled users</li>
+<li><strong>TOTP Management</strong>: Complete TOTP setup, verification, and management</li>
+<li><strong>SMS 2FA Support</strong>: Framework ready for SMS-based authentication</li>
+<li><strong>Debug Tools</strong>: Troubleshooting and time sync verification tools</li>
+<li><strong>Token Management</strong>: Access token refresh and lifecycle management</li>
+</ul>
+<h2 id="basic-authentication">Basic Authentication</h2>
+<h3 id="user-registration">User Registration</h3>
+<p>Register a new user with automatic 2FA setup:</p>
+<pre><code class="language-python">from cirtusai import CirtusAIClient
+
+client = CirtusAIClient(&quot;https://api.cirtusai.com&quot;)
+
+# Register with automatic 2FA setup
+setup_response = client.auth.register(
+    username=&quot;your_username&quot;,
+    email=&quot;your_email@example.com&quot;,
+    password=&quot;your_secure_password&quot;,
+    preferred_2fa_method=&quot;totp&quot;  # or &quot;sms&quot;
+)
+
+print(f&quot;QR Code URL: {setup_response.qr_code_url}&quot;)
+print(f&quot;Secret Key: {setup_response.secret_key}&quot;)
+print(f&quot;Backup Codes: {setup_response.backup_codes}&quot;)
+</code></pre>
+<h3 id="simple-login-no-2fa">Simple Login (No 2FA)</h3>
+<p>For accounts without 2FA enabled:</p>
+<pre><code class="language-python"># Direct login without 2FA
+token = client.auth.login(&quot;username&quot;, &quot;password&quot;)
+client.set_token(token.access_token)
+</code></pre>
+<h2 id="two-factor-authentication">Two-Factor Authentication</h2>
+<h3 id="login-with-2fa">Login with 2FA</h3>
+<h4 id="method-1-two-step-process">Method 1: Two-Step Process</h4>
+<pre><code class="language-python"># Step 1: Initial login
+login_result = client.auth.login(&quot;username&quot;, &quot;password&quot;)
+
+if hasattr(login_result, 'requires_2fa') and login_result.requires_2fa:
+    # Step 2: Verify 2FA
+    totp_code = input(&quot;Enter TOTP code: &quot;)
+    token = client.auth.verify_2fa(login_result.temporary_token, totp_code)
+    client.set_token(token.access_token)
+else:
+    # No 2FA required
+    client.set_token(login_result.access_token)
+</code></pre>
+<h4 id="method-2-single-method">Method 2: Single Method</h4>
+<pre><code class="language-python"># Complete 2FA login in one call
+try:
+    token = client.auth.login_with_2fa(&quot;username&quot;, &quot;password&quot;, &quot;123456&quot;)
+    client.set_token(token.access_token)
+    print(&quot;Login successful!&quot;)
+except TwoFactorAuthenticationError as e:
+    print(f&quot;2FA verification failed: {e}&quot;)
+</code></pre>
+<h3 id="2fa-management">2FA Management</h3>
+<h4 id="check-2fa-status">Check 2FA Status</h4>
+<pre><code class="language-python">status = client.auth.get_2fa_status()
+print(f&quot;2FA Enabled: {status.enabled}&quot;)
+print(f&quot;Method: {status.method}&quot;)
+print(f&quot;Backup Codes Available: {status.backup_codes_remaining}&quot;)
+</code></pre>
+<h4 id="setup-2fa-for-existing-user">Setup 2FA for Existing User</h4>
+<pre><code class="language-python"># Setup 2FA
+setup_response = client.auth.setup_2fa()
+print(f&quot;Scan this QR code: {setup_response.qr_code_url}&quot;)
+
+# After scanning QR code, confirm with TOTP
+totp_code = input(&quot;Enter TOTP code from authenticator app: &quot;)
+result = client.auth.confirm_2fa(totp_code)
+print(f&quot;2FA setup complete: {result}&quot;)
+</code></pre>
+<h4 id="disable-2fa">Disable 2FA</h4>
+<pre><code class="language-python"># Disable 2FA (requires current TOTP code and password)
+totp_code = input(&quot;Enter current TOTP code: &quot;)
+password = input(&quot;Enter your password: &quot;)
+
+result = client.auth.disable_2fa(totp_code, password)
+print(f&quot;2FA disabled: {result}&quot;)
+</code></pre>
+<h4 id="get-qr-code-image">Get QR Code Image</h4>
+<pre><code class="language-python"># Get QR code as PNG bytes
+qr_bytes = client.auth.get_qr_code()
+with open(&quot;qr_code.png&quot;, &quot;wb&quot;) as f:
+    f.write(qr_bytes)
+</code></pre>
+<h2 id="sms-2fa-framework-ready">SMS 2FA (Framework Ready)</h2>
+<pre><code class="language-python"># Request SMS code (when implemented)
+result = client.auth.request_sms_code()
+print(f&quot;SMS sent: {result}&quot;)
+</code></pre>
+<h2 id="debugging-and-troubleshooting">Debugging and Troubleshooting</h2>
+<h3 id="debug-totp-issues">Debug TOTP Issues</h3>
+<pre><code class="language-python"># Debug TOTP setup and time sync
+debug_info = client.auth.debug_2fa()
+print(f&quot;Current valid codes: {debug_info.get('valid_codes')}&quot;)
+print(f&quot;Server time: {debug_info.get('server_time')}&quot;)
+print(f&quot;Time window: {debug_info.get('time_window')}&quot;)
+</code></pre>
+<h2 id="token-management">Token Management</h2>
+<h3 id="refresh-access-token">Refresh Access Token</h3>
+<pre><code class="language-python"># Refresh expired access token
+refresh_token = &quot;your_refresh_token&quot;
+new_tokens = client.auth.refresh(refresh_token)
+client.set_token(new_tokens[&quot;access_token&quot;])
+</code></pre>
+<h2 id="error-handling">Error Handling</h2>
+<h3 id="custom-exception-handling">Custom Exception Handling</h3>
+<pre><code class="language-python">from cirtusai.auth import TwoFactorAuthenticationError
+
+try:
+    token = client.auth.login_with_2fa(&quot;username&quot;, &quot;password&quot;, &quot;invalid_code&quot;)
+except TwoFactorAuthenticationError as e:
+    print(f&quot;2FA Error: {e}&quot;)
+except requests.exceptions.HTTPError as e:
+    print(f&quot;HTTP Error: {e}&quot;)
+</code></pre>
+<h2 id="advanced-usage">Advanced Usage</h2>
+<h3 id="complete-registration-and-login-flow">Complete Registration and Login Flow</h3>
+<pre><code class="language-python">def complete_registration_flow():
+    client = CirtusAIClient(&quot;https://api.cirtusai.com&quot;)
+
+    # Register user
+    setup = client.auth.register(
+        username=&quot;new_user&quot;,
+        email=&quot;user@example.com&quot;,
+        password=&quot;secure_password&quot;
+    )
+
+    print(&quot;Please scan this QR code with your authenticator app:&quot;)
+    print(setup.qr_code_url)
+
+    # Wait for user to setup authenticator
+    totp_code = input(&quot;Enter TOTP code to confirm setup: &quot;)
+    client.auth.confirm_2fa(totp_code)
+
+    # Now login with 2FA
+    token = client.auth.login_with_2fa(&quot;new_user&quot;, &quot;secure_password&quot;, totp_code)
+    client.set_token(token.access_token)
+
+    return client
+</code></pre>
+<h3 id="session-management">Session Management</h3>
+<pre><code class="language-python">class AuthenticatedSession:
+    def __init__(self, base_url, username, password):
+        self.client = CirtusAIClient(base_url)
+        self.username = username
+        self.password = password
+        self._authenticate()
+
+    def _authenticate(self):
+        login_result = self.client.auth.login(self.username, self.password)
+
+        if hasattr(login_result, 'requires_2fa'):
+            totp_code = input(&quot;Enter TOTP code: &quot;)
+            token = self.client.auth.verify_2fa(
+                login_result.temporary_token, 
+                totp_code
+            )
+        else:
+            token = login_result
+
+        self.client.set_token(token.access_token)
+
+    def get_client(self):
+        return self.client
+</code></pre>
+<h2 id="security-best-practices">Security Best Practices</h2>
+<h3 id="1-secure-token-storage">1. Secure Token Storage</h3>
+<pre><code class="language-python">import keyring
+
+# Store tokens securely
+def store_token_securely(token):
+    keyring.set_password(&quot;cirtusai&quot;, &quot;access_token&quot;, token)
+
+def get_stored_token():
+    return keyring.get_password(&quot;cirtusai&quot;, &quot;access_token&quot;)
+</code></pre>
+<h3 id="2-automatic-token-refresh">2. Automatic Token Refresh</h3>
+<pre><code class="language-python">def auto_refresh_client(client, refresh_token):
+    try:
+        # Attempt API call
+        response = client.some_api_call()
+        return response
+    except requests.exceptions.HTTPError as e:
+        if e.response.status_code == 401:
+            # Token expired, refresh
+            new_tokens = client.auth.refresh(refresh_token)
+            client.set_token(new_tokens[&quot;access_token&quot;])
+            # Retry original call
+            return client.some_api_call()
+        raise
+</code></pre>
+<h3 id="3-backup-code-management">3. Backup Code Management</h3>
+<pre><code class="language-python">def save_backup_codes(backup_codes):
+    &quot;&quot;&quot;Save backup codes securely&quot;&quot;&quot;
+    with open(&quot;backup_codes.txt&quot;, &quot;w&quot;) as f:
+        f.write(&quot;CirtusAI Backup Codes (Store Securely):\n&quot;)
+        for i, code in enumerate(backup_codes, 1):
+            f.write(f&quot;{i}. {code}\n&quot;)
+    print(&quot;Backup codes saved to backup_codes.txt - store this file securely!&quot;)
+</code></pre>
+<h2 id="configuration">Configuration</h2>
+<h3 id="environment-variables">Environment Variables</h3>
+<pre><code class="language-python">import os
+from cirtusai import CirtusAIClient
+
+# Configure using environment variables
+client = CirtusAIClient(
+    base_url=os.getenv(&quot;CIRTUSAI_API_URL&quot;, &quot;https://api.cirtusai.com&quot;),
+    token=os.getenv(&quot;CIRTUSAI_ACCESS_TOKEN&quot;)
+)
+</code></pre>
+<h3 id="configuration-file">Configuration File</h3>
+<pre><code class="language-python">import json
+
+def load_auth_config(config_file=&quot;cirtusai_config.json&quot;):
+    with open(config_file) as f:
+        config = json.load(f)
+
+    client = CirtusAIClient(config[&quot;base_url&quot;])
+
+    if config.get(&quot;auto_login&quot;):
+        token = client.auth.login_with_2fa(
+            config[&quot;username&quot;],
+            config[&quot;password&quot;],
+            input(&quot;Enter TOTP code: &quot;)
+        )
+        client.set_token(token.access_token)
+
+    return client
+</code></pre>
+<h2 id="api-reference">API Reference</h2>
+<h3 id="authclient-methods">AuthClient Methods</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+<th>Parameters</th>
+<th>Returns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>register()</code></td>
+<td>Register new user with 2FA</td>
+<td>username, email, password, preferred_2fa_method</td>
+<td>TwoFactorSetupResponse</td>
+</tr>
+<tr>
+<td><code>login()</code></td>
+<td>Initial login step</td>
+<td>username, password</td>
+<td>Token or TwoFactorRequiredResponse</td>
+</tr>
+<tr>
+<td><code>verify_2fa()</code></td>
+<td>Complete 2FA verification</td>
+<td>temporary_token, totp_code</td>
+<td>Token</td>
+</tr>
+<tr>
+<td><code>login_with_2fa()</code></td>
+<td>Complete 2FA login flow</td>
+<td>username, password, totp_code</td>
+<td>Token</td>
+</tr>
+<tr>
+<td><code>get_2fa_status()</code></td>
+<td>Get current 2FA status</td>
+<td>-</td>
+<td>TwoFactorStatusResponse</td>
+</tr>
+<tr>
+<td><code>setup_2fa()</code></td>
+<td>Setup 2FA for existing user</td>
+<td>-</td>
+<td>TwoFactorSetupResponse</td>
+</tr>
+<tr>
+<td><code>confirm_2fa()</code></td>
+<td>Confirm 2FA setup</td>
+<td>totp_code</td>
+<td>Dict</td>
+</tr>
+<tr>
+<td><code>disable_2fa()</code></td>
+<td>Disable 2FA</td>
+<td>totp_code, password</td>
+<td>Dict</td>
+</tr>
+<tr>
+<td><code>get_qr_code()</code></td>
+<td>Get QR code image</td>
+<td>-</td>
+<td>bytes</td>
+</tr>
+<tr>
+<td><code>request_sms_code()</code></td>
+<td>Request SMS code</td>
+<td>-</td>
+<td>Dict</td>
+</tr>
+<tr>
+<td><code>debug_2fa()</code></td>
+<td>Debug TOTP issues</td>
+<td>-</td>
+<td>Dict</td>
+</tr>
+<tr>
+<td><code>refresh()</code></td>
+<td>Refresh access token</td>
+<td>refresh_token</td>
+<td>Dict</td>
+</tr>
+</tbody>
+</table>
+<h3 id="response-models">Response Models</h3>
+<h4 id="token">Token</h4>
+<pre><code class="language-python">{
+    &quot;access_token&quot;: &quot;string&quot;,
+    &quot;token_type&quot;: &quot;bearer&quot;,
+    &quot;expires_in&quot;: 3600,
+    &quot;refresh_token&quot;: &quot;string&quot;
+}
+</code></pre>
+<h4 id="twofactorrequiredresponse">TwoFactorRequiredResponse</h4>
+<pre><code class="language-python">{
+    &quot;requires_2fa&quot;: true,
+    &quot;temporary_token&quot;: &quot;string&quot;,
+    &quot;message&quot;: &quot;2FA verification required&quot;
+}
+</code></pre>
+<h4 id="twofactorsetupresponse">TwoFactorSetupResponse</h4>
+<pre><code class="language-python">{
+    &quot;secret_key&quot;: &quot;string&quot;,
+    &quot;qr_code_url&quot;: &quot;string&quot;,
+    &quot;backup_codes&quot;: [&quot;code1&quot;, &quot;code2&quot;, ...],
+    &quot;manual_entry_key&quot;: &quot;string&quot;
+}
+</code></pre></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

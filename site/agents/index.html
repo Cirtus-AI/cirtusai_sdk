@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="https://github.com/Cirtus-AI/cirtusai_sdk/agents/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Agent Management - CirtusAI SDK Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">CirtusAI SDK Documentation</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../quickstart/" class="nav-link">Quick Start</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../authentication/" class="nav-link">Authentication</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="./" class="nav-link active" aria-current="page">Agent Management</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../wallets/" class="nav-link">Wallet Operations</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../email/" class="nav-link">Email Services</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../security/" class="nav-link">Security & Compliance</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../blockchain/" class="nav-link">Blockchain Infrastructure</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../authentication/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../wallets/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/Cirtus-AI/cirtusai_sdk/edit/master/docs/agents.md" class="nav-link"><i class="fa-brands fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#cirtusai-sdk-agent-management-guide" class="nav-link">CirtusAI SDK Agent Management Guide</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#overview" class="nav-link">Overview</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#features" class="nav-link">Features</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#agent-types" class="nav-link">Agent Types</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#basic-agent-operations" class="nav-link">Basic Agent Operations</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#child-agent-management" class="nav-link">Child Agent Management</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#asset-provisioning" class="nav-link">Asset Provisioning</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#advanced-agent-workflows" class="nav-link">Advanced Agent Workflows</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#agent-monitoring-and-status" class="nav-link">Agent Monitoring and Status</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#error-handling" class="nav-link">Error Handling</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#best-practices" class="nav-link">Best Practices</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#api-reference" class="nav-link">API Reference</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="cirtusai-sdk-agent-management-guide">CirtusAI SDK Agent Management Guide</h1>
+<h2 id="overview">Overview</h2>
+<p>The CirtusAI SDK provides comprehensive agent management capabilities for both master and child agents. The agent system enables hierarchical agent architectures with granular permission management and asset provisioning.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li><strong>Master Agent Management</strong>: Core agent lifecycle operations</li>
+<li><strong>Child Agent Creation</strong>: Hierarchical agent structures</li>
+<li><strong>Permission Management</strong>: Granular access control for child agents</li>
+<li><strong>Asset Provisioning</strong>: Automated email and wallet provisioning</li>
+<li><strong>Agent Linking</strong>: Parent-child relationship management</li>
+</ul>
+<h2 id="agent-types">Agent Types</h2>
+<h3 id="master-agents">Master Agents</h3>
+<ul>
+<li>Primary user agents with full permissions</li>
+<li>Can create and manage child agents</li>
+<li>Have direct API access and authentication</li>
+</ul>
+<h3 id="child-agents">Child Agents</h3>
+<ul>
+<li>Subordinate agents with limited, delegated permissions</li>
+<li>Created and managed by master agents</li>
+<li>Inherit specific permissions from parent</li>
+<li>Can have assets (email, wallets) provisioned automatically</li>
+</ul>
+<h2 id="basic-agent-operations">Basic Agent Operations</h2>
+<h3 id="list-all-agents">List All Agents</h3>
+<pre><code class="language-python">from cirtusai import CirtusAIClient
+
+client = CirtusAIClient(&quot;https://api.cirtusai.com&quot;)
+client.set_token(&quot;your_access_token&quot;)
+
+# List all master agents for logged-in user
+agents = client.agents.list_agents()
+for agent in agents:
+    print(f&quot;Agent ID: {agent['id']}&quot;)
+    print(f&quot;Name: {agent['name']}&quot;)
+    print(f&quot;Status: {agent['status']}&quot;)
+</code></pre>
+<h3 id="get-specific-agent">Get Specific Agent</h3>
+<pre><code class="language-python"># Retrieve specific agent details
+agent_id = &quot;agent_123&quot;
+agent = client.agents.get_agent(agent_id)
+
+print(f&quot;Agent Type: {agent['type']}&quot;)
+print(f&quot;Permissions: {agent.get('permissions_granted', [])}&quot;)
+print(f&quot;Created: {agent['created_at']}&quot;)
+</code></pre>
+<h3 id="delete-agent">Delete Agent</h3>
+<pre><code class="language-python"># Delete an agent (master or child)
+client.agents.delete_agent(&quot;agent_123&quot;)
+print(&quot;Agent deleted successfully&quot;)
+</code></pre>
+<h2 id="child-agent-management">Child Agent Management</h2>
+<h3 id="create-child-agent">Create Child Agent</h3>
+<pre><code class="language-python"># Create a new child agent with specific permissions
+child_agent = client.agents.create_child_agent(
+    parent_id=&quot;master_agent_123&quot;,
+    name=&quot;Email Processing Agent&quot;,
+    permissions_granted=[&quot;email:read&quot;, &quot;email:send&quot;]
+)
+
+print(f&quot;Child Agent ID: {child_agent['id']}&quot;)
+print(f&quot;Parent ID: {child_agent['parent_id']}&quot;)
+print(f&quot;Permissions: {child_agent['permissions_granted']}&quot;)
+</code></pre>
+<h3 id="list-child-agents">List Child Agents</h3>
+<pre><code class="language-python"># Get all child agents for the current master agent
+children = client.agents.get_children()
+for child in children:
+    print(f&quot;Child ID: {child['id']}&quot;)
+    print(f&quot;Name: {child['name']}&quot;)
+    print(f&quot;Permissions: {child['permissions_granted']}&quot;)
+</code></pre>
+<h3 id="update-child-permissions">Update Child Permissions</h3>
+<pre><code class="language-python"># Update permissions for a child agent
+new_permissions = {
+    &quot;email:read&quot;: True,
+    &quot;email:send&quot;: True,
+    &quot;wallet:read&quot;: True,
+    &quot;wallet:send&quot;: False
+}
+
+updated_agent = client.agents.update_child_permissions(
+    child_id=&quot;child_agent_456&quot;,
+    permissions=new_permissions
+)
+
+print(f&quot;Updated permissions: {updated_agent['permissions']}&quot;)
+</code></pre>
+<h3 id="unlink-child-agent">Unlink Child Agent</h3>
+<pre><code class="language-python"># Remove/delete a child agent
+client.agents.unlink_child_agent(&quot;child_agent_456&quot;)
+print(&quot;Child agent unlinked successfully&quot;)
+</code></pre>
+<h2 id="asset-provisioning">Asset Provisioning</h2>
+<h3 id="provision-email-assets">Provision Email Assets</h3>
+<pre><code class="language-python"># Automatically provision email capability for a child agent
+email_asset = client.agents.provision_email(&quot;child_agent_456&quot;)
+
+print(f&quot;Email provisioned: {email_asset['email_address']}&quot;)
+print(f&quot;Provider: {email_asset['provider']}&quot;)
+print(f&quot;Status: {email_asset['status']}&quot;)
+</code></pre>
+<h3 id="provision-wallet-assets">Provision Wallet Assets</h3>
+<pre><code class="language-python"># Provision crypto wallet for child agent
+wallet_asset = client.agents.provision_wallet(
+    agent_id=&quot;child_agent_456&quot;,
+    chain=&quot;ethereum&quot;  # or &quot;polygon&quot;, &quot;arbitrum&quot;, etc.
+)
+
+print(f&quot;Wallet Address: {wallet_asset['address']}&quot;)
+print(f&quot;Chain: {wallet_asset['chain']}&quot;)
+print(f&quot;Balance: {wallet_asset['balance']}&quot;)
+</code></pre>
+<h2 id="advanced-agent-workflows">Advanced Agent Workflows</h2>
+<h3 id="multi-purpose-agent-creation">Multi-Purpose Agent Creation</h3>
+<pre><code class="language-python">def create_comprehensive_agent(client, parent_id, name):
+    &quot;&quot;&quot;Create a child agent with email and wallet capabilities&quot;&quot;&quot;
+
+    # Step 1: Create child agent
+    child = client.agents.create_child_agent(
+        parent_id=parent_id,
+        name=name,
+        permissions_granted=[
+            &quot;email:read&quot;, &quot;email:send&quot;,
+            &quot;wallet:read&quot;, &quot;wallet:send&quot;
+        ]
+    )
+
+    child_id = child['id']
+    print(f&quot;Created child agent: {child_id}&quot;)
+
+    # Step 2: Provision email
+    try:
+        email_asset = client.agents.provision_email(child_id)
+        print(f&quot;Email provisioned: {email_asset['email_address']}&quot;)
+    except Exception as e:
+        print(f&quot;Email provisioning failed: {e}&quot;)
+
+    # Step 3: Provision wallet
+    try:
+        wallet_asset = client.agents.provision_wallet(child_id, &quot;ethereum&quot;)
+        print(f&quot;Wallet provisioned: {wallet_asset['address']}&quot;)
+    except Exception as e:
+        print(f&quot;Wallet provisioning failed: {e}&quot;)
+
+    return child
+
+# Usage
+master_agent_id = &quot;master_123&quot;
+agent = create_comprehensive_agent(
+    client, 
+    master_agent_id, 
+    &quot;Trading Assistant Agent&quot;
+)
+</code></pre>
+<h3 id="agent-permission-matrix">Agent Permission Matrix</h3>
+<pre><code class="language-python">def setup_permission_matrix(client, child_id, role):
+    &quot;&quot;&quot;Setup permissions based on agent role&quot;&quot;&quot;
+
+    permission_templates = {
+        &quot;email_only&quot;: {
+            &quot;email:read&quot;: True,
+            &quot;email:send&quot;: True,
+            &quot;wallet:read&quot;: False,
+            &quot;wallet:send&quot;: False
+        },
+        &quot;wallet_only&quot;: {
+            &quot;email:read&quot;: False,
+            &quot;email:send&quot;: False,
+            &quot;wallet:read&quot;: True,
+            &quot;wallet:send&quot;: True
+        },
+        &quot;full_access&quot;: {
+            &quot;email:read&quot;: True,
+            &quot;email:send&quot;: True,
+            &quot;wallet:read&quot;: True,
+            &quot;wallet:send&quot;: True
+        },
+        &quot;read_only&quot;: {
+            &quot;email:read&quot;: True,
+            &quot;email:send&quot;: False,
+            &quot;wallet:read&quot;: True,
+            &quot;wallet:send&quot;: False
+        }
+    }
+
+    permissions = permission_templates.get(role, permission_templates[&quot;read_only&quot;])
+    return client.agents.update_child_permissions(child_id, permissions)
+
+# Usage examples
+setup_permission_matrix(client, &quot;child_123&quot;, &quot;email_only&quot;)
+setup_permission_matrix(client, &quot;child_456&quot;, &quot;full_access&quot;)
+</code></pre>
+<h3 id="bulk-agent-management">Bulk Agent Management</h3>
+<pre><code class="language-python">def create_agent_fleet(client, parent_id, agent_configs):
+    &quot;&quot;&quot;Create multiple child agents with different configurations&quot;&quot;&quot;
+
+    created_agents = []
+
+    for config in agent_configs:
+        try:
+            # Create child agent
+            child = client.agents.create_child_agent(
+                parent_id=parent_id,
+                name=config[&quot;name&quot;],
+                permissions_granted=config[&quot;permissions&quot;]
+            )
+
+            # Provision assets based on config
+            if config.get(&quot;needs_email&quot;):
+                client.agents.provision_email(child['id'])
+
+            if config.get(&quot;needs_wallet&quot;):
+                client.agents.provision_wallet(
+                    child['id'], 
+                    config.get(&quot;chain&quot;, &quot;ethereum&quot;)
+                )
+
+            created_agents.append(child)
+            print(f&quot;Created agent: {child['name']} ({child['id']})&quot;)
+
+        except Exception as e:
+            print(f&quot;Failed to create agent {config['name']}: {e}&quot;)
+
+    return created_agents
+
+# Usage
+agent_configs = [
+    {
+        &quot;name&quot;: &quot;Email Monitor Agent&quot;,
+        &quot;permissions&quot;: [&quot;email:read&quot;],
+        &quot;needs_email&quot;: True,
+        &quot;needs_wallet&quot;: False
+    },
+    {
+        &quot;name&quot;: &quot;Trading Agent&quot;,
+        &quot;permissions&quot;: [&quot;wallet:read&quot;, &quot;wallet:send&quot;],
+        &quot;needs_email&quot;: False,
+        &quot;needs_wallet&quot;: True,
+        &quot;chain&quot;: &quot;ethereum&quot;
+    },
+    {
+        &quot;name&quot;: &quot;Notification Agent&quot;,
+        &quot;permissions&quot;: [&quot;email:read&quot;, &quot;email:send&quot;],
+        &quot;needs_email&quot;: True,
+        &quot;needs_wallet&quot;: False
+    }
+]
+
+fleet = create_agent_fleet(client, &quot;master_123&quot;, agent_configs)
+</code></pre>
+<h2 id="agent-monitoring-and-status">Agent Monitoring and Status</h2>
+<h3 id="agent-health-check">Agent Health Check</h3>
+<pre><code class="language-python">def check_agent_health(client, agent_id):
+    &quot;&quot;&quot;Check agent status and asset health&quot;&quot;&quot;
+
+    try:
+        agent = client.agents.get_agent(agent_id)
+        health_report = {
+            &quot;agent_id&quot;: agent_id,
+            &quot;status&quot;: agent.get(&quot;status&quot;, &quot;unknown&quot;),
+            &quot;permissions&quot;: agent.get(&quot;permissions_granted&quot;, []),
+            &quot;assets&quot;: {
+                &quot;email&quot;: False,
+                &quot;wallet&quot;: False
+            }
+        }
+
+        # Check if agent has email capabilities
+        if &quot;email:read&quot; in agent.get(&quot;permissions_granted&quot;, []):
+            try:
+                # Try to access email
+                client.email.read_inbox(agent_id)
+                health_report[&quot;assets&quot;][&quot;email&quot;] = True
+            except:
+                health_report[&quot;assets&quot;][&quot;email&quot;] = False
+
+        # Check if agent has wallet capabilities
+        if &quot;wallet:read&quot; in agent.get(&quot;permissions_granted&quot;, []):
+            try:
+                # Try to access wallet
+                client.wallets.list_wallets()
+                health_report[&quot;assets&quot;][&quot;wallet&quot;] = True
+            except:
+                health_report[&quot;assets&quot;][&quot;wallet&quot;] = False
+
+        return health_report
+
+    except Exception as e:
+        return {&quot;agent_id&quot;: agent_id, &quot;error&quot;: str(e)}
+
+# Usage
+health = check_agent_health(client, &quot;child_agent_123&quot;)
+print(f&quot;Agent Health: {health}&quot;)
+</code></pre>
+<h3 id="agent-activity-monitoring">Agent Activity Monitoring</h3>
+<pre><code class="language-python">def monitor_agent_activity(client):
+    &quot;&quot;&quot;Monitor all agent activity&quot;&quot;&quot;
+
+    agents = client.agents.list_agents()
+    children = client.agents.get_children()
+
+    print(&quot;=== Agent Activity Report ===&quot;)
+    print(f&quot;Master Agents: {len(agents)}&quot;)
+    print(f&quot;Child Agents: {len(children)}&quot;)
+
+    for child in children:
+        permissions = child.get('permissions_granted', [])
+        print(f&quot;\nChild Agent: {child['name']}&quot;)
+        print(f&quot;  ID: {child['id']}&quot;)
+        print(f&quot;  Permissions: {', '.join(permissions)}&quot;)
+
+        # Check recent activity (if available)
+        health = check_agent_health(client, child['id'])
+        print(f&quot;  Email Active: {health['assets']['email']}&quot;)
+        print(f&quot;  Wallet Active: {health['assets']['wallet']}&quot;)
+
+# Usage
+monitor_agent_activity(client)
+</code></pre>
+<h2 id="error-handling">Error Handling</h2>
+<h3 id="common-error-scenarios">Common Error Scenarios</h3>
+<pre><code class="language-python">def safe_agent_operation(client, operation, *args, **kwargs):
+    &quot;&quot;&quot;Safely execute agent operations with error handling&quot;&quot;&quot;
+
+    try:
+        result = getattr(client.agents, operation)(*args, **kwargs)
+        return {&quot;success&quot;: True, &quot;result&quot;: result}
+
+    except requests.exceptions.HTTPError as e:
+        if e.response.status_code == 403:
+            return {&quot;success&quot;: False, &quot;error&quot;: &quot;Permission denied&quot;}
+        elif e.response.status_code == 404:
+            return {&quot;success&quot;: False, &quot;error&quot;: &quot;Agent not found&quot;}
+        else:
+            return {&quot;success&quot;: False, &quot;error&quot;: f&quot;HTTP error: {e}&quot;}
+
+    except Exception as e:
+        return {&quot;success&quot;: False, &quot;error&quot;: f&quot;Unexpected error: {e}&quot;}
+
+# Usage examples
+result = safe_agent_operation(client, &quot;get_agent&quot;, &quot;invalid_agent_id&quot;)
+if not result[&quot;success&quot;]:
+    print(f&quot;Operation failed: {result['error']}&quot;)
+</code></pre>
+<h2 id="best-practices">Best Practices</h2>
+<h3 id="1-agent-naming-convention">1. Agent Naming Convention</h3>
+<pre><code class="language-python">def generate_agent_name(purpose, environment=&quot;prod&quot;):
+    &quot;&quot;&quot;Generate standardized agent names&quot;&quot;&quot;
+    timestamp = datetime.now().strftime(&quot;%Y%m%d&quot;)
+    return f&quot;{environment}_{purpose}_{timestamp}&quot;
+
+# Examples
+email_agent = generate_agent_name(&quot;email_processor&quot;, &quot;dev&quot;)
+trading_agent = generate_agent_name(&quot;trading_bot&quot;, &quot;prod&quot;)
+</code></pre>
+<h3 id="2-permission-management">2. Permission Management</h3>
+<pre><code class="language-python">class PermissionManager:
+    &quot;&quot;&quot;Manage agent permissions systematically&quot;&quot;&quot;
+
+    PERMISSION_LEVELS = {
+        &quot;minimal&quot;: [&quot;email:read&quot;],
+        &quot;standard&quot;: [&quot;email:read&quot;, &quot;email:send&quot;],
+        &quot;advanced&quot;: [&quot;email:read&quot;, &quot;email:send&quot;, &quot;wallet:read&quot;],
+        &quot;full&quot;: [&quot;email:read&quot;, &quot;email:send&quot;, &quot;wallet:read&quot;, &quot;wallet:send&quot;]
+    }
+
+    @classmethod
+    def get_permissions(cls, level):
+        return cls.PERMISSION_LEVELS.get(level, cls.PERMISSION_LEVELS[&quot;minimal&quot;])
+
+    @classmethod
+    def validate_permissions(cls, permissions):
+        valid_permissions = [
+            &quot;email:read&quot;, &quot;email:send&quot;,
+            &quot;wallet:read&quot;, &quot;wallet:send&quot;
+        ]
+        return all(perm in valid_permissions for perm in permissions)
+
+# Usage
+permissions = PermissionManager.get_permissions(&quot;standard&quot;)
+child = client.agents.create_child_agent(
+    parent_id=&quot;master_123&quot;,
+    name=&quot;Standard Agent&quot;,
+    permissions_granted=permissions
+)
+</code></pre>
+<h3 id="3-asset-lifecycle-management">3. Asset Lifecycle Management</h3>
+<pre><code class="language-python">class AgentAssetManager:
+    &quot;&quot;&quot;Manage agent assets throughout lifecycle&quot;&quot;&quot;
+
+    def __init__(self, client):
+        self.client = client
+
+    def setup_complete_agent(self, parent_id, name, needs_email=True, needs_wallet=True):
+        &quot;&quot;&quot;Setup agent with all required assets&quot;&quot;&quot;
+
+        # Determine permissions based on needs
+        permissions = []
+        if needs_email:
+            permissions.extend([&quot;email:read&quot;, &quot;email:send&quot;])
+        if needs_wallet:
+            permissions.extend([&quot;wallet:read&quot;, &quot;wallet:send&quot;])
+
+        # Create agent
+        agent = self.client.agents.create_child_agent(
+            parent_id=parent_id,
+            name=name,
+            permissions_granted=permissions
+        )
+
+        agent_id = agent['id']
+
+        # Provision assets
+        if needs_email:
+            self.client.agents.provision_email(agent_id)
+
+        if needs_wallet:
+            self.client.agents.provision_wallet(agent_id)
+
+        return agent
+
+    def cleanup_agent(self, agent_id):
+        &quot;&quot;&quot;Clean up agent and its assets&quot;&quot;&quot;
+        try:
+            self.client.agents.unlink_child_agent(agent_id)
+            return True
+        except Exception as e:
+            print(f&quot;Cleanup failed: {e}&quot;)
+            return False
+
+# Usage
+manager = AgentAssetManager(client)
+agent = manager.setup_complete_agent(
+    parent_id=&quot;master_123&quot;,
+    name=&quot;Complete Agent&quot;,
+    needs_email=True,
+    needs_wallet=True
+)
+</code></pre>
+<h2 id="api-reference">API Reference</h2>
+<h3 id="agentsclient-methods">AgentsClient Methods</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+<th>Parameters</th>
+<th>Returns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>list_agents()</code></td>
+<td>List all master agents</td>
+<td>-</td>
+<td>List[Dict]</td>
+</tr>
+<tr>
+<td><code>get_agent()</code></td>
+<td>Get specific agent details</td>
+<td>agent_id</td>
+<td>Dict</td>
+</tr>
+<tr>
+<td><code>create_child_agent()</code></td>
+<td>Create new child agent</td>
+<td>parent_id, name, permissions_granted</td>
+<td>Dict</td>
+</tr>
+<tr>
+<td><code>delete_agent()</code></td>
+<td>Delete agent</td>
+<td>agent_id</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>provision_email()</code></td>
+<td>Provision email for child agent</td>
+<td>agent_id</td>
+<td>Dict</td>
+</tr>
+<tr>
+<td><code>provision_wallet()</code></td>
+<td>Provision wallet for child agent</td>
+<td>agent_id, chain</td>
+<td>Dict</td>
+</tr>
+<tr>
+<td><code>get_children()</code></td>
+<td>List all child agents</td>
+<td>-</td>
+<td>List[Dict]</td>
+</tr>
+<tr>
+<td><code>update_child_permissions()</code></td>
+<td>Update child permissions</td>
+<td>child_id, permissions</td>
+<td>Dict</td>
+</tr>
+<tr>
+<td><code>unlink_child_agent()</code></td>
+<td>Remove child agent</td>
+<td>child_id</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<h3 id="agent-object-structure">Agent Object Structure</h3>
+<pre><code class="language-python">{
+    &quot;id&quot;: &quot;agent_123&quot;,
+    &quot;name&quot;: &quot;My Agent&quot;,
+    &quot;type&quot;: &quot;master&quot; | &quot;child&quot;,
+    &quot;status&quot;: &quot;active&quot; | &quot;inactive&quot;,
+    &quot;parent_id&quot;: &quot;master_123&quot;,  # for child agents
+    &quot;permissions_granted&quot;: [&quot;email:read&quot;, &quot;email:send&quot;],
+    &quot;created_at&quot;: &quot;2024-01-01T00:00:00Z&quot;,
+    &quot;updated_at&quot;: &quot;2024-01-01T00:00:00Z&quot;
+}
+</code></pre>
+<h3 id="available-permissions">Available Permissions</h3>
+<ul>
+<li><code>email:read</code> - Read email messages</li>
+<li><code>email:send</code> - Send email messages  </li>
+<li><code>wallet:read</code> - View wallet balances and transactions</li>
+<li><code>wallet:send</code> - Execute wallet transactions</li>
+</ul></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

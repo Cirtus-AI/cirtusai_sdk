@@ -141,6 +141,37 @@ def unlink(ctx, child_id):
     ctx.obj['client'].agents.unlink_child_agent(child_id)
     # match expected CLI test message
     click.echo(f"Unlinked child agent {child_id}")
+    
+@main.group()
+@click.pass_context
+def compliance(ctx):
+    """Compliance commands (KYC etc.)"""
+
+@compliance.command(name='get-kyc-status')
+@click.pass_context
+def get_kyc_status(ctx):
+    """Get KYC status for the current user"""
+    click.echo(json.dumps(ctx.obj['client'].compliance.get_kyc_status(), indent=2))
+
+@compliance.command(name='initiate-kyc')
+@click.pass_context
+def cli_initiate_kyc(ctx):
+    """Initiate the KYC verification flow for the current user"""
+    click.echo(json.dumps(ctx.obj['client'].compliance.initiate_kyc(), indent=2))
+
+@compliance.command(name='auto-submit-kyc')
+@click.pass_context
+def auto_submit_kyc(ctx):
+    """One-click KYC: pull docs from S3, OCR, and submit for KYC"""
+    click.echo(json.dumps(ctx.obj['client'].compliance.auto_submit_kyc(), indent=2))
+    
+@compliance.command(name='bulk-auto-submit-kyc')
+@click.argument('user_ids', type=str)
+@click.pass_context
+def bulk_auto_submit_kyc_cmd(ctx, user_ids):
+    """Bulk one-click KYC: process multiple user IDs (comma-separated)."""
+    ids = [uid.strip() for uid in user_ids.split(',')]
+    click.echo(json.dumps(ctx.obj['client'].compliance.bulk_auto_submit_kyc(ids), indent=2))
 
 # Wallet commands
 @main.group()
@@ -552,3 +583,143 @@ def child_services(ctx):
 def list_services(ctx, child_id):
     """List services for a child agent"""
     click.echo(json.dumps(ctx.obj['client'].child_services.list_services(child_id), indent=2))
+
+# ================================
+# Compliance Commands (v0.3.0)
+# ================================
+
+@main.group()
+@click.pass_context
+def compliance(ctx):
+    """Advanced compliance and monitoring commands"""
+
+@compliance.command(name='kyc-check')
+@click.argument('user_id')
+@click.option('--identity-check', is_flag=True, help='Perform identity verification')
+@click.option('--document-scan', is_flag=True, help='Scan documents for compliance')
+@click.pass_context
+def kyc_check(ctx, user_id, identity_check, document_scan):
+    """Perform KYC verification for a user"""
+    result = ctx.obj['client'].compliance.kyc_verification(
+        user_id, 
+        identity_check=identity_check, 
+        document_scan=document_scan
+    )
+    click.echo(json.dumps(result, indent=2))
+
+@compliance.command(name='process-document')
+@click.argument('file_path')
+@click.option('--document-type', required=True, help='Type of document (passport, driver_license, utility_bill, bank_statement)')
+@click.option('--user-id', required=True, help='User ID for document association')
+@click.pass_context
+def process_document(ctx, file_path, document_type, user_id):
+    """Process and validate compliance documents"""
+    with open(file_path, 'rb') as f:
+        result = ctx.obj['client'].compliance.process_document(
+            f, document_type, user_id
+        )
+    click.echo(json.dumps(result, indent=2))
+
+@compliance.command(name='audit-trail')
+@click.option('--user-id', help='Filter by user ID')
+@click.option('--action-type', help='Filter by action type')
+@click.option('--start-date', help='Start date (YYYY-MM-DD)')
+@click.option('--end-date', help='End date (YYYY-MM-DD)')
+@click.option('--limit', default=100, help='Number of records to retrieve')
+@click.pass_context
+def audit_trail(ctx, user_id, action_type, start_date, end_date, limit):
+    """Retrieve audit trail records"""
+    result = ctx.obj['client'].compliance.get_audit_trail(
+        user_id=user_id,
+        action_type=action_type,
+        start_date=start_date,
+        end_date=end_date,
+        limit=limit
+    )
+    click.echo(json.dumps(result, indent=2))
+
+@compliance.command(name='webhook-status')
+@click.option('--webhook-id', help='Specific webhook ID to check')
+@click.pass_context
+def webhook_status(ctx, webhook_id):
+    """Check webhook delivery status and retry queue"""
+    if webhook_id:
+        result = ctx.obj['client'].compliance.get_webhook_status(webhook_id)
+    else:
+        result = ctx.obj['client'].compliance.list_webhook_deliveries()
+    click.echo(json.dumps(result, indent=2))
+
+@compliance.command(name='retry-webhook')
+@click.argument('webhook_id')
+@click.pass_context
+def retry_webhook(ctx, webhook_id):
+    """Manually retry a failed webhook delivery"""
+    result = ctx.obj['client'].compliance.retry_webhook(webhook_id)
+    click.echo(json.dumps(result, indent=2))
+
+@compliance.command(name='rate-limit-status')
+@click.option('--user-id', help='Check rate limits for specific user')
+@click.pass_context
+def rate_limit_status(ctx, user_id):
+    """Check current rate limiting status"""
+    result = ctx.obj['client'].compliance.get_rate_limit_status(user_id)
+    click.echo(json.dumps(result, indent=2))
+
+# Advanced Compliance Commands (Enterprise)
+@compliance.group(name='advanced')
+@click.pass_context
+def compliance_advanced(ctx):
+    """Advanced compliance features for enterprise users"""
+
+@compliance_advanced.command(name='bulk-process')
+@click.argument('directory_path')
+@click.option('--document-type', required=True, help='Type of documents to process')
+@click.option('--batch-size', default=10, help='Number of documents per batch')
+@click.pass_context
+def bulk_process_documents(ctx, directory_path, document_type, batch_size):
+    """Bulk process multiple compliance documents"""
+    import os
+    files = [f for f in os.listdir(directory_path) if os.path.isfile(os.path.join(directory_path, f))]
+    
+    if not hasattr(ctx.obj['client'], 'compliance_advanced'):
+        click.echo("Error: Advanced compliance features not available. Please upgrade your plan.")
+        return
+    
+    result = ctx.obj['client'].compliance_advanced.bulk_process_documents(
+        directory_path, document_type, batch_size
+    )
+    click.echo(json.dumps(result, indent=2))
+
+@compliance_advanced.command(name='compliance-dashboard')
+@click.option('--export-format', type=click.Choice(['json', 'csv']), default='json')
+@click.pass_context
+def compliance_dashboard(ctx, export_format):
+    """Generate compliance dashboard data"""
+    if not hasattr(ctx.obj['client'], 'compliance_advanced'):
+        click.echo("Error: Advanced compliance features not available. Please upgrade your plan.")
+        return
+    
+    result = ctx.obj['client'].compliance_advanced.get_dashboard_data()
+    
+    if export_format == 'csv':
+        import csv
+        import sys
+        writer = csv.writer(sys.stdout)
+        if 'metrics' in result:
+            writer.writerow(['Metric', 'Value'])
+            for key, value in result['metrics'].items():
+                writer.writerow([key, value])
+    else:
+        click.echo(json.dumps(result, indent=2))
+
+@compliance_advanced.command(name='risk-assessment')
+@click.argument('user_id')
+@click.pass_context
+def risk_assessment(ctx, user_id):
+    """Perform comprehensive risk assessment for a user"""
+    if not hasattr(ctx.obj['client'], 'compliance_advanced'):
+        click.echo("Error: Advanced compliance features not available. Please upgrade your plan.")
+        return
+    
+    result = ctx.obj['client'].compliance_advanced.perform_risk_assessment(user_id)
+    click.echo(json.dumps(result, indent=2))

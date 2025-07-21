@@ -7,7 +7,7 @@ from .identity import IdentityClient
 from .governance import GovernanceClient
 from .reputation import ReputationClient
 from .bridge import BridgeClient, AssetsClient
-from .security import MonitoringClient, ComplianceClient
+from .security import MonitoringClient, ComplianceClient, AdvancedComplianceClient
 from .email import EmailClient
 from .marketplace import MarketplaceClient
 from .swap import SwapClient
@@ -41,6 +41,7 @@ class CirtusAIClient:
         self.child_assets = ChildAssetsClient(self.session, self.base_url)
         self.monitoring = MonitoringClient(self.session, self.base_url)
         self.compliance = ComplianceClient(self.session, self.base_url)
+        self.compliance_advanced = AdvancedComplianceClient(self.session, self.base_url)
         self.email = EmailClient(self.session, self.base_url)
 
     def set_token(self, token: str):

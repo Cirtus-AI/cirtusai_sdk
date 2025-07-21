@@ -1,7 +1,7 @@
 Metadata-Version: 2.4
 Name: cirtusai-sdk
-Version: 0.2.0b2
-Summary: A Python SDK for the CirtusAI backend: agent, wallet, and credential management.
+Version: 0.2.2
+Summary: A Python SDK for the CirtusAI backend: agent, wallet, credential management, and advanced compliance features.
 Author: CirtusAI Team
 Requires-Python: >=3.8
 Description-Content-Type: text/markdown
@@ -26,33 +26,83 @@ Dynamic: summary
 
 # CirtusAI Python SDK - Complete Developer Guide (Updated July 2025)
 
-**The Most Comprehensive SDK for Autonomous AI Agent Management with Blockchain-Level Security**
+v0.2.2 (beta)
+
+## CirtusAI — Autonomy Verified
+
+_The Trust Layer for the Agent Economy_
+
+The most comprehensive SDK for autonomous AI agent management with blockchain-level security
 
 The CirtusAI Python SDK provides everything developers need to build powerful, secure, and compliant AI agent applications. From basic wallet management to advanced smart contract automation, from governance participation to real-world asset tokenization - this SDK unlocks the complete power of the CirtusAI platform.
 
 ## What Makes CirtusAI Unique
 
-- Enterprise-Grade 2FA Security: Mandatory TOTP authentication with time-sync tolerance
-- Smart Contract Agent Wallets: On-chain spending limits, whitelists, and automated rule enforcement  
-- Multi-Chain Support: Ethereum, Polygon, Arbitrum, and more
-- Email Integration: IMAP/SMTP and OAuth for seamless communication
-- DAO Governance: Participate in on-chain voting and proposal management
-- DeFi Integration: Swaps, yield farming, cross-chain bridges, and gas abstraction
-- Real-World Assets (RWA): Tokenize and manage physical assets on-chain
-- Compliance Built-In: KYC/AML, audit trails, and regulatory reporting
-- Production Ready: Sync/async support, comprehensive error handling, and extensive testing
+- **Enterprise-Grade 2FA Security**: Mandatory TOTP authentication with time-sync tolerance
+- **Smart Contract Agent Wallets**: On-chain spending limits, whitelists, and automated rule enforcement  
+- **Multi-Chain Support**: Ethereum, Polygon, Arbitrum, and more
+- **Email Integration**: IMAP/SMTP and OAuth for seamless communication
+- **DAO Governance**: Participate in on-chain voting and proposal management
+- **DeFi Integration**: Swaps, yield farming, cross-chain bridges, and gas abstraction
+- **Real-World Assets (RWA)**: Tokenize and manage physical assets on-chain
+- **Advanced Compliance (NEW v0.3.0)**: KYC/AML verification, document processing, audit trails, webhook management
+- **Asynchronous Processing**: Celery-based background task processing for enterprise scalability
+- **Tamper-Evident Audit Logging**: Hash chain-secured audit trails with cryptographic integrity
+- **Rate Limiting & Permissions**: Advanced API protection with user-based rate limiting
+- **Production Ready**: Sync/async support, comprehensive error handling, and extensive testing
 
 ---
 
 ## Installation
 
-```bash
-# Install the latest stable SDK
-pip install cirtusai-sdk
+Install the latest stable SDK:
 
-# Install the beta/pre-release version
+```bash
+pip install cirtusai-sdk
+```
+
+Install the beta/pre-release version:
+
+```bash
 pip install --pre cirtusai-sdk
 ```
+
+---
+
+## Command Line Interface
+
+The SDK includes a powerful CLI for common tasks. After installing:
+
+```bash
+pip install cirtusai-sdk
+```
+
+Use the `cirtusai` command:
+
+```bash
+cirtusai --help
+```
+
+Available commands:
+
+```bash
+cirtusai auth           Authentication (login, register, refresh, verify-2fa)
+cirtusai agents         Agent management (list, get, create-child, delete, children, provision-email, provision-wallet, update-permissions, unlink)
+cirtusai wallets        Wallet & email account management (list-assets, list-email, create-email, get-email, update-email, delete-email, refresh-email-token, add-crypto)
+cirtusai identity       DID & credential management (get-did, issue-credential, verify-credential)
+cirtusai governance     Governance (create-proposal, cast-vote, get-proposal-state)
+cirtusai reputation     Soulbound token commands (issue-sbt, get-sbt-owner)
+cirtusai bridge         Cross-chain bridge (get-quote, transfer)
+cirtusai assets         Asset view (view, refresh)
+cirtusai marketplace    Marketplace (create-listing, list-listings, get-listing, update-listing, cancel-listing, place-bid, list-bids, accept-bid)
+cirtusai swap           Token swap (get-quote, execute, cancel)
+cirtusai nfts           NFT management (list, get-metadata, mint, batch-transfer, burn)
+cirtusai child-assets   Child asset management (list, get, create, update, delete)
+cirtusai child-services Child service management (list)
+cirtusai compliance     🆕 Compliance & monitoring (kyc-check, process-document, audit-trail, webhook-status, retry-webhook, rate-limit-status)
+cirtusai compliance advanced  🆕 Enterprise compliance features (bulk-process, compliance-dashboard, risk-assessment)
+```
+```bash
 
 ---
 
@@ -60,34 +110,42 @@ pip install --pre cirtusai-sdk
 
 ### 1. Authentication with 2FA (Required)
 
-Every CirtusAI application starts with secure authentication:
+Every CirtusAI application starts with secure authentication. First, import the client and error classes, then initialize the client with your backend URL:
 
 ```python
 from cirtusai import CirtusAIClient
 from cirtusai.auth import TwoFactorAuthenticationError
 
-# Initialize the client
 client = CirtusAIClient(base_url="http://localhost:8000")
+```
 
-# Register a new user (automatic 2FA setup)
+Register a new user (automatic 2FA setup):
+
+```python
 setup_info = client.auth.register(
-    username="mycompany_agent", 
+    username="mycompany_agent",
     email="admin@mycompany.com",
     password="SuperSecure123!",
     preferred_2fa_method="totp"
 )
+```
 
-# Save the QR code for your authenticator app
+Save the QR code, secret, and backup codes provided for your authenticator app:
+
+```python
 print(f"Scan QR: data:image/png;base64,{setup_info.qr_code_image}")
 print(f"Secret: {setup_info.secret}")
 print(f"Backup codes: {setup_info.backup_codes}")
+```
 
-# Login with 2FA (one-step method)
+Login with 2FA using a current TOTP code:
+
+```python
 try:
     token = client.auth.login_with_2fa(
         "mycompany_agent",
         "SuperSecure123!",
-        "123456"  # Current TOTP code from authenticator
+        "123456"
     )
     client.set_token(token.access_token)
     print("Authenticated successfully!")
@@ -97,19 +155,23 @@ except TwoFactorAuthenticationError as e:
 
 ### 2. Create Your First Wallet
 
+Create a new HD wallet
 ```python
-# Create a new HD wallet
 wallet = client.wallets.create_wallet(chain="ethereum")
 print(f"New wallet: {wallet['wallet_address']}")
 
-# Import an existing wallet
+```
+Import an existing wallet
+```python
 imported = client.wallets.import_wallet(
     chain="ethereum",
     private_key="0x1234567890abcdef..."  # Your private key
 )
 print(f"Imported wallet: {imported['wallet_address']}")
 
-# List all your wallets
+```
+List all your wallets
+```python
 wallets = client.wallets.list_wallets()
 for w in wallets:
     print(f"  {w['name']}: {w['wallet_address']} ({w['chain']})")
@@ -119,12 +181,14 @@ for w in wallets:
 
 Agent wallets are smart contracts with programmable rules:
 
+Deploy a smart contract agent wallet
 ```python
-# Deploy a smart contract agent wallet
 agent_wallet = client.wallets.deploy_agent_wallet()
 print(f"Agent wallet deployed: {agent_wallet['wallet_address']}")
 
-# Set spending limits (daily ETH limit)
+```
+Set spending limits (daily ETH limit)
+```python
 tx_hash = client.wallets.set_spending_limit(
     address=agent_wallet['wallet_address'],
     token="0x0",  # ETH
@@ -133,7 +197,9 @@ tx_hash = client.wallets.set_spending_limit(
 )
 print(f"Spending limit set: {tx_hash}")
 
-# Add trusted addresses to whitelist
+```
+Add trusted addresses to whitelist
+```python
 whitelist_tx = client.wallets.update_whitelist(
     address=agent_wallet['wallet_address'],
     target="0x742d35Cc6634C0532925a3b8D0715a99C7DCF",
@@ -144,16 +210,20 @@ print(f"Address whitelisted: {whitelist_tx}")
 
 ### 4. Manage Child Agents
 
+List master agents
 ```python
-# List master agents
 agents = client.agents.list_agents()
 print(f"Master agents: {agents}")
 
-# Create a child agent under a master agent
+```
+Create a child agent under a master agent
+```python
 child = client.agents.create_child_agent("my_master_id", "assistant_bot")
 print(f"Created child agent: {child['id']}")
 
-# List all child agents
+```
+List all child agents
+```python
 children = client.agents.get_children()
 print(f"Child agents: {children}")
 ```
@@ -162,31 +232,39 @@ print(f"Child agents: {children}")
 
 ## Complete Feature Guide
 
-## 1. 🔐 Advanced Authentication & Security
+## 1.  Advanced Authentication & Security
 
 ### 1.1 Complete 2FA Management
 
+Check current 2FA status
 ```python
-# Check current 2FA status
 status = client.auth.get_2fa_status()
 print(f"2FA enabled: {status.is_2fa_enabled}")
 
-# Setup 2FA for existing users
+```
+Setup 2FA for existing users
+```python
 setup = client.auth.setup_2fa()
 print(f"New secret: {setup.secret}")
 
-# Get QR code as image bytes
+```
+Get QR code as image bytes
+```python
 qr_bytes = client.auth.get_qr_code()
 with open("qr_code.png", "wb") as f:
     f.write(qr_bytes)
 
-# Debug time synchronization issues
+```
+Debug time synchronization issues
+```python
 debug_info = client.auth.debug_2fa()
 print("Valid codes right now:")
 for step, code in debug_info["valid_codes"].items():
     print(f"  {step}: {code}")
 
-# Disable 2FA (requires password + TOTP)
+```
+Disable 2FA (requires password + TOTP)
+```python
 result = client.auth.disable_2fa(
     totp_code="123456",
     password="SuperSecure123!"
@@ -196,39 +274,47 @@ print(f"2FA disabled: {result['enabled']}")
 
 ### 1.2 Session Management
 
+Get current user information  
 ```python
-# Get current user information  
 user_info = client.auth.get_user_info()
 print(f"User: {user_info['username']} ({user_info['email']})")
 
-# Refresh expired tokens
+```
+Refresh expired tokens
+```python
 new_token = client.auth.refresh(refresh_token="your_refresh_token")
 client.set_token(new_token.access_token)
 
-# Logout and clear session
+```
+Logout and clear session
+```python
 client.auth.logout()
 ```
 
 ---
 
-## 2. 💰 Comprehensive Wallet Management
+## 2.  Comprehensive Wallet Management
 
 ### 2.1 Multi-Chain Wallet Operations
 
+Create wallets on different chains
 ```python
-# Create wallets on different chains
 eth_wallet = client.wallets.create_wallet(chain="ethereum")
 poly_wallet = client.wallets.create_wallet(chain="polygon") 
 arb_wallet = client.wallets.create_wallet(chain="arbitrum")
 
-# Get wallet balances
+```
+Get wallet balances
+```python
 balance = client.wallets.get_balance(
     chain="ethereum",
     address=eth_wallet['wallet_address']
 )
 print(f"ETH Balance: {balance}")
 
-# Get consolidated asset view across all chains
+```
+Get consolidated asset view across all chains
+```python
 assets = client.assets.get_multi_chain_asset_view()
 print(f"Total portfolio value: ${assets['total_value_usd']}")
 for chain, data in assets['chains'].items():
@@ -237,15 +323,17 @@ for chain, data in assets['chains'].items():
 
 ### 2.2 ERC-20 Token Management
 
+Get token balance
 ```python
-# Get token balance
 usdc_balance = client.wallets.get_token_balance(
     wallet_id=eth_wallet['id'],
     token_address="0xA0b86a33E6D1cc22c435370bA9e4240EE8D5fE5"  # USDC
 )
 print(f"USDC: {usdc_balance['balance']} {usdc_balance['symbol']}")
 
-# Transfer tokens
+```
+Transfer tokens
+```python
 transfer_tx = client.wallets.transfer_tokens(
     wallet_id=eth_wallet['id'],
     token_address="0xA0b86a33E6D1cc22c435370bA9e4240EE8D5fE5",
@@ -254,7 +342,9 @@ transfer_tx = client.wallets.transfer_tokens(
 )
 print(f"Transfer completed: {transfer_tx['tx_hash']}")
 
-# Approve token spending
+```
+Approve token spending
+```python
 approve_tx = client.wallets.approve_tokens(
     wallet_id=eth_wallet['id'], 
     token_address="0xA0b86a33E6D1cc22c435370bA9e4240EE8D5fE5",
@@ -266,22 +356,26 @@ print(f"Approval set: {approve_tx['tx_hash']}")
 
 ---
 
-## 3. 🤖 Agent Wallet Smart Contracts
+## 3.  Agent Wallet Smart Contracts
 
 ### 3.1 Agent Wallet Deployment & Management
 
+Deploy multiple agent wallets for different purposes
 ```python
-# Deploy multiple agent wallets for different purposes
 marketing_agent = client.wallets.deploy_agent_wallet()
 finance_agent = client.wallets.deploy_agent_wallet()
 ops_agent = client.wallets.deploy_agent_wallet()
 
-# List all agent wallets
+```
+List all agent wallets
+```python
 agent_wallets = client.wallets.list_agent_wallets()
 for wallet in agent_wallets:
     print(f"Agent: {wallet['wallet_address']} (deployed: {wallet['created_at']})")
 
-# Get detailed wallet information
+```
+Get detailed wallet information
+```python
 wallet_details = client.wallets.get_agent_wallet(
     address=marketing_agent['wallet_address']
 )
@@ -290,11 +384,13 @@ print(f"Wallet details: {wallet_details}")
 
 ### 3.2 On-Chain Rule Management
 
+Set daily spending limits for different tokens
 ```python
-# Set daily spending limits for different tokens
 agent_addr = marketing_agent['wallet_address']
 
-# ETH spending limit: 0.5 ETH per day
+```
+ETH spending limit: 0.5 ETH per day
+```python
 eth_limit = client.wallets.set_spending_limit(
     address=agent_addr,
     token="0x0",  # ETH
@@ -302,7 +398,9 @@ eth_limit = client.wallets.set_spending_limit(
     period=86400  # 24 hours
 )
 
-# USDC spending limit: $1000 per day  
+```
+USDC spending limit: $1000 per day  
+```python
 usdc_limit = client.wallets.set_spending_limit(
     address=agent_addr,
     token="0xA0b86a33E6D1cc22c435370bA9e4240EE8D5fE5",  # USDC
@@ -310,7 +408,9 @@ usdc_limit = client.wallets.set_spending_limit(
     period=86400
 )
 
-# Build a whitelist of approved addresses
+```
+Build a whitelist of approved addresses
+```python
 approved_vendors = [
     "0x742d35Cc6634C0532925a3b8D0715a99C7DCF",  # OpenAI API payments
     "0x8b3a92Ef6F66F79A7B7C4D8f9E2A1B5C3D7E9F",   # AWS payments  
@@ -323,9 +423,11 @@ for vendor in approved_vendors:
         target=vendor,
         allowed=True
     )
-    print(f"✅ Whitelisted {vendor}: {whitelist_tx}")
+    print(f" Whitelisted {vendor}: {whitelist_tx}")
 
-# Set transaction threshold requiring manual approval
+```
+Set transaction threshold requiring manual approval
+```python
 threshold_tx = client.wallets.set_threshold(
     address=agent_addr,
     new_threshold=500  # Require approval for transactions > $500
@@ -335,8 +437,8 @@ print(f"Threshold set: {threshold_tx}")
 
 ### 3.3 Audit Trail & Event Monitoring
 
+Get complete transaction history for an agent wallet
 ```python
-# Get complete transaction history for an agent wallet
 transactions = client.wallets.list_wallet_transactions(
     address=agent_addr
 )
@@ -349,7 +451,9 @@ for tx in transactions:
     print(f"    Block: {tx['block_number']}")
     print()
 
-# Monitor for specific event types
+```
+Monitor for specific event types
+```python
 spending_events = [tx for tx in transactions if tx['event_name'] == 'SpendingLimitSet']
 whitelist_events = [tx for tx in transactions if tx['event_name'] == 'WhitelistUpdated']
 
@@ -359,12 +463,12 @@ print(f"Whitelist updates: {len(whitelist_events)}")
 
 ---
 
-## 4. 👥 Master/Child Agent Management
+## 4.  Master/Child Agent Management
 
 ### 4.1 Agent Hierarchy Creation
 
+Create a master agent for your organization
 ```python
-# Create a master agent for your organization
 master_agent = client.agents.create_agent(
     name="Marketing Master Agent",
     description="Handles all marketing automation",
@@ -373,7 +477,9 @@ master_agent = client.agents.create_agent(
 )
 print(f"Master agent created: {master_agent['id']}")
 
-# Create specialized child agents
+```
+Create specialized child agents
+```python
 social_media_agent = client.agents.create_agent(
     name="Social Media Specialist",
     description="Automated social media posting and engagement",
@@ -397,8 +503,8 @@ print(f"  Email: {email_agent['id']}")
 
 ### 4.2 Agent Rule Inheritance
 
+Child agents inherit rules from their master
 ```python
-# Child agents inherit rules from their master
 inherited_rules = client.agents.get_inherited_rules(
     child_id=social_media_agent['id']
 )
@@ -411,8 +517,8 @@ print(f"  Policies: {inherited_rules['policies']}")
 
 ### 4.3 Task Delegation
 
+Delegate specific tasks to child agents
 ```python
-# Delegate specific tasks to child agents
 social_campaign = client.agents.delegate_task(
     master_id=master_agent['id'],
     child_agent_id=social_media_agent['id'],
@@ -421,7 +527,7 @@ social_campaign = client.agents.delegate_task(
         "token": "0x0",  # ETH
         "amount": "50000000000000000"  # 0.05 ETH
     },
-    deadline="2025-07-24T12:00:00Z",
+    deadline="2025-07-24T1200Z",
     parameters={
         "platform": "twitter",
         "campaign_theme": "product_launch",
@@ -430,7 +536,9 @@ social_campaign = client.agents.delegate_task(
 )
 print(f"Task delegated: {social_campaign['id']}")
 
-# Monitor delegation status
+```
+Monitor delegation status
+```python
 delegations = client.agents.list_delegations(master_agent['id'])
 for delegation in delegations:
     print(f"Task: {delegation['task_type']} → {delegation['status']}")
@@ -438,12 +546,12 @@ for delegation in delegations:
 
 ---
 
-## 5. 📧 Email Integration & Communication
+## 5.  Email Integration & Communication
 
 ### 5.1 Email Account Linking
 
+Link IMAP/SMTP email account
 ```python
-# Link IMAP/SMTP email account
 email_account = client.wallets.create_email_account(
     provider="imap",
     email_address="marketing@mycompany.com",
@@ -459,11 +567,15 @@ email_account = client.wallets.create_email_account(
 )
 print(f"Email account linked: {email_account['id']}")
 
-# OAuth integration for Google/Outlook (redirect-based)
+```
+OAuth integration for Google/Outlook (redirect-based)
+```python
 google_oauth_url = client.wallets.get_google_oauth_url()
 print(f"Google OAuth: {google_oauth_url}")
 
-# List all linked email accounts
+```
+List all linked email accounts
+```python
 email_accounts = client.wallets.list_email_accounts()
 for account in email_accounts:
     print(f"  {account['email_address']} ({account['provider']})")
@@ -471,12 +583,14 @@ for account in email_accounts:
 
 ### 5.2 Email Management & Access
 
+Test email connection
 ```python
-# Test email connection
 test_result = client.wallets.test_email_connection(email_account['id'])
 print(f"Connection test: {test_result['status']}")
 
-# Access inbox (with proper permissions)
+```
+Access inbox (with proper permissions)
+```python
 inbox = client.wallets.get_inbox(
     account_id=email_account['id'],
     limit=10,
@@ -491,12 +605,12 @@ for msg in inbox['messages']:
 
 ---
 
-## 6. 🌉 Cross-Chain Bridge & DeFi
+## 6.  Cross-Chain Bridge & DeFi
 
 ### 6.1 Cross-Chain Transfers
 
+Get bridge quote for cross-chain transfer
 ```python
-# Get bridge quote for cross-chain transfer
 quote = client.bridge.get_quote(
     from_chain="ethereum", 
     to_chain="polygon",
@@ -509,7 +623,9 @@ print(f"  Fee: ${quote['fee_usd']}")
 print(f"  Time: {quote['estimated_time']}")
 print(f"  You'll receive: {quote['to_amount']} USDC on Polygon")
 
-# Execute the bridge transfer
+```
+Execute the bridge transfer
+```python
 if quote['fee_usd'] < 10:  # Acceptable fee
     bridge_tx = client.bridge.bridge_transfer(
         provider=quote['provider'],
@@ -525,8 +641,8 @@ if quote['fee_usd'] < 10:  # Acceptable fee
 
 ### 6.2 DeFi Integration
 
+Swap tokens using integrated DEX
 ```python
-# Swap tokens using integrated DEX
 swap_tx = client.wallets.swap_tokens(
     wallet_id=eth_wallet['id'],
     from_token="0x0",  # ETH
@@ -536,7 +652,9 @@ swap_tx = client.wallets.swap_tokens(
 )
 print(f"Swap completed: {swap_tx['tx_hash']}")
 
-# Deposit into yield farming vault
+```
+Deposit into yield farming vault
+```python
 yield_deposit = client.wallets.deposit_yield_vault(
     wallet_id=eth_wallet['id'],
     vault_address="0x1234567890abcdef...",  # Aave USDC vault
@@ -545,7 +663,9 @@ yield_deposit = client.wallets.deposit_yield_vault(
 )
 print(f"Yield farming deposit: {yield_deposit['tx_hash']}")
 
-# Check yield farming positions
+```
+Check yield farming positions
+```python
 positions = client.wallets.get_yield_positions(eth_wallet['id'])
 for position in positions:
     print(f"Vault: {position['vault_name']}")
@@ -556,8 +676,8 @@ for position in positions:
 
 ### 6.3 On-Chain Swap Services
 
+Get swap quote for token pair
 ```python
-# Get swap quote for token pair
 swap_quote = client.swap.get_quote(
     from_token="0x0",  # ETH
     to_token="0xA0b86a33E6D1cc22c435370bA9e4240EE8D5fE5",  # USDC
@@ -565,7 +685,9 @@ swap_quote = client.swap.get_quote(
 )
 print(f"Swap quote: {swap_quote}")
 
-# Execute the swap
+```
+Execute the swap
+```python
 swap_tx = client.swap.execute_swap(
     from_token="0x0",
     to_token="0xA0b86a33E6D1cc22c435370bA9e4240EE8D5fE5",
@@ -574,20 +696,24 @@ swap_tx = client.swap.execute_swap(
 )
 print(f"Swap executed: {swap_tx['tx_hash']}")
 
-# Cancel a pending swap quote
+```
+Cancel a pending swap quote
+```python
 cancel = client.swap.cancel_swap(quote_id=swap_quote['quote_id'])
 print(f"Swap quote cancelled: {cancel['status']}")
 ```
 
 ### 6.4 Marketplace Operations
 
+List marketplace listings
 ```python
-# List marketplace listings
 listings = client.marketplace.list_listings(limit=20)
 for l in listings:
     print(f"Listing: {l['id']} - {l['asset_name']} at {l['price']}")
 
-# Create a new listing
+```
+Create a new listing
+```python
 new_listing = client.marketplace.create_listing(
     asset_id="asset123",
     price="0.5 ETH",
@@ -595,26 +721,30 @@ new_listing = client.marketplace.create_listing(
 )
 print(f"Created listing: {new_listing['id']}")
 
-# Place a bid on a listing
+```
+Place a bid on a listing
+```python
 bid = client.marketplace.place_bid(
     listing_id=new_listing['id'],
     bid_amount="0.45 ETH"
 )
 print(f"Bid placed: {bid['bid_id']}")
 
-# Cancel a listing
+```
+Cancel a listing
+```python
 client.marketplace.cancel_listing(listing_id=new_listing['id'])
 print("Listing cancelled")
 ```
 
 ---
 
-## 7. 🏛️ Governance & DAO Participation
+## 7. ️ Governance & DAO Participation
 
 ### 7.1 Proposal Management
 
+Create a governance proposal
 ```python
-# Create a governance proposal
 proposal = client.governance.create_proposal(
     targets=["0x1234567890abcdef..."],  # Contract to call
     values=[0],  # ETH to send (0 for parameter change)
@@ -623,7 +753,9 @@ proposal = client.governance.create_proposal(
 )
 print(f"Proposal created: {proposal['proposal_id']}")
 
-# Get proposal details
+```
+Get proposal details
+```python
 proposal_info = client.governance.get_proposal_state(proposal['proposal_id'])
 print(f"Proposal status: {proposal_info['status']}")
 print(f"Votes for: {proposal_info['votes_for']}")
@@ -633,15 +765,17 @@ print(f"Voting deadline: {proposal_info['voting_deadline']}")
 
 ### 7.2 Voting
 
+Cast vote on proposal (1 = for, 0 = against)
 ```python
-# Cast vote on proposal (1 = for, 0 = against)
 vote = client.governance.cast_vote(
     proposal_id=proposal['proposal_id'],
     support=1  # Vote in favor
 )
 print(f"Vote cast: {vote['tx_hash']}")
 
-# Check your voting history
+```
+Check your voting history
+```python
 voting_history = client.governance.get_user_votes()
 for vote_record in voting_history:
     print(f"Proposal {vote_record['proposal_id']}: {'FOR' if vote_record['support'] else 'AGAINST'}")
@@ -649,12 +783,12 @@ for vote_record in voting_history:
 
 ---
 
-## 8. 🏠 Real-World Assets (RWA)
+## 8.  Real-World Assets (RWA)
 
 ### 8.1 Asset Tokenization
 
+Register a real-world asset token
 ```python
-# Register a real-world asset token
 rwa_asset = client.wallets.register_rwa_asset(
     token_address="0x9876543210fedcba...",  # RWA token contract
     token_id="1",  # Specific asset ID
@@ -662,7 +796,9 @@ rwa_asset = client.wallets.register_rwa_asset(
 )
 print(f"RWA asset registered: {rwa_asset['id']}")
 
-# List your RWA holdings
+```
+List your RWA holdings
+```python
 rwa_holdings = client.wallets.list_rwa_assets()
 for asset in rwa_holdings:
     print(f"Asset: {asset['name']}")
@@ -673,8 +809,8 @@ for asset in rwa_holdings:
 
 ### 8.2 Asset Management
 
+Transfer RWA tokens
 ```python
-# Transfer RWA tokens
 rwa_transfer = client.wallets.transfer_rwa(
     wallet_id=eth_wallet['id'],
     token_address="0x9876543210fedcba...",
@@ -687,12 +823,12 @@ print(f"RWA transfer: {rwa_transfer['tx_hash']}")
 
 ---
 
-## 9. 🎯 Child Asset Provisioning
+## 9.  Child Asset Provisioning
 
 ### 9.1 Email Asset Provisioning
 
+Provision email access to child agents
 ```python
-# Provision email access to child agents
 email_provision = client.agents.provision_email_asset(
     child_id=email_agent['id'],
     email_account_id=email_account['id'],
@@ -704,15 +840,17 @@ email_provision = client.agents.provision_email_asset(
 )
 print(f"Email access provisioned: {email_provision['email_address']}")
 
-# Check email quota usage
+```
+Check email quota usage
+```python
 email_usage = client.agents.get_email_usage(email_agent['id'])
 print(f"Email usage: {email_usage['used_today']}/{email_usage['daily_limit']}")
 ```
 
 ### 9.2 Wallet Asset Provisioning
 
+Provision dedicated wallets for child agents
 ```python
-# Provision dedicated wallets for child agents
 child_eth_wallet = client.agents.provision_wallet_asset(
     child_id=social_media_agent['id'],
     chain="ethereum"
@@ -725,7 +863,9 @@ child_poly_wallet = client.agents.provision_wallet_asset(
 )
 print(f"Child Polygon wallet: {child_poly_wallet['wallet_address']}")
 
-# Transfer budget to child wallets
+```
+Transfer budget to child wallets
+```python
 budget_transfer = client.agents.transfer_assets_to_child(
     child_id=social_media_agent['id'],
     from_wallet=eth_wallet['wallet_address'],
@@ -739,12 +879,12 @@ print(f"Budget transferred: {budget_transfer['transfer_id']}")
 
 ---
 
-## 10. 💳 Fiat On/Off Ramps
+## 10.  Fiat On/Off Ramps
 
 ### 10.1 Fiat Onboarding
 
+Create fiat on-ramp session
 ```python
-# Create fiat on-ramp session
 onramp_session = client.wallets.create_onramp_session(
     currency="USD",
     amount=1000.0  # $1000
@@ -752,7 +892,9 @@ onramp_session = client.wallets.create_onramp_session(
 print(f"On-ramp session: {onramp_session['session_id']}")
 print(f"Widget URL: {onramp_session['widget_url']}")
 
-# Check on-ramp status
+```
+Check on-ramp status
+```python
 onramp_status = client.wallets.get_onramp_status(
     session_id=onramp_session['session_id']
 )
@@ -763,23 +905,27 @@ if onramp_status['status'] == 'completed':
 
 ---
 
-## 11. ⛽ Gas Management & Abstraction
+## 11.  Gas Management & Abstraction
 
 ### 11.1 Gas Sponsorship
 
+Deposit tokens for gas sponsorship
 ```python
-# Deposit tokens for gas sponsorship
 gas_deposit = client.wallets.sponsor_gas(
     token_address="0xA0b86a33E6D1cc22c435370bA9e4240EE8D5fE5",  # USDC
     amount=100.0  # $100 worth of gas
 )
 print(f"Gas sponsorship: {gas_deposit}")
 
-# Check gas balance
+```
+Check gas balance
+```python
 gas_balance = client.wallets.get_gas_sponsorship_balance()
 print(f"Gas balance: {gas_balance} USDC")
 
-# Send gasless transaction using ERC-4337
+```
+Send gasless transaction using ERC-4337
+```python
 user_op = client.wallets.send_user_operation(
     user_op={
         "sender": agent_addr,
@@ -801,85 +947,202 @@ print(f"Gasless transaction: {user_op['user_op_hash']}")
 
 ---
 
-## 12. 📊 Monitoring & Compliance
+## 12. 🆕 Advanced Compliance & Monitoring 
 
-### 12.1 Transaction Monitoring
+### 12.1 KYC/AML Verification
 
+Perform comprehensive KYC verification
 ```python
-# Start monitoring an address
-monitoring = client.monitoring.watch_address(
-    address="0x742d35Cc6634C0532925a3b8D0715a99C7DCF",
-    alert_conditions=["large_transaction", "new_contract_interaction"]
+kyc_result = client.compliance.kyc_verification(
+    user_id="user123",
+    identity_check=True,
+    document_scan=True
 )
-print(f"Monitoring started: {monitoring['watch_id']}")
-
-# Get transaction status
-tx_status = client.monitoring.get_transaction_status(
-    tx_hash="0xabcdef1234567890..."
-)
-print(f"Transaction status: {tx_status['status']}")
-print(f"Confirmations: {tx_status['confirmations']}")
-
-# List all active watches
-watches = client.monitoring.list_watches()
-for w in watches:
-    print(f"Watch: {w['watch_id']} - {w['address']}")
-
-# Retrieve recent alerts
-alerts = client.monitoring.get_alerts()
-for alert in alerts:
-    print(f"Alert: {alert['alert_id']} - {alert['type']} at {alert['timestamp']}")
+print(f"KYC Status: {kyc_result['status']}")
+print(f"Risk Score: {kyc_result['risk_score']}")
+print(f"Verification Level: {kyc_result['verification_level']}")
 ```
 
-### 12.2 Compliance & Reporting
-
+Check current KYC status
 ```python
-# Check KYC status
-kyc_status = client.compliance.get_kyc_status()
-print(f"KYC Status: {kyc_status['status']}")
+status = client.compliance.get_kyc_status(user_id="user123")
+print(f"Current status: {status['status']}")
+print(f"Last updated: {status['last_updated']}")
+```
 
-# Initiate KYC if needed
-if kyc_status['status'] == 'not_verified':
-    kyc_session = client.compliance.initiate_kyc()
-    print(f"KYC session: {kyc_session['verification_url']}")
+### 12.2 Document Processing & Validation
 
-# Generate compliance report
-compliance_report = client.compliance.generate_report(
+Process compliance documents with AI validation
+```python
+with open("passport.pdf", "rb") as document:
+    result = client.compliance.process_document(
+        document=document,
+        document_type="passport",
+        user_id="user123"
+    )
+    
+print(f"Document processed: {result['document_id']}")
+print(f"Validation status: {result['validation_status']}")
+print(f"Extracted data: {result['extracted_data']}")
+print(f"Confidence score: {result['confidence_score']}")
+```
+
+Supported document types:
+- `passport` - International passports
+- `driver_license` - Government-issued driver's licenses  
+- `utility_bill` - Proof of address documents
+- `bank_statement` - Financial institution statements
+- `tax_document` - Tax returns and related documents
+
+### 12.3 Tamper-Evident Audit Trails
+
+Retrieve audit trail with cryptographic verification
+```python
+audit_trail = client.compliance.get_audit_trail(
+    user_id="user123",
+    action_type="document_upload",
     start_date="2025-07-01",
     end_date="2025-07-17",
-    report_type="full_audit"
+    limit=50
 )
-print(f"Compliance report:")
-print(f"  Total transactions: {compliance_report['total_transactions']}")
-print(f"  Total value: ${compliance_report['total_value_usd']}")
-print(f"  Flagged activities: {compliance_report['flagged_count']}")
-print(f"  Compliance score: {compliance_report['compliance_score']}/100")
 
-# Get detailed audit trail for an entity
-audit_trail = client.compliance.get_audit_trail(
-    entity_id="entity123",
-    entity_type="transaction"
+for entry in audit_trail['entries']:
+    print(f"Timestamp: {entry['timestamp']}")
+    print(f"Action: {entry['action_type']}")
+    print(f"User: {entry['user_id']}")
+    print(f"Hash: {entry['hash_value']}")
+    print(f"Previous Hash: {entry['previous_hash']}")
+    print(f"Verification: {'✓ Valid' if entry['hash_verified'] else '✗ Invalid'}")
+    print("---")
+```
+
+Verify audit trail integrity
+```python
+verification = client.compliance.verify_audit_integrity(
+    start_date="2025-07-01",
+    end_date="2025-07-17"
 )
-print("Audit trail entries:")
-for entry in audit_trail:
-    print(f"  {entry['timestamp']}: {entry['action']} by {entry['performed_by']}")
+print(f"Audit trail verified: {verification['is_valid']}")
+print(f"Total entries checked: {verification['entries_checked']}")
+print(f"Hash chain intact: {verification['hash_chain_valid']}")
+```
+
+### 12.4 Webhook Management & Persistence
+
+Get webhook delivery status
+```python
+webhook_status = client.compliance.get_webhook_status(webhook_id="webhook_123")
+print(f"Delivery status: {webhook_status['status']}")
+print(f"Attempts: {webhook_status['attempts']}")
+print(f"Last attempt: {webhook_status['last_attempt_time']}")
+print(f"Next retry: {webhook_status['next_retry_time']}")
+```
+
+List all webhook deliveries
+```python
+deliveries = client.compliance.list_webhook_deliveries(
+    status="failed",  # Options: pending, delivered, failed, retrying
+    limit=20
+)
+for delivery in deliveries:
+    print(f"Webhook {delivery['webhook_id']}: {delivery['status']}")
+```
+
+Manually retry a failed webhook
+```python
+retry_result = client.compliance.retry_webhook(webhook_id="webhook_123")
+print(f"Retry initiated: {retry_result['retry_scheduled']}")
+print(f"Retry time: {retry_result['retry_time']}")
+```
+
+### 12.5 Rate Limiting & API Protection
+
+Check rate limit status
+```python
+rate_status = client.compliance.get_rate_limit_status(user_id="user123")
+print(f"Requests remaining: {rate_status['requests_remaining']}")
+print(f"Reset time: {rate_status['reset_time']}")
+print(f"Rate limit: {rate_status['rate_limit']}")
+```
+
+Check global rate limit status
+```python
+global_status = client.compliance.get_rate_limit_status()
+print(f"Global requests remaining: {global_status['global_requests_remaining']}")
+print(f"Per-user limits active: {global_status['per_user_limits_active']}")
+```
+
+### 12.6 Enterprise Compliance Features
+
+For enterprise users with advanced compliance plans:
+
+```python
+# Bulk document processing
+if hasattr(client, 'compliance_advanced'):
+    bulk_result = client.compliance_advanced.bulk_process_documents(
+        directory_path="/path/to/documents",
+        document_type="bank_statement",
+        batch_size=10
+    )
+    print(f"Processed {bulk_result['total_processed']} documents")
+    print(f"Success rate: {bulk_result['success_rate']}%")
+```
+
+Get compliance dashboard data
+```python
+if hasattr(client, 'compliance_advanced'):
+    dashboard = client.compliance_advanced.get_dashboard_data()
+    print(f"Total KYC completions: {dashboard['metrics']['kyc_completions']}")
+    print(f"Document processing rate: {dashboard['metrics']['document_success_rate']}%")
+    print(f"Compliance score: {dashboard['metrics']['overall_compliance_score']}")
+```
+
+Perform comprehensive risk assessment
+```python
+if hasattr(client, 'compliance_advanced'):
+    risk_assessment = client.compliance_advanced.perform_risk_assessment(
+        user_id="user123"
+    )
+    print(f"Risk level: {risk_assessment['risk_level']}")
+    print(f"Risk factors: {risk_assessment['risk_factors']}")
+    print(f"Recommended actions: {risk_assessment['recommendations']}")
+```
+
+### 12.7 Asynchronous Task Processing
+
+Monitor background compliance tasks
+```python
+# Check status of document processing job
+task_status = client.compliance.get_task_status(task_id="task_123")
+print(f"Task status: {task_status['status']}")
+print(f"Progress: {task_status['progress']}%")
+print(f"ETA: {task_status['estimated_completion']}")
+```
+
+List all active compliance tasks
+```python
+active_tasks = client.compliance.list_active_tasks()
+for task in active_tasks:
+    print(f"Task {task['task_id']}: {task['task_type']} - {task['status']}")
 ```
 
 ---
 
-## 13. 🔥 Advanced Features
+## 13.  Advanced Features
 
 ### 13.1 NFT Management
 
+List NFTs in wallet
 ```python
-# List NFTs in wallet
 nfts = client.wallets.list_nfts(wallet_id=eth_wallet['id'])
 for nft in nfts:
     print(f"{nft['name']} #{nft['token_id']}")
     print(f"  Collection: {nft['collection_name']}")
     print(f"  Value: ${nft['estimated_value']}")
 
-# Transfer NFT
+```
+Transfer NFT
+```python
 nft_transfer = client.wallets.transfer_nft(
     wallet_id=eth_wallet['id'],
     contract_address="0x1234567890abcdef...",
@@ -888,14 +1151,18 @@ nft_transfer = client.wallets.transfer_nft(
 )
 print(f"NFT transferred: {nft_transfer['tx_hash']}")
 
-# Get metadata for a specific NFT
+```
+Get metadata for a specific NFT
+```python
 metadata = client.nfts.get_nft_metadata(
     contract_address="0x1234567890abcdef...",
     token_id="123"
 )
 print(f"NFT Metadata: {metadata}")
 
-# Mint a new NFT
+```
+Mint a new NFT
+```python
 minted = client.nfts.mint_nft(
     contract_address="0xNFTContract...",
     to_address="0x742d35Cc6634C0532925a3b8D0715a99C7DCF",
@@ -903,7 +1170,9 @@ minted = client.nfts.mint_nft(
 )
 print(f"NFT minted: {minted['token_id']}")
 
-# Batch transfer multiple NFTs
+```
+Batch transfer multiple NFTs
+```python
 batch = client.nfts.batch_transfer(
     contract_address="0x1234567890abcdef...",
     transfers=[
@@ -913,7 +1182,9 @@ batch = client.nfts.batch_transfer(
 )
 print("Batch transfer complete")
 
-# Burn an NFT
+```
+Burn an NFT
+```python
 burn = client.nfts.burn_nft(
     contract_address="0x1234567890abcdef...",
     token_id="123"
@@ -923,15 +1194,17 @@ print(f"NFT burned: {burn['status']}")
 
 ### 13.2 Event Subscriptions
 
+Subscribe to wallet events
 ```python
-# Subscribe to wallet events
 subscription = client.wallets.subscribe_to_events(
     wallet_address=eth_wallet['wallet_address'],
     event_types=["transfer", "approval", "swap"]
 )
 print(f"Event subscription: {subscription['subscription_id']}")
 
-# Get recent events
+```
+Get recent events
+```python
 events = client.wallets.get_wallet_events(
     wallet_address=eth_wallet['wallet_address'],
     limit=50
@@ -940,7 +1213,7 @@ for event in events:
     print(f"{event['event_type']}: {event['details']}")
 ```
 
-## 📚 Complete API Reference
+##  Complete API Reference
 
 ### AuthClient
 
@@ -1099,7 +1372,7 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 
 ---
 
-## 📋 Requirements
+##  Requirements
 
 - **Python 3.8+**
 - **requests** or **httpx** (for async support)
@@ -1108,28 +1381,28 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 
 ---
 
-## 📈 What's New in July 2025
+##  What's New in July 2025
 
-### 🔥 Latest Features
+###  Latest Features
 
-- ✅ **Complete Two-Factor Authentication** with TOTP and SMS support
-- ✅ **Agent Smart Contract Wallets** with programmable on-chain rules  
-- ✅ **Master/Child Agent Hierarchy** with rule inheritance
-- ✅ **Multi-Chain Asset Aggregation** across 10+ blockchains
-- ✅ **Advanced DeFi Integration** with yield farming and swaps
-- ✅ **Real-World Asset Tokenization** for physical asset management
-- ✅ **Gas Abstraction** with ERC-4337 support
-- ✅ **Enhanced Compliance** with KYC/AML and audit trails
-- ✅ **Email Integration** via IMAP/SMTP and OAuth
-- ✅ **Cross-Chain Bridging** for seamless asset transfers
+-  **Complete Two-Factor Authentication** with TOTP and SMS support
+-  **Agent Smart Contract Wallets** with programmable on-chain rules  
+-  **Master/Child Agent Hierarchy** with rule inheritance
+-  **Multi-Chain Asset Aggregation** across 10+ blockchains
+-  **Advanced DeFi Integration** with yield farming and swaps
+-  **Real-World Asset Tokenization** for physical asset management
+-  **Gas Abstraction** with ERC-4337 support
+-  **Enhanced Compliance** with KYC/AML and audit trails
+-  **Email Integration** via IMAP/SMTP and OAuth
+-  **Cross-Chain Bridging** for seamless asset transfers
 
-### 🎯 Coming Soon
+###  Coming Soon
 
-- 🔜 **Advanced AI Agent Templates** for common use cases
-- 🔜 **Mobile SDK** for iOS and Android
-- 🔜 **WebSocket Support** for real-time events
-- 🔜 **Advanced Analytics** with machine learning insights
-- 🔜 **Layer 2 Optimizations** for faster, cheaper transactions
+-  **Advanced AI Agent Templates** for common use cases
+-  **Mobile SDK** for iOS and Android
+-  **WebSocket Support** for real-time events
+-  **Advanced Analytics** with machine learning insights
+-  **Layer 2 Optimizations** for faster, cheaper transactions
 
 ---
 
@@ -1139,4 +1412,5 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 pip install cirtusai-sdk
 ```
 
-*Built with ❤️ by the CirtusAI team - Empowering the Autonomous*
+Built with ️ by the CirtusAI team - Autonomy Verified
+  _The Trust Layer for the Agent Economy_

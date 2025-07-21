@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="https://github.com/Cirtus-AI/cirtusai_sdk/quickstart/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Quick Start - CirtusAI SDK Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">CirtusAI SDK Documentation</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="./" class="nav-link active" aria-current="page">Quick Start</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../authentication/" class="nav-link">Authentication</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../agents/" class="nav-link">Agent Management</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../wallets/" class="nav-link">Wallet Operations</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../email/" class="nav-link">Email Services</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../security/" class="nav-link">Security & Compliance</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../blockchain/" class="nav-link">Blockchain Infrastructure</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href=".." class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../authentication/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/Cirtus-AI/cirtusai_sdk/edit/master/docs/quickstart.md" class="nav-link"><i class="fa-brands fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#cirtusai-sdk-quick-start-guide" class="nav-link">CirtusAI SDK Quick Start Guide</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#installation" class="nav-link">Installation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#basic-setup" class="nav-link">Basic Setup</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#5-minute-examples" class="nav-link">5-Minute Examples</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#common-workflows" class="nav-link">Common Workflows</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#error-handling" class="nav-link">Error Handling</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#next-steps" class="nav-link">Next Steps</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#quick-reference" class="nav-link">Quick Reference</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#support" class="nav-link">Support</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="cirtusai-sdk-quick-start-guide">CirtusAI SDK Quick Start Guide</h1>
+<h2 id="installation">Installation</h2>
+<pre><code class="language-bash">pip install cirtusai-sdk
+</code></pre>
+<h2 id="basic-setup">Basic Setup</h2>
+<pre><code class="language-python">from cirtusai import CirtusAIClient
+
+# Initialize client
+client = CirtusAIClient(&quot;https://api.cirtusai.com&quot;)
+
+# Authenticate
+token = client.auth.login(&quot;your_username&quot;, &quot;your_password&quot;)
+client.set_token(token.access_token)
+</code></pre>
+<h2 id="5-minute-examples">5-Minute Examples</h2>
+<h3 id="1-create-and-use-an-agent-2-minutes">1. Create and Use an Agent (2 minutes)</h3>
+<pre><code class="language-python"># Create a child agent
+agent = client.agents.create_child_agent(
+    parent_id=&quot;your_master_agent_id&quot;,
+    name=&quot;My First Agent&quot;,
+    permissions_granted=[&quot;email:read&quot;, &quot;email:send&quot;]
+)
+
+# Provision email for the agent
+email_asset = client.agents.provision_email(agent['id'])
+print(f&quot;Agent email: {email_asset['email_address']}&quot;)
+
+# Read emails
+messages = client.email.read_inbox(agent['id'])
+print(f&quot;Found {len(messages)} messages&quot;)
+</code></pre>
+<h3 id="2-create-and-fund-a-wallet-1-minute">2. Create and Fund a Wallet (1 minute)</h3>
+<pre><code class="language-python"># Create wallet
+wallet = client.wallets.create_wallet(&quot;ethereum&quot;)
+print(f&quot;Wallet address: {wallet['address']}&quot;)
+
+# Check balance
+balance = client.wallets.get_balance(&quot;ethereum&quot;, wallet['address'])
+print(f&quot;ETH balance: {balance}&quot;)
+</code></pre>
+<h3 id="3-bridge-assets-cross-chain-2-minutes">3. Bridge Assets Cross-Chain (2 minutes)</h3>
+<pre><code class="language-python"># Get bridge quote
+quote = client.bridge.get_quote(
+    from_chain=&quot;ethereum&quot;,
+    to_chain=&quot;polygon&quot;, 
+    from_token=&quot;ETH&quot;,
+    to_token=&quot;MATIC&quot;,
+    amount=1000000000000000000  # 1 ETH
+)
+
+print(f&quot;Will receive: {quote['estimated_output']} MATIC&quot;)
+
+# Execute bridge (if you have funds)
+# bridge_result = client.bridge.bridge_transfer(...)
+</code></pre>
+<h2 id="common-workflows">Common Workflows</h2>
+<h3 id="email-ai-processing">Email + AI Processing</h3>
+<pre><code class="language-python">from langchain_deepseek import ChatDeepSeek
+
+# Setup AI
+llm = ChatDeepSeek(api_key=&quot;your_deepseek_key&quot;)
+
+# Process emails with AI
+messages = client.email.read_inbox(&quot;agent_id&quot;)
+for message in messages:
+    summary = llm.invoke(f&quot;Summarize: {message['text_body']}&quot;).content
+    print(f&quot;From: {message['from']}&quot;)
+    print(f&quot;Summary: {summary}&quot;)
+</code></pre>
+<h3 id="defi-operations">DeFi Operations</h3>
+<pre><code class="language-python"># Get swap quote
+quote = client.swap.get_quote(
+    from_chain=&quot;ethereum&quot;,
+    to_chain=&quot;ethereum&quot;,
+    from_token=&quot;USDC&quot;, 
+    to_token=&quot;ETH&quot;,
+    amount=1000.0
+)
+
+# Execute swap
+swap_result = client.swap.execute_swap({
+    &quot;from_token&quot;: &quot;USDC&quot;,
+    &quot;to_token&quot;: &quot;ETH&quot;, 
+    &quot;amount&quot;: 1000.0,
+    &quot;slippage_tolerance&quot;: 0.5
+})
+</code></pre>
+<h3 id="nft-management">NFT Management</h3>
+<pre><code class="language-python"># List your NFTs
+nfts = client.nfts.list_nfts(&quot;wallet_id&quot;)
+
+# Create marketplace listing
+listing = client.marketplace.create_listing({
+    &quot;nft_contract&quot;: nfts[0]['contract_address'],
+    &quot;token_id&quot;: nfts[0]['token_id'],
+    &quot;price&quot;: &quot;0.1&quot;,
+    &quot;currency&quot;: &quot;ETH&quot;
+})
+</code></pre>
+<h2 id="error-handling">Error Handling</h2>
+<pre><code class="language-python">try:
+    result = client.some_operation()
+except requests.exceptions.HTTPError as e:
+    if e.response.status_code == 403:
+        print(&quot;Permission denied&quot;)
+    elif e.response.status_code == 401:
+        print(&quot;Authentication required&quot;)
+    else:
+        print(f&quot;Error: {e}&quot;)
+</code></pre>
+<h2 id="next-steps">Next Steps</h2>
+<ol>
+<li><strong>Read the full documentation</strong>: Explore detailed guides for each component</li>
+<li><strong>Set up 2FA</strong>: Enable two-factor authentication for security</li>
+<li><strong>Create agent workflows</strong>: Build complex automation with multiple agents</li>
+<li><strong>Integrate with LangChain</strong>: Add AI capabilities to your agents</li>
+<li><strong>Explore DeFi</strong>: Use cross-chain bridging and swapping features</li>
+</ol>
+<h2 id="quick-reference">Quick Reference</h2>
+<h3 id="core-modules">Core Modules</h3>
+<ul>
+<li><code>client.auth</code> - Authentication and 2FA</li>
+<li><code>client.agents</code> - Agent management  </li>
+<li><code>client.wallets</code> - Wallet and asset operations</li>
+<li><code>client.email</code> - Email services</li>
+<li><code>client.security</code> - KYC/AML compliance</li>
+<li><code>client.bridge</code> - Cross-chain bridging</li>
+<li><code>client.swap</code> - DeFi swaps</li>
+<li><code>client.nfts</code> - NFT operations</li>
+<li><code>client.marketplace</code> - NFT marketplace</li>
+<li><code>client.governance</code> - DAO governance</li>
+<li><code>client.identity</code> - Decentralized identity</li>
+<li><code>client.reputation</code> - Soulbound tokens</li>
+</ul>
+<h3 id="common-patterns">Common Patterns</h3>
+<pre><code class="language-python"># Safe operation wrapper
+def safe_operation(operation):
+    try:
+        return {&quot;success&quot;: True, &quot;result&quot;: operation()}
+    except Exception as e:
+        return {&quot;success&quot;: False, &quot;error&quot;: str(e)}
+
+# Batch processing
+def process_batch(items, operation, batch_size=10):
+    results = []
+    for i in range(0, len(items), batch_size):
+        batch = items[i:i + batch_size]
+        for item in batch:
+            result = safe_operation(lambda: operation(item))
+            results.append(result)
+    return results
+</code></pre>
+<h2 id="support">Support</h2>
+<ul>
+<li><strong>Documentation</strong>: See <code>/docs/</code> folder for detailed guides</li>
+<li><strong>Examples</strong>: Check <code>/examples/</code> folder for complete workflows  </li>
+<li><strong>Issues</strong>: Report bugs and feature requests on GitHub</li>
+<li><strong>API Reference</strong>: Each module has detailed API documentation</li>
+</ul></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
