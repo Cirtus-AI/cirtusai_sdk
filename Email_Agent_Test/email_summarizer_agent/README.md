@@ -60,7 +60,7 @@ python run_agent.py get email account information
 
 Invoking: `get_email_account` with `{}`
 
-Email accounts: [{'provider': 'imap', 'email_address': 'cirtus@cirtusai.com', 'config': {'host': 'imap.feishu.cn', 'port': 993, 'username': 'cirtus@cirtusai.com', 'password': 'YDLOR0J5B1FiFAxi', 'use_ssl': True, 'smtp_host': 'smtp.feishu.cn', 'smtp_port': 465, 'smtp_user': 'cirtus@cirtusai.com', 'smtp_password': 'YDLOR0J5B1FiFAxi', 'smtp_use_tls': True}, 'id': '99ad4a79-f0bd-432d-bfc5-aaeb715c3616', 'user_id': '0e2f868c-7646-45c7-8fe1-d3589afc5c1d', 'created_at': '2025-07-14T04:32:25.495154Z', 'updated_at': '2025-07-24T07:01:19.617257Z'}]
+Email accounts: [{'provider': 'imap', 'email_address': 'cirtus@cirtusai.com', 'config': {'host': 'imap.feishu.cn', 'port': 993, 'username': 'cirtus@cirtusai.com', 'password': 'xxxxxxxxxxx', 'use_ssl': True, 'smtp_host': 'smtp.feishu.cn', 'smtp_port': 465, 'smtp_user': 'cirtus@cirtusai.com', 'smtp_password': 'xxxxxxxxxxxx', 'smtp_use_tls': True}, 'id': '99ad4a79-f0bd-432d-bfc5-aaeb715c3616', 'user_id': '0e2f868c-7646-45c7-8fe1-d3589afc5c1d', 'created_at': '2025-07-14T04:32:25.495154Z', 'updated_at': '2025-07-24T07:01:19.617257Z'}]
 
 > Finished chain.
 
