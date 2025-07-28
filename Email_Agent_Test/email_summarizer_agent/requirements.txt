@@ -1,0 +1,6 @@
+langchain
+langchain-deepseek
+pandas
+requests
+python-dotenv
+cirtusai_sdk

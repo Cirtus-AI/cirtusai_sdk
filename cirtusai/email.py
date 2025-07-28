@@ -23,7 +23,7 @@ class EmailClient:
         headers = {"X-Child-Agent-ID": agent_id}
         resp = self.session.get(url, headers=headers)
         resp.raise_for_status()
-        return [resp.json()]
+        return resp.json()
 
 
     def send_email(self, agent_id: str, recipient: str, subject: str, body: str) -> Dict[str, Any]:
@@ -66,8 +66,16 @@ class EmailSummarizerTool(BaseTool):
         print(f"--- Verifying Permissions for Agent: {self.agent_id} ---")
         sys.stdout.flush()
         try:
-            agent_details = self.client.agents.get_agent(self.agent_id)
-            permissions = agent_details.get("permissions_granted", [])
+            master_agent = self.client.agents.list_agents()
+            if not master_agent:
+                return "Error: Could not find master agent."
+            
+            child_agent = next((agent for agent in master_agent.get('state', {}).get('linked_children', []) if agent.get('child_agent_id') == self.agent_id), None)
+
+            if not child_agent:
+                return f"Error: Child agent '{self.agent_id}' not found."
+
+            permissions = child_agent.get("permissions_granted", [])
             print(f"Agent Permissions: {permissions}")
             sys.stdout.flush()
         except Exception as e:
@@ -143,8 +151,16 @@ class SendEmailTool(BaseTool):
         print(f"--- Verifying Permissions for Agent: {self.agent_id} ---")
         sys.stdout.flush()
         try:
-            agent_details = self.client.agents.get_agent(self.agent_id)
-            permissions = agent_details.get("permissions_granted", [])
+            master_agent = self.client.agents.list_agents()
+            if not master_agent:
+                return "Error: Could not find master agent."
+            
+            child_agent = next((agent for agent in master_agent.get('state', {}).get('linked_children', []) if agent.get('child_agent_id') == self.agent_id), None)
+
+            if not child_agent:
+                return f"Error: Child agent '{self.agent_id}' not found."
+
+            permissions = child_agent.get("permissions_granted", [])
             print(f"Agent Permissions: {permissions}")
             sys.stdout.flush()
         except Exception as e:
