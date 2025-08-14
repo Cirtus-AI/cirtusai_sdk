@@ -1,14 +1,10 @@
 import os
-import pandas as pd
-from langchain_core.tools import BaseTool
 from langchain_deepseek import ChatDeepSeek
 from langchain.agents import AgentExecutor, create_openai_tools_agent
 from langchain_core.prompts import ChatPromptTemplate
 from dotenv import load_dotenv
 from cirtusai.client import CirtusAIClient
-from cirtusai.email import EmailSummarizerTool, SendEmailTool, GetEmailAccountTool, UpdateEmailAccountTool
-from typing import Type
-from pydantic import BaseModel, Field
+from cloud_mail_tool import CloudMailClient, CloudMailSendEmailTool, CloudMailReadAndSummarizeEmailTool, CloudMailGetAccountInfoTool
 import sys
 
 # Load environment variables from .env file
@@ -24,6 +20,9 @@ CIRTUS_USERNAME = os.getenv("CIRTUS_USERNAME")
 CIRTUS_PASSWORD = os.getenv("CIRTUS_PASSWORD")
 CIRTUS_AGENT_ID = os.getenv("CIRTUS_AGENT_ID")
 DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
+CLOUD_MAIL_URL = os.getenv("CLOUD_MAIL_URL")
+CLOUD_MAIL_EMAIL = os.getenv("CLOUD_MAIL_EMAIL")
+CLOUD_MAIL_PASSWORD = os.getenv("CLOUD_MAIL_PASSWORD")
 
 # --- CirtusAI Client Initialization ---
 try:
@@ -36,7 +35,7 @@ except Exception as e:
 
 def main():
     """Initializes and runs the email summarizer agent."""
-    if not all([CIRTUS_USERNAME, CIRTUS_PASSWORD, CIRTUS_AGENT_ID, DEEPSEEK_API_KEY]):
+    if not all([CIRTUS_USERNAME, CIRTUS_PASSWORD, CIRTUS_AGENT_ID, DEEPSEEK_API_KEY, CLOUD_MAIL_URL, CLOUD_MAIL_EMAIL, CLOUD_MAIL_PASSWORD]):
         sys.stderr.write("Error: Missing required environment variables in .env file.\n")
         sys.exit(1)
 
@@ -49,36 +48,41 @@ def main():
         sys.stderr.write(f"Error initializing ChatDeepSeek: {e}\n")
         sys.exit(1)
     
-    # Instantiate the class-based tool
-    summarize_tool = EmailSummarizerTool(
-        llm=llm, 
-        client=client, 
-        agent_id=CIRTUS_AGENT_ID, 
-        username=CIRTUS_USERNAME, 
-        password=CIRTUS_PASSWORD
-    )
-    send_email_tool = SendEmailTool(
-        client=client, 
-        agent_id=CIRTUS_AGENT_ID, 
-        username=CIRTUS_USERNAME, 
-        password=CIRTUS_PASSWORD
-    )
-    get_email_account_tool = GetEmailAccountTool(
-        client=client,
-        username=CIRTUS_USERNAME,
-        password=CIRTUS_PASSWORD
-    )
-    update_email_account_tool = UpdateEmailAccountTool(
-        client=client,
-        username=CIRTUS_USERNAME,
-        password=CIRTUS_PASSWORD
+    # Instantiate the cloud-mail client
+    cloud_mail_client = CloudMailClient(
+        cloud_mail_url=CLOUD_MAIL_URL,
+        cloud_mail_email=CLOUD_MAIL_EMAIL,
+        cloud_mail_password=CLOUD_MAIL_PASSWORD
     )
 
-    tools = [summarize_tool, send_email_tool, get_email_account_tool, update_email_account_tool]
+    # Instantiate the class-based tools
+    send_email_tool = CloudMailSendEmailTool(
+        client=client,
+        agent_id=CIRTUS_AGENT_ID,
+        username=CIRTUS_USERNAME,
+        password=CIRTUS_PASSWORD,
+        cloud_mail_client=cloud_mail_client
+    )
+    read_summarize_tool = CloudMailReadAndSummarizeEmailTool(
+        llm=llm,
+        client=client,
+        agent_id=CIRTUS_AGENT_ID,
+        username=CIRTUS_USERNAME,
+        password=CIRTUS_PASSWORD,
+        cloud_mail_client=cloud_mail_client
+    )
+    get_email_account_tool = CloudMailGetAccountInfoTool(
+        client=client,
+        username=CIRTUS_USERNAME,
+        password=CIRTUS_PASSWORD,
+        cloud_mail_client=cloud_mail_client
+    )
+
+    tools = [send_email_tool, read_summarize_tool, get_email_account_tool]
 
     prompt = ChatPromptTemplate.from_messages(
         [
-            ("system", "You are a helpful assistant that can summarize and send emails. You can read emails by asking me to 'read emails' or 'summarize my inbox'. You can send emails by asking me to 'send an email to [recipient] with subject [subject] and body [body]'. You can also get and update email account information."),
+            ("system", "You are a helpful assistant that can read, summarize and send emails using the cloud-mail server. You can read and summarize emails by asking me to 'read and summarize emails'. You can send emails by asking me to 'send an email to [recipient] with subject [subject] and body [body]'. You can also get your email account information."),
             ("human", "{input}"),
             ("placeholder", "{agent_scratchpad}"),
         ]
